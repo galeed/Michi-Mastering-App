@@ -1,970 +1,968 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Michi App — Masterización Profesional</title>
+<title>MASTER — Masterización Profesional</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-–bg: #000000;
-–surface: #0a0a0a;
-–panel: #111111;
-–border: #222222;
-–border-bright: #333333;
-–accent: #00e5a0;
-–accent2: #ff6b35;
-–accent3: #6c63ff;
-–text: #ffffff;
-–muted: #888888;
-–warn: #ffbb00;
-–danger: #ff4055;
-}
-
-body {
-background: #000000;
-color: #ffffff;
-font-family: ‘DM Mono’, monospace;
-font-size: 15px;
-min-height: 100vh;
-overflow-x: hidden;
--webkit-text-size-adjust: 100%;
-}
-
-/* GRID BACKGROUND */
-body::before {
-content: ‘’;
-position: fixed;
-inset: 0;
-background-image:
-linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
-linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
-background-size: 40px 40px;
-pointer-events: none;
-z-index: 0;
-}
-
-/* HEADER */
-header {
-position: sticky;
-top: 0;
-z-index: 100;
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 0 20px;
-height: 60px;
-background: rgba(0,0,0,0.95);
-backdrop-filter: blur(16px);
--webkit-backdrop-filter: blur(16px);
-border-bottom: 1px solid var(–border);
-}
-
-.logo {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 30px;
-letter-spacing: 6px;
-color: var(–accent);
-text-shadow: 0 0 30px rgba(0,229,160,0.4);
-}
-
-.logo span { color: #ffffff; opacity: 0.3; }
-
-.header-status {
-display: flex;
-align-items: center;
-gap: 12px;
-font-size: 13px;
-color: var(–muted);
-letter-spacing: 1px;
-}
-
-.status-dot {
-width: 7px; height: 7px;
-border-radius: 50%;
-background: var(–accent);
-box-shadow: 0 0 8px var(–accent);
-animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-0%, 100% { opacity: 1; }
-50% { opacity: 0.3; }
-}
-
-/* MAIN LAYOUT */
-main {
-position: relative;
-z-index: 1;
-display: grid;
-grid-template-rows: auto auto auto;
-gap: 0;
-padding: 20px;
-max-width: 1400px;
-margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-main { padding: 12px; }
-.workspace { grid-template-columns: 1fr; }
-.controls-grid { grid-template-columns: 1fr; }
-.header-status span:not(:first-child):not(:last-child) { display: none; }
-.file-meta { flex-wrap: wrap; gap: 6px; }
-.output-body { grid-template-columns: 1fr; }
-.download-area { flex-direction: row; }
-}
-
-/* UPLOAD ZONE */
-.upload-zone {
-border: 1.5px dashed var(–border-bright);
-border-radius: 4px;
-padding: 60px 40px;
-text-align: center;
-cursor: pointer;
-transition: all 0.3s;
-background: var(–surface);
-margin-bottom: 24px;
-position: relative;
-overflow: hidden;
-}
-
-.upload-zone::before {
-content: ‘’;
-position: absolute;
-inset: 0;
-background: radial-gradient(ellipse at center, rgba(0,229,160,0.04) 0%, transparent 70%);
-opacity: 0;
-transition: opacity 0.3s;
-}
-
-.upload-zone:hover, .upload-zone.drag-over {
-border-color: var(–accent);
-background: rgba(0,229,160,0.03);
-}
-
-.upload-zone:hover::before, .upload-zone.drag-over::before { opacity: 1; }
-
-.upload-icon {
-width: 56px; height: 56px;
-margin: 0 auto 20px;
-border: 1.5px solid var(–border-bright);
-border-radius: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 22px;
-color: var(–accent);
-transition: all 0.3s;
-}
-
-.upload-zone:hover .upload-icon {
-border-color: var(–accent);
-box-shadow: 0 0 20px rgba(0,229,160,0.2);
-transform: translateY(-2px);
-}
-
-.upload-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 28px;
-letter-spacing: 4px;
-color: #ffffff;
-margin-bottom: 10px;
-}
-
-.upload-sub {
-font-size: 14px;
-color: var(–muted);
-letter-spacing: 1px;
-}
-
-/* WAVEFORM */
-.waveform-section {
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: 4px;
-padding: 20px 24px;
-margin-bottom: 24px;
-display: none;
-}
-
-.waveform-section.visible { display: block; }
-
-.waveform-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 16px;
-}
-
-.file-info {
-display: flex;
-align-items: center;
-gap: 16px;
-}
-
-.file-name {
-font-size: 15px;
-color: #ffffff;
-font-weight: 500;
-}
-
-.file-meta {
-display: flex;
-gap: 8px;
-flex-wrap: wrap;
-}
-
-.file-badge {
-font-size: 12px;
-letter-spacing: 1px;
-padding: 4px 10px;
-border: 1px solid var(–border-bright);
-border-radius: 2px;
-color: var(–muted);
-background: var(–panel);
-}
-
-.waveform-canvas-wrap {
-position: relative;
-height: 80px;
-background: var(–panel);
-border-radius: 2px;
-overflow: hidden;
-margin-bottom: 12px;
-}
-
-#waveformCanvas, #waveformCanvasMastered {
-width: 100%;
-height: 100%;
-display: block;
-}
-
-.playhead {
-position: absolute;
-top: 0; bottom: 0;
-width: 2px;
-background: var(–accent);
-box-shadow: 0 0 8px var(–accent);
-left: 0;
-transition: left 0.1s linear;
-pointer-events: none;
-}
-
-.transport {
-display: flex;
-align-items: center;
-gap: 12px;
-}
-
-.btn-transport {
-width: 48px; height: 48px;
-border: 1px solid var(–border-bright);
-border-radius: 3px;
-background: var(–panel);
-color: #ffffff;
-cursor: pointer;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 18px;
-transition: all 0.2s;
-}
-
-.btn-transport:hover {
-border-color: var(–accent);
-color: var(–accent);
-background: rgba(0,229,160,0.05);
-}
-
-.btn-transport.active {
-background: var(–accent);
-color: #000000;
-border-color: var(–accent);
-}
-
-.time-display {
-font-size: 14px;
-color: var(–muted);
-letter-spacing: 2px;
-min-width: 90px;
-}
-
-/* METERS */
-.meters-row {
-display: flex;
-gap: 8px;
-align-items: flex-end;
-height: 40px;
-margin-left: auto;
-}
-
-.meter-bar-wrap {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 4px;
-}
-
-.meter-bar {
-width: 8px;
-height: 32px;
-background: var(–panel);
-border: 1px solid var(–border);
-border-radius: 1px;
-position: relative;
-overflow: hidden;
-}
-
-.meter-fill {
-position: absolute;
-bottom: 0;
-left: 0;
-right: 0;
-background: linear-gradient(to top, var(–accent), var(–accent) 70%, var(–warn) 85%, var(–danger) 100%);
-transition: height 0.08s;
-}
-
-.meter-label {
-font-size: 13px;
-color: var(–muted);
-letter-spacing: 0.5px;
-}
-
-/* TWO COLUMN LAYOUT */
-.workspace {
-display: grid;
-grid-template-columns: 1fr 340px;
-gap: 20px;
-margin-bottom: 24px;
-}
-
-/* PLATFORM SELECTOR */
-.panel {
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: 4px;
-overflow: hidden;
-}
-
-.panel-header {
-padding: 14px 20px;
-border-bottom: 1px solid var(–border);
-display: flex;
-align-items: center;
-justify-content: space-between;
-}
-
-.panel-title {
-font-size: 13px;
-letter-spacing: 2px;
-color: var(–muted);
-text-transform: uppercase;
-}
-
-.panel-body { padding: 20px; }
-
-/* EQ */
-.eq-canvas-wrap {
-background: var(–panel);
-border: 1px solid var(–border);
-border-radius: 2px;
-margin-bottom: 16px;
-position: relative;
-}
-
-#eqCanvas {
-display: block;
-width: 100%;
-cursor: crosshair;
-}
-
-.eq-bands {
-display: grid;
-grid-template-columns: repeat(8, 1fr);
-gap: 8px;
-}
-
-.eq-band {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 6px;
-}
-
-.eq-slider-wrap {
-width: 28px;
-height: 100px;
-display: flex;
-flex-direction: column;
-align-items: center;
-position: relative;
-}
-
-input[type=“range”][orient=“vertical”],
-input[type=“range”].vertical {
-writing-mode: vertical-lr;
-direction: rtl;
-width: 4px;
-height: 90px;
--webkit-appearance: slider-vertical;
-appearance: slider-vertical;
-cursor: pointer;
-accent-color: var(–accent);
-background: transparent;
-}
-
-.eq-freq {
-font-size: 11px;
-color: var(–muted);
-letter-spacing: 0.5px;
-text-align: center;
-}
-
-.eq-val {
-font-size: 11px;
-color: var(–accent);
-letter-spacing: 0.5px;
-min-width: 28px;
-text-align: center;
-}
-
-/* CONTROLS GRID */
-.controls-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 12px;
-margin-bottom: 16px;
-}
-
-.control-group {
-background: var(–panel);
-border: 1px solid var(–border);
-border-radius: 3px;
-padding: 14px;
-}
-
-.control-label {
-font-size: 12px;
-letter-spacing: 1.5px;
-color: var(–muted);
-margin-bottom: 10px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-
-.control-value {
-color: var(–accent);
-font-size: 13px;
-}
-
-input[type=“range”] {
-width: 100%;
-accent-color: var(–accent);
-cursor: pointer;
-height: 4px;
-}
-
-input[type=“range”]::-webkit-slider-runnable-track {
-height: 4px;
-background: var(–border-bright);
-border-radius: 2px;
-}
-
-input[type=“range”]::-webkit-slider-thumb {
-width: 20px; height: 20px;
-border-radius: 50%;
-background: var(–accent);
-border: 2px solid #000000;
-box-shadow: 0 0 8px rgba(0,229,160,0.4);
-margin-top: -8px;
-}
-
-/* PLATFORM CARDS */
-.platform-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 8px;
-padding: 16px;
-}
-
-.platform-card {
-border: 1.5px solid var(–border);
-border-radius: 3px;
-padding: 14px 10px;
-cursor: pointer;
-transition: all 0.2s;
-background: var(–panel);
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 8px;
-position: relative;
-}
-
-.platform-card:hover {
-border-color: var(–border-bright);
-transform: translateY(-1px);
-}
-
-.platform-card.selected {
-border-color: var(–accent);
-background: rgba(0,229,160,0.06);
-}
-
-.platform-card.selected::after {
-content: ‘✓’;
-position: absolute;
-top: 6px; right: 8px;
-font-size: 13px;
-color: var(–accent);
-}
-
-.platform-icon {
-font-size: 26px;
-filter: grayscale(0.3);
-}
-
-.platform-name {
-font-size: 12px;
-letter-spacing: 1.5px;
-color: var(–muted);
-text-align: center;
-}
-
-.platform-lufs {
-font-size: 13px;
-color: var(–accent);
-font-family: ‘DM Mono’, monospace;
-}
-
-/* LUFS METER */
-.lufs-meter {
-padding: 16px;
-}
-
-.lufs-display {
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-gap: 8px;
-margin-bottom: 12px;
-}
-
-.lufs-box {
-background: var(–panel);
-border: 1px solid var(–border);
-border-radius: 3px;
-padding: 10px 8px;
-text-align: center;
-}
-
-.lufs-box-val {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 26px;
-letter-spacing: 2px;
-color: #ffffff;
-line-height: 1;
-}
-
-.lufs-box-val.ok { color: var(–accent); }
-.lufs-box-val.warn { color: var(–warn); }
-.lufs-box-val.danger { color: var(–danger); }
-
-.lufs-box-label {
-font-size: 11px;
-letter-spacing: 1.5px;
-color: var(–muted);
-margin-top: 4px;
-}
-
-/* LOUDNESS BAR */
-.loudness-bar-wrap {
-background: var(–panel);
-border: 1px solid var(–border);
-border-radius: 2px;
-height: 22px;
-position: relative;
-overflow: hidden;
-margin-bottom: 8px;
-}
-
-.loudness-fill {
-height: 100%;
-background: linear-gradient(90deg, var(–accent3), var(–accent));
-transition: width 0.5s ease;
-border-radius: 2px;
-}
-
-.loudness-target-line {
-position: absolute;
-top: 0; bottom: 0;
-width: 2px;
-background: var(–accent2);
-box-shadow: 0 0 6px var(–accent2);
-}
-
-.loudness-labels {
-display: flex;
-justify-content: space-between;
-font-size: 12px;
-color: var(–muted);
-}
-
-/* MASTER BUTTON */
-.master-section {
-padding: 0 16px 16px;
-}
-
-.btn-master {
-width: 100%;
-padding: 20px;
-background: var(–accent);
-border: none;
-border-radius: 3px;
-color: #000000;
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 22px;
-letter-spacing: 5px;
-cursor: pointer;
-transition: all 0.3s;
-position: relative;
-overflow: hidden;
-}
-
-.btn-master::before {
-content: ‘’;
-position: absolute;
-top: 50%; left: 50%;
-width: 0; height: 0;
-background: rgba(255,255,255,0.2);
-border-radius: 50%;
-transform: translate(-50%, -50%);
-transition: width 0.4s, height 0.4s;
-}
-
-.btn-master:hover::before { width: 300px; height: 300px; }
-
-.btn-master:hover {
-background: #00ffb3;
-box-shadow: 0 0 30px rgba(0,229,160,0.5);
-transform: translateY(-1px);
-}
-
-.btn-master:active { transform: translateY(0); }
-.btn-master:disabled {
-background: var(–border-bright);
-color: var(–muted);
-cursor: not-allowed;
-transform: none;
-box-shadow: none;
-}
-
-/* PROGRESS */
-.progress-section {
-display: none;
-padding: 0 16px 16px;
-}
-
-.progress-section.visible { display: block; }
-
-.progress-bar-wrap {
-background: var(–panel);
-border: 1px solid var(–border);
-border-radius: 2px;
-height: 8px;
-overflow: hidden;
-margin-bottom: 8px;
-}
-
-.progress-fill {
-height: 100%;
-background: linear-gradient(90deg, var(–accent3), var(–accent));
-border-radius: 2px;
-transition: width 0.3s ease;
-width: 0%;
-}
-
-.progress-label {
-font-size: 13px;
-color: var(–muted);
-letter-spacing: 1px;
-text-align: center;
-}
-
-/* OUTPUT */
-.output-section {
-display: none;
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: 4px;
-overflow: hidden;
-}
-
-.output-section.visible { display: block; }
-
-.output-header {
-padding: 16px 20px;
-background: rgba(0,229,160,0.06);
-border-bottom: 1px solid rgba(0,229,160,0.15);
-display: flex;
-align-items: center;
-gap: 12px;
-}
-
-.output-badge {
-font-size: 13px;
-letter-spacing: 2px;
-color: var(–accent);
-padding: 6px 12px;
-border: 1px solid var(–accent);
-border-radius: 2px;
-text-shadow: 0 0 10px rgba(0,229,160,0.5);
-}
-
-.output-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 20px;
-letter-spacing: 3px;
-color: #ffffff;
-}
-
-.output-body {
-padding: 20px;
-display: grid;
-grid-template-columns: 1fr auto;
-gap: 20px;
-align-items: start;
-}
-
-.comparison-table {
-border: 1px solid var(–border);
-border-radius: 3px;
-overflow: hidden;
-}
-
-.comparison-row {
-display: grid;
-grid-template-columns: 140px 1fr 1fr;
-border-bottom: 1px solid var(–border);
-}
-
-.comparison-row:last-child { border-bottom: none; }
-
-.comparison-row > * {
-padding: 8px 12px;
-font-size: 11px;
-}
-
-.comparison-row > *:not(:last-child) { border-right: 1px solid var(–border); }
-
-.comp-header {
-background: var(–panel);
-font-size: 12px;
-letter-spacing: 2px;
-color: var(–muted);
-}
-
-.comp-label { color: var(–muted); font-size: 13px; letter-spacing: 1px; }
-.comp-before { color: #ffffff; font-size: 13px; }
-.comp-after { color: var(–accent); font-size: 13px; }
-
-.download-area {
-display: flex;
-flex-direction: column;
-gap: 8px;
-min-width: 160px;
-}
-
-.btn-download {
-padding: 14px 20px;
-border: 1.5px solid var(–accent);
-background: transparent;
-color: var(–accent);
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 18px;
-letter-spacing: 3px;
-cursor: pointer;
-border-radius: 3px;
-transition: all 0.2s;
-text-align: center;
-}
-
-.btn-download:hover {
-background: var(–accent);
-color: #000000;
-box-shadow: 0 0 20px rgba(0,229,160,0.3);
-}
-
-.btn-reset {
-padding: 12px 20px;
-border: 1px solid var(–border-bright);
-background: transparent;
-color: var(–muted);
-font-family: ‘DM Mono’, monospace;
-font-size: 13px;
-letter-spacing: 1px;
-cursor: pointer;
-border-radius: 3px;
-transition: all 0.2s;
-}
-
-.btn-reset:hover { border-color: var(–accent2); color: var(–accent2); }
-
-/* SPECTRUM */
-#spectrumCanvas {
-width: 100%;
-height: 60px;
-display: block;
-border-radius: 2px;
-background: var(–panel);
-border: 1px solid var(–border);
-margin-top: 8px;
-}
-
-/* TOGGLE */
-.toggle-wrap {
-display: flex;
-align-items: center;
-gap: 10px;
-font-size: 13px;
-color: var(–muted);
-letter-spacing: 1px;
-cursor: pointer;
-}
-
-.toggle {
-width: 40px; height: 22px;
-background: var(–border-bright);
-border-radius: 11px;
-position: relative;
-transition: background 0.2s;
-flex-shrink: 0;
-}
-
-.toggle.on { background: var(–accent); }
-
-.toggle::after {
-content: ‘’;
-position: absolute;
-top: 3px; left: 3px;
-width: 16px; height: 16px;
-border-radius: 50%;
-background: white;
-transition: transform 0.2s;
-}
-
-.toggle.on::after { transform: translateX(18px); }
-
-/* PRESETS */
-.presets-row {
-display: flex;
-gap: 8px;
-flex-wrap: wrap;
-padding: 12px 16px;
-border-bottom: 1px solid var(–border);
-}
-
-.preset-btn {
-font-size: 13px;
-letter-spacing: 1.5px;
-padding: 8px 14px;
-border: 1px solid var(–border-bright);
-background: var(–panel);
-color: var(–muted);
-cursor: pointer;
-border-radius: 2px;
-transition: all 0.2s;
-font-family: ‘DM Mono’, monospace;
-}
-
-.preset-btn:hover { border-color: var(–accent3); color: var(–accent3); }
-.preset-btn.active { border-color: var(–accent); color: var(–accent); background: rgba(0,229,160,0.08); }
-
-/* TOOLTIP */
-[data-tip] { position: relative; cursor: help; }
-[data-tip]::after {
-content: attr(data-tip);
-position: absolute;
-bottom: 110%;
-left: 50%;
-transform: translateX(-50%);
-background: #111111;
-border: 1px solid var(–border-bright);
-padding: 6px 10px;
-border-radius: 3px;
-font-size: 13px;
-color: #ffffff;
-white-space: nowrap;
-letter-spacing: 0.5px;
-opacity: 0;
-pointer-events: none;
-transition: opacity 0.2s;
-z-index: 200;
-}
-[data-tip]:hover::after { opacity: 1; }
-
-/* NOTIFICATIONS */
-.toast {
-position: fixed;
-bottom: 32px;
-right: 32px;
-background: var(–panel);
-border: 1px solid var(–border-bright);
-border-left: 3px solid var(–accent);
-padding: 14px 18px;
-border-radius: 3px;
-font-size: 14px;
-color: #ffffff;
-letter-spacing: 0.5px;
-z-index: 1000;
-transform: translateX(120%);
-transition: transform 0.3s ease;
-}
-
-.toast.show { transform: translateX(0); }
-.toast.error { border-left-color: var(–danger); }
-
-input[type=“file”] { display: none; }
-
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(–bg); }
-::-webkit-scrollbar-thumb { background: var(–border-bright); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(–accent); }
-
-.section-divider {
-display: flex;
-align-items: center;
-gap: 12px;
-margin-bottom: 20px;
-color: var(–muted);
-font-size: 13px;
-letter-spacing: 3px;
-}
-.section-divider::before, .section-divider::after {
-content: ‘’;
-flex: 1;
-height: 1px;
-background: var(–border);
-}
-
-.hint-text {
-font-size: 13px;
-color: var(–muted);
-letter-spacing: 0.5px;
-text-align: center;
-padding: 8px;
-}
+  :root {
+    --bg: #000000;
+    --surface: #0a0a0a;
+    --panel: #111111;
+    --border: #222222;
+    --border-bright: #333333;
+    --accent: #00e5a0;
+    --accent2: #ff6b35;
+    --accent3: #6c63ff;
+    --text: #ffffff;
+    --muted: #888888;
+    --warn: #ffbb00;
+    --danger: #ff4055;
+  }
+
+  body {
+    background: #000000;
+    color: #ffffff;
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HEADER */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 60px;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 6px;
+    color: var(--accent);
+    text-shadow: 0 0 30px rgba(0,229,160,0.4);
+  }
+
+  .logo span { color: #ffffff; opacity: 0.3; }
+
+  .header-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* MAIN LAYOUT */
+  main {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 0;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    main { padding: 12px; }
+    .workspace { grid-template-columns: 1fr; }
+    .controls-grid { grid-template-columns: 1fr; }
+    .header-status span:not(:first-child):not(:last-child) { display: none; }
+    .file-meta { flex-wrap: wrap; gap: 6px; }
+    .output-body { grid-template-columns: 1fr; }
+    .download-area { flex-direction: row; }
+  }
+
+  /* UPLOAD ZONE */
+  .upload-zone {
+    border: 1.5px dashed var(--border-bright);
+    border-radius: 4px;
+    padding: 60px 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: var(--surface);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upload-zone::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(0,229,160,0.04) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .upload-zone:hover, .upload-zone.drag-over {
+    border-color: var(--accent);
+    background: rgba(0,229,160,0.03);
+  }
+
+  .upload-zone:hover::before, .upload-zone.drag-over::before { opacity: 1; }
+
+  .upload-icon {
+    width: 56px; height: 56px;
+    margin: 0 auto 20px;
+    border: 1.5px solid var(--border-bright);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: var(--accent);
+    transition: all 0.3s;
+  }
+
+  .upload-zone:hover .upload-icon {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(0,229,160,0.2);
+    transform: translateY(-2px);
+  }
+
+  .upload-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+
+  .upload-sub {
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* WAVEFORM */
+  .waveform-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: none;
+  }
+
+  .waveform-section.visible { display: block; }
+
+  .waveform-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .file-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .file-name {
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  .file-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .file-badge {
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border: 1px solid var(--border-bright);
+    border-radius: 2px;
+    color: var(--muted);
+    background: var(--panel);
+  }
+
+  .waveform-canvas-wrap {
+    position: relative;
+    height: 80px;
+    background: var(--panel);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  #waveformCanvas, #waveformCanvasMastered {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .playhead {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    left: 0;
+    transition: left 0.1s linear;
+    pointer-events: none;
+  }
+
+  .transport {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn-transport {
+    width: 48px; height: 48px;
+    border: 1px solid var(--border-bright);
+    border-radius: 3px;
+    background: var(--panel);
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.2s;
+  }
+
+  .btn-transport:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,229,160,0.05);
+  }
+
+  .btn-transport.active {
+    background: var(--accent);
+    color: #000000;
+    border-color: var(--accent);
+  }
+
+  .time-display {
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    min-width: 90px;
+  }
+
+  /* METERS */
+  .meters-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    height: 40px;
+    margin-left: auto;
+  }
+
+  .meter-bar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .meter-bar {
+    width: 8px;
+    height: 32px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 1px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .meter-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, var(--accent), var(--accent) 70%, var(--warn) 85%, var(--danger) 100%);
+    transition: height 0.08s;
+  }
+
+  .meter-label {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  /* TWO COLUMN LAYOUT */
+  .workspace {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  /* PLATFORM SELECTOR */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-title {
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .panel-body { padding: 20px; }
+
+  /* EQ */
+  .eq-canvas-wrap {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  #eqCanvas {
+    display: block;
+    width: 100%;
+    cursor: crosshair;
+  }
+
+  .eq-bands {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+  }
+
+  .eq-band {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .eq-slider-wrap {
+    width: 28px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  input[type="range"][orient="vertical"],
+  input[type="range"].vertical {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    width: 4px;
+    height: 90px;
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
+    cursor: pointer;
+    accent-color: var(--accent);
+    background: transparent;
+  }
+
+  .eq-freq {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+
+  .eq-val {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    min-width: 28px;
+    text-align: center;
+  }
+
+  /* CONTROLS GRID */
+  .controls-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .control-group {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 14px;
+  }
+
+  .control-label {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .control-value {
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+    cursor: pointer;
+    height: 4px;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px;
+    background: var(--border-bright);
+    border-radius: 2px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid #000000;
+    box-shadow: 0 0 8px rgba(0,229,160,0.4);
+    margin-top: -8px;
+  }
+
+  /* PLATFORM CARDS */
+  .platform-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .platform-card {
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    padding: 14px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--panel);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+
+  .platform-card:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-1px);
+  }
+
+  .platform-card.selected {
+    border-color: var(--accent);
+    background: rgba(0,229,160,0.06);
+  }
+
+  .platform-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 6px; right: 8px;
+    font-size: 13px;
+    color: var(--accent);
+  }
+
+  .platform-icon {
+    font-size: 26px;
+    filter: grayscale(0.3);
+  }
+
+  .platform-name {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .platform-lufs {
+    font-size: 13px;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* LUFS METER */
+  .lufs-meter {
+    padding: 16px;
+  }
+
+  .lufs-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .lufs-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+
+  .lufs-box-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: #ffffff;
+    line-height: 1;
+  }
+
+  .lufs-box-val.ok { color: var(--accent); }
+  .lufs-box-val.warn { color: var(--warn); }
+  .lufs-box-val.danger { color: var(--danger); }
+
+  .lufs-box-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* LOUDNESS BAR */
+  .loudness-bar-wrap {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    height: 22px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .loudness-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent3), var(--accent));
+    transition: width 0.5s ease;
+    border-radius: 2px;
+  }
+
+  .loudness-target-line {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--accent2);
+    box-shadow: 0 0 6px var(--accent2);
+  }
+
+  .loudness-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* MASTER BUTTON */
+  .master-section {
+    padding: 0 16px 16px;
+  }
+
+  .btn-master {
+    width: 100%;
+    padding: 20px;
+    background: var(--accent);
+    border: none;
+    border-radius: 3px;
+    color: #000000;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-master::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+  }
+
+  .btn-master:hover::before { width: 300px; height: 300px; }
+
+  .btn-master:hover {
+    background: #00ffb3;
+    box-shadow: 0 0 30px rgba(0,229,160,0.5);
+    transform: translateY(-1px);
+  }
+
+  .btn-master:active { transform: translateY(0); }
+  .btn-master:disabled {
+    background: var(--border-bright);
+    color: var(--muted);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* PROGRESS */
+  .progress-section {
+    display: none;
+    padding: 0 16px 16px;
+  }
+
+  .progress-section.visible { display: block; }
+
+  .progress-bar-wrap {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent3), var(--accent));
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+
+  .progress-label {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  /* OUTPUT */
+  .output-section {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .output-section.visible { display: block; }
+
+  .output-header {
+    padding: 16px 20px;
+    background: rgba(0,229,160,0.06);
+    border-bottom: 1px solid rgba(0,229,160,0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .output-badge {
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    padding: 6px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    text-shadow: 0 0 10px rgba(0,229,160,0.5);
+  }
+
+  .output-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: #ffffff;
+  }
+
+  .output-body {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .comparison-table {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .comparison-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-row:last-child { border-bottom: none; }
+
+  .comparison-row > * {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  .comparison-row > *:not(:last-child) { border-right: 1px solid var(--border); }
+
+  .comp-header {
+    background: var(--panel);
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  .comp-label { color: var(--muted); font-size: 13px; letter-spacing: 1px; }
+  .comp-before { color: #ffffff; font-size: 13px; }
+  .comp-after { color: var(--accent); font-size: 13px; }
+
+  .download-area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 160px;
+  }
+
+  .btn-download {
+    padding: 14px 20px;
+    border: 1.5px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .btn-download:hover {
+    background: var(--accent);
+    color: #000000;
+    box-shadow: 0 0 20px rgba(0,229,160,0.3);
+  }
+
+  .btn-reset {
+    padding: 12px 20px;
+    border: 1px solid var(--border-bright);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+
+  .btn-reset:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  /* SPECTRUM */
+  #spectrumCanvas {
+    width: 100%;
+    height: 60px;
+    display: block;
+    border-radius: 2px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  /* TOGGLE */
+  .toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+
+  .toggle {
+    width: 40px; height: 22px;
+    background: var(--border-bright);
+    border-radius: 11px;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+
+  .toggle.on { background: var(--accent); }
+
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.2s;
+  }
+
+  .toggle.on::after { transform: translateX(18px); }
+
+  /* PRESETS */
+  .presets-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .preset-btn {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    padding: 8px 14px;
+    border: 1px solid var(--border-bright);
+    background: var(--panel);
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .preset-btn:hover { border-color: var(--accent3); color: var(--accent3); }
+  .preset-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(0,229,160,0.08); }
+
+  /* TOOLTIP */
+  [data-tip] { position: relative; cursor: help; }
+  [data-tip]::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111111;
+    border: 1px solid var(--border-bright);
+    padding: 6px 10px;
+    border-radius: 3px;
+    font-size: 13px;
+    color: #ffffff;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 200;
+  }
+  [data-tip]:hover::after { opacity: 1; }
+
+  /* NOTIFICATIONS */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--panel);
+    border: 1px solid var(--border-bright);
+    border-left: 3px solid var(--accent);
+    padding: 14px 18px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    z-index: 1000;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+  }
+
+  .toast.show { transform: translateX(0); }
+  .toast.error { border-left-color: var(--danger); }
+
+  input[type="file"] { display: none; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 3px;
+  }
+  .section-divider::before, .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .hint-text {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-align: center;
+    padding: 8px;
+  }
 </style>
-
 </head>
 <body>
 
 <header>
-  <div class="logo">MICHI APP<span>MÁSTER</span></div>
+  <div class="logo">MASTER<span>.PRO</span></div>
   <div class="header-status">
     <div class="status-dot"></div>
     <span>ENGINE READY</span>
@@ -986,7 +984,6 @@ padding: 8px;
   </div>
 
   <!-- WAVEFORM -->
-
   <div class="waveform-section" id="waveformSection">
     <div class="waveform-header">
       <div class="file-info">
@@ -1013,264 +1010,256 @@ padding: 8px;
       </div>
     </div>
 
-```
-<div class="waveform-canvas-wrap">
-  <canvas id="waveformCanvas"></canvas>
-  <div class="playhead" id="playhead"></div>
-</div>
+    <div class="waveform-canvas-wrap">
+      <canvas id="waveformCanvas"></canvas>
+      <div class="playhead" id="playhead"></div>
+    </div>
 
-<canvas id="spectrumCanvas"></canvas>
+    <canvas id="spectrumCanvas"></canvas>
 
-<div class="transport" style="margin-top:12px;">
-  <button class="btn-transport" id="btnPlay" title="Play/Pause">▶</button>
-  <button class="btn-transport" id="btnStop" title="Stop">■</button>
-  <span class="time-display" id="timeDisplay">0:00.000</span>
-  <div class="toggle-wrap" style="margin-left:auto;" onclick="toggleAB()">
-    <div class="toggle" id="abToggle"></div>
-    <span id="abLabel">FUENTE ORIGINAL</span>
-  </div>
-</div>
-```
-
+    <div class="transport" style="margin-top:12px;">
+      <button class="btn-transport" id="btnPlay" title="Play/Pause">▶</button>
+      <button class="btn-transport" id="btnStop" title="Stop">■</button>
+      <span class="time-display" id="timeDisplay">0:00.000</span>
+      <div class="toggle-wrap" style="margin-left:auto;" onclick="toggleAB()">
+        <div class="toggle" id="abToggle"></div>
+        <span id="abLabel">FUENTE ORIGINAL</span>
+      </div>
+    </div>
   </div>
 
   <!-- WORKSPACE -->
-
   <div class="workspace" id="workspaceSection" style="display:none;">
 
-```
-<!-- LEFT: CONTROLS -->
-<div>
-  <div class="section-divider">ECUALIZACIÓN</div>
-  <div class="panel" style="margin-bottom:20px;">
-    <div class="panel-header">
-      <span class="panel-title">EQ PARAMÉTRICO — 8 BANDAS</span>
-      <div class="toggle-wrap" onclick="toggleEQ()">
-        <div class="toggle on" id="eqToggle"></div>
-        <span>ON</span>
-      </div>
-    </div>
-    <div class="presets-row">
-      <button class="preset-btn active" onclick="applyEQPreset('flat',this)">FLAT</button>
-      <button class="preset-btn" onclick="applyEQPreset('warm',this)">WARM</button>
-      <button class="preset-btn" onclick="applyEQPreset('bright',this)">BRIGHT</button>
-      <button class="preset-btn" onclick="applyEQPreset('punchy',this)">PUNCHY</button>
-      <button class="preset-btn" onclick="applyEQPreset('vocal',this)">VOCAL</button>
-      <button class="preset-btn" onclick="applyEQPreset('hifi',this)">HI-FI</button>
-    </div>
-    <div class="panel-body">
-      <div class="eq-canvas-wrap">
-        <canvas id="eqCanvas" height="120"></canvas>
-      </div>
-      <div class="eq-bands" id="eqBands"></div>
-    </div>
-  </div>
-
-  <div class="section-divider">DINÁMICA</div>
-  <div class="controls-grid">
-    <div class="control-group" data-tip="Reduce picos transitorios">
-      <div class="control-label">
-        COMPRESOR
-        <div class="toggle-wrap" onclick="toggleControl('compressor')">
-          <div class="toggle on" id="compressorToggle"></div>
+    <!-- LEFT: CONTROLS -->
+    <div>
+      <div class="section-divider">ECUALIZACIÓN</div>
+      <div class="panel" style="margin-bottom:20px;">
+        <div class="panel-header">
+          <span class="panel-title">EQ PARAMÉTRICO — 8 BANDAS</span>
+          <div class="toggle-wrap" onclick="toggleEQ()">
+            <div class="toggle on" id="eqToggle"></div>
+            <span>ON</span>
+          </div>
         </div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div>
-          <div class="control-label">THRESHOLD <span class="control-value" id="threshVal">-12 dB</span></div>
-          <input type="range" min="-40" max="0" value="-12" id="threshSlider" oninput="updateSlider('thresh',this.value,'dB')">
+        <div class="presets-row">
+          <button class="preset-btn active" onclick="applyEQPreset('flat',this)">FLAT</button>
+          <button class="preset-btn" onclick="applyEQPreset('warm',this)">WARM</button>
+          <button class="preset-btn" onclick="applyEQPreset('bright',this)">BRIGHT</button>
+          <button class="preset-btn" onclick="applyEQPreset('punchy',this)">PUNCHY</button>
+          <button class="preset-btn" onclick="applyEQPreset('vocal',this)">VOCAL</button>
+          <button class="preset-btn" onclick="applyEQPreset('hifi',this)">HI-FI</button>
         </div>
-        <div>
-          <div class="control-label">RATIO <span class="control-value" id="ratioVal">3:1</span></div>
-          <input type="range" min="1" max="20" value="3" step="0.5" id="ratioSlider" oninput="updateSlider('ratio',this.value,':1')">
-        </div>
-        <div>
-          <div class="control-label">KNEE <span class="control-value" id="kneeVal">6 dB</span></div>
-          <input type="range" min="0" max="20" value="6" id="kneeSlider" oninput="updateSlider('knee',this.value,'dB')">
-        </div>
-      </div>
-    </div>
-
-    <div class="control-group" data-tip="Controla el tiempo de ataque/release">
-      <div class="control-label">ENVOLVENTE</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div>
-          <div class="control-label">ATTACK <span class="control-value" id="attackVal">10 ms</span></div>
-          <input type="range" min="0" max="200" value="10" id="attackSlider" oninput="updateSlider('attack',this.value,'ms')">
-        </div>
-        <div>
-          <div class="control-label">RELEASE <span class="control-value" id="releaseVal">150 ms</span></div>
-          <input type="range" min="10" max="1000" value="150" id="releaseSlider" oninput="updateSlider('release',this.value,'ms')">
-        </div>
-        <div>
-          <div class="control-label">MAKEUP GAIN <span class="control-value" id="makeupVal">+0 dB</span></div>
-          <input type="range" min="-12" max="12" value="0" id="makeupSlider" oninput="updateSlider('makeup',this.value,'dB')">
-        </div>
-      </div>
-    </div>
-
-    <div class="control-group" data-tip="Limiter brick wall para proteger el master">
-      <div class="control-label">
-        LIMITER
-        <div class="toggle-wrap" onclick="toggleControl('limiter')">
-          <div class="toggle on" id="limiterToggle"></div>
-        </div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div>
-          <div class="control-label">CEILING <span class="control-value" id="ceilVal">-1.0 dBTP</span></div>
-          <input type="range" min="-6" max="0" value="-1" step="0.1" id="ceilSlider" oninput="updateSlider('ceil',this.value,'dBTP')">
-        </div>
-        <div>
-          <div class="control-label">RELEASE <span class="control-value" id="limRelVal">50 ms</span></div>
-          <input type="range" min="1" max="500" value="50" id="limRelSlider" oninput="updateSlider('limRel',this.value,'ms')">
-        </div>
-      </div>
-    </div>
-
-    <div class="control-group" data-tip="Excitador armónico y ensanchamiento estéreo">
-      <div class="control-label">REALCE</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div>
-          <div class="control-label">EXCITER <span class="control-value" id="exciterVal">20%</span></div>
-          <input type="range" min="0" max="100" value="20" id="exciterSlider" oninput="updateSlider('exciter',this.value,'%')">
-        </div>
-        <div>
-          <div class="control-label">STEREO WIDTH <span class="control-value" id="widthVal">100%</span></div>
-          <input type="range" min="0" max="200" value="100" id="widthSlider" oninput="updateSlider('width',this.value,'%')">
-        </div>
-        <div>
-          <div class="control-label">AIR <span class="control-value" id="airVal">0 dB</span></div>
-          <input type="range" min="-6" max="6" value="0" step="0.5" id="airSlider" oninput="updateSlider('air',this.value,'dB')">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-divider">NIVEL DE SALIDA</div>
-  <div class="control-group">
-    <div class="control-label">OUTPUT GAIN <span class="control-value" id="outputVal">+0.0 dB</span></div>
-    <input type="range" min="-12" max="6" value="0" step="0.1" id="outputSlider" oninput="updateSlider('output',this.value,'dB')">
-  </div>
-</div>
-
-<!-- RIGHT: PLATFORM + LUFS -->
-<div style="display:flex;flex-direction:column;gap:20px;">
-
-  <div class="panel">
-    <div class="panel-header">
-      <span class="panel-title">PLATAFORMA DESTINO</span>
-    </div>
-    <div class="platform-grid" id="platformGrid">
-      <div class="platform-card selected" data-platform="spotify" data-lufs="-14" onclick="selectPlatform(this)">
-        <div class="platform-icon">🎧</div>
-        <div class="platform-name">SPOTIFY</div>
-        <div class="platform-lufs">-14 LUFS</div>
-      </div>
-      <div class="platform-card" data-platform="apple" data-lufs="-16" onclick="selectPlatform(this)">
-        <div class="platform-icon">🍎</div>
-        <div class="platform-name">APPLE MUSIC</div>
-        <div class="platform-lufs">-16 LUFS</div>
-      </div>
-      <div class="platform-card" data-platform="youtube" data-lufs="-14" onclick="selectPlatform(this)">
-        <div class="platform-icon">▶️</div>
-        <div class="platform-name">YOUTUBE</div>
-        <div class="platform-lufs">-14 LUFS</div>
-      </div>
-      <div class="platform-card" data-platform="tidal" data-lufs="-14" onclick="selectPlatform(this)">
-        <div class="platform-icon">🌊</div>
-        <div class="platform-name">TIDAL</div>
-        <div class="platform-lufs">-14 LUFS</div>
-      </div>
-      <div class="platform-card" data-platform="amazon" data-lufs="-14" onclick="selectPlatform(this)">
-        <div class="platform-icon">📦</div>
-        <div class="platform-name">AMAZON</div>
-        <div class="platform-lufs">-14 LUFS</div>
-      </div>
-      <div class="platform-card" data-platform="soundcloud" data-lufs="-8" onclick="selectPlatform(this)">
-        <div class="platform-icon">☁️</div>
-        <div class="platform-name">SOUNDCLOUD</div>
-        <div class="platform-lufs">-8 LUFS</div>
-      </div>
-    </div>
-
-    <div class="lufs-meter">
-      <div class="lufs-display">
-        <div class="lufs-box">
-          <div class="lufs-box-val" id="lufsIntVal">—</div>
-          <div class="lufs-box-label">INTEGRADO</div>
-        </div>
-        <div class="lufs-box">
-          <div class="lufs-box-val" id="lufsShortVal">—</div>
-          <div class="lufs-box-label">SHORT TERM</div>
-        </div>
-        <div class="lufs-box">
-          <div class="lufs-box-val" id="lufsTpVal">—</div>
-          <div class="lufs-box-label">TRUE PEAK</div>
+        <div class="panel-body">
+          <div class="eq-canvas-wrap">
+            <canvas id="eqCanvas" height="120"></canvas>
+          </div>
+          <div class="eq-bands" id="eqBands"></div>
         </div>
       </div>
 
-      <div class="loudness-bar-wrap">
-        <div class="loudness-fill" id="loudnessFill" style="width:0%"></div>
-        <div class="loudness-target-line" id="targetLine" style="left:70%"></div>
-      </div>
-      <div class="loudness-labels">
-        <span>-24 LUFS</span>
-        <span id="targetLabel" style="color:var(--accent2);">TARGET: -14</span>
-        <span>0 LUFS</span>
-      </div>
-    </div>
+      <div class="section-divider">DINÁMICA</div>
+      <div class="controls-grid">
+        <div class="control-group" data-tip="Reduce picos transitorios">
+          <div class="control-label">
+            COMPRESOR
+            <div class="toggle-wrap" onclick="toggleControl('compressor')">
+              <div class="toggle on" id="compressorToggle"></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div>
+              <div class="control-label">THRESHOLD <span class="control-value" id="threshVal">-12 dB</span></div>
+              <input type="range" min="-40" max="0" value="-12" id="threshSlider" oninput="updateSlider('thresh',this.value,'dB')">
+            </div>
+            <div>
+              <div class="control-label">RATIO <span class="control-value" id="ratioVal">3:1</span></div>
+              <input type="range" min="1" max="20" value="3" step="0.5" id="ratioSlider" oninput="updateSlider('ratio',this.value,':1')">
+            </div>
+            <div>
+              <div class="control-label">KNEE <span class="control-value" id="kneeVal">6 dB</span></div>
+              <input type="range" min="0" max="20" value="6" id="kneeSlider" oninput="updateSlider('knee',this.value,'dB')">
+            </div>
+          </div>
+        </div>
 
-    <div class="master-section">
-      <button class="btn-master" id="btnMaster" disabled onclick="startMastering()">
-        MASTERIZAR
-      </button>
-    </div>
-    <div class="progress-section" id="progressSection">
-      <div class="progress-bar-wrap">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-      <div class="progress-label" id="progressLabel">ANALIZANDO...</div>
-    </div>
-  </div>
+        <div class="control-group" data-tip="Controla el tiempo de ataque/release">
+          <div class="control-label">ENVOLVENTE</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div>
+              <div class="control-label">ATTACK <span class="control-value" id="attackVal">10 ms</span></div>
+              <input type="range" min="0" max="200" value="10" id="attackSlider" oninput="updateSlider('attack',this.value,'ms')">
+            </div>
+            <div>
+              <div class="control-label">RELEASE <span class="control-value" id="releaseVal">150 ms</span></div>
+              <input type="range" min="10" max="1000" value="150" id="releaseSlider" oninput="updateSlider('release',this.value,'ms')">
+            </div>
+            <div>
+              <div class="control-label">MAKEUP GAIN <span class="control-value" id="makeupVal">+0 dB</span></div>
+              <input type="range" min="-12" max="12" value="0" id="makeupSlider" oninput="updateSlider('makeup',this.value,'dB')">
+            </div>
+          </div>
+        </div>
 
-  <!-- FORMAT OUTPUT -->
-  <div class="panel">
-    <div class="panel-header">
-      <span class="panel-title">FORMATO DE EXPORTACIÓN</span>
-    </div>
-    <div class="panel-body" style="display:flex;flex-direction:column;gap:10px;">
+        <div class="control-group" data-tip="Limiter brick wall para proteger el master">
+          <div class="control-label">
+            LIMITER
+            <div class="toggle-wrap" onclick="toggleControl('limiter')">
+              <div class="toggle on" id="limiterToggle"></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div>
+              <div class="control-label">CEILING <span class="control-value" id="ceilVal">-1.0 dBTP</span></div>
+              <input type="range" min="-6" max="0" value="-1" step="0.1" id="ceilSlider" oninput="updateSlider('ceil',this.value,'dBTP')">
+            </div>
+            <div>
+              <div class="control-label">RELEASE <span class="control-value" id="limRelVal">50 ms</span></div>
+              <input type="range" min="1" max="500" value="50" id="limRelSlider" oninput="updateSlider('limRel',this.value,'ms')">
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group" data-tip="Excitador armónico y ensanchamiento estéreo">
+          <div class="control-label">REALCE</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div>
+              <div class="control-label">EXCITER <span class="control-value" id="exciterVal">20%</span></div>
+              <input type="range" min="0" max="100" value="20" id="exciterSlider" oninput="updateSlider('exciter',this.value,'%')">
+            </div>
+            <div>
+              <div class="control-label">STEREO WIDTH <span class="control-value" id="widthVal">100%</span></div>
+              <input type="range" min="0" max="200" value="100" id="widthSlider" oninput="updateSlider('width',this.value,'%')">
+            </div>
+            <div>
+              <div class="control-label">AIR <span class="control-value" id="airVal">0 dB</span></div>
+              <input type="range" min="-6" max="6" value="0" step="0.5" id="airSlider" oninput="updateSlider('air',this.value,'dB')">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider">NIVEL DE SALIDA</div>
       <div class="control-group">
-        <div class="control-label">FORMATO</div>
-        <select id="exportFormat" style="width:100%;background:var(--bg);border:1px solid var(--border-bright);color:var(--text);padding:6px 8px;border-radius:2px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;">
-          <option value="wav">WAV (sin pérdida)</option>
-          <option value="flac">FLAC (comprimido sin pérdida)</option>
-          <option value="mp3">MP3 320kbps</option>
-          <option value="aac">AAC 256kbps</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <div class="control-label">SAMPLE RATE <span class="control-value" id="srOutVal">44100 Hz</span></div>
-        <input type="range" min="0" max="3" value="0" step="1" id="srSlider" oninput="updateSR(this.value)">
-      </div>
-      <div class="control-group">
-        <div class="control-label">BIT DEPTH <span class="control-value" id="bitOutVal">24-bit</span></div>
-        <input type="range" min="0" max="2" value="1" step="1" id="bitSlider" oninput="updateBit(this.value)">
-      </div>
-      <div class="toggle-wrap" onclick="toggleDither()">
-        <div class="toggle on" id="ditherToggle"></div>
-        <span>DITHERING (TPDF)</span>
+        <div class="control-label">OUTPUT GAIN <span class="control-value" id="outputVal">+0.0 dB</span></div>
+        <input type="range" min="-12" max="6" value="0" step="0.1" id="outputSlider" oninput="updateSlider('output',this.value,'dB')">
       </div>
     </div>
-  </div>
 
-</div>
-```
+    <!-- RIGHT: PLATFORM + LUFS -->
+    <div style="display:flex;flex-direction:column;gap:20px;">
 
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">PLATAFORMA DESTINO</span>
+        </div>
+        <div class="platform-grid" id="platformGrid">
+          <div class="platform-card selected" data-platform="spotify" data-lufs="-14" onclick="selectPlatform(this)">
+            <div class="platform-icon">🎧</div>
+            <div class="platform-name">SPOTIFY</div>
+            <div class="platform-lufs">-14 LUFS</div>
+          </div>
+          <div class="platform-card" data-platform="apple" data-lufs="-16" onclick="selectPlatform(this)">
+            <div class="platform-icon">🍎</div>
+            <div class="platform-name">APPLE MUSIC</div>
+            <div class="platform-lufs">-16 LUFS</div>
+          </div>
+          <div class="platform-card" data-platform="youtube" data-lufs="-14" onclick="selectPlatform(this)">
+            <div class="platform-icon">▶️</div>
+            <div class="platform-name">YOUTUBE</div>
+            <div class="platform-lufs">-14 LUFS</div>
+          </div>
+          <div class="platform-card" data-platform="tidal" data-lufs="-14" onclick="selectPlatform(this)">
+            <div class="platform-icon">🌊</div>
+            <div class="platform-name">TIDAL</div>
+            <div class="platform-lufs">-14 LUFS</div>
+          </div>
+          <div class="platform-card" data-platform="amazon" data-lufs="-14" onclick="selectPlatform(this)">
+            <div class="platform-icon">📦</div>
+            <div class="platform-name">AMAZON</div>
+            <div class="platform-lufs">-14 LUFS</div>
+          </div>
+          <div class="platform-card" data-platform="soundcloud" data-lufs="-8" onclick="selectPlatform(this)">
+            <div class="platform-icon">☁️</div>
+            <div class="platform-name">SOUNDCLOUD</div>
+            <div class="platform-lufs">-8 LUFS</div>
+          </div>
+        </div>
+
+        <div class="lufs-meter">
+          <div class="lufs-display">
+            <div class="lufs-box">
+              <div class="lufs-box-val" id="lufsIntVal">—</div>
+              <div class="lufs-box-label">INTEGRADO</div>
+            </div>
+            <div class="lufs-box">
+              <div class="lufs-box-val" id="lufsShortVal">—</div>
+              <div class="lufs-box-label">SHORT TERM</div>
+            </div>
+            <div class="lufs-box">
+              <div class="lufs-box-val" id="lufsTpVal">—</div>
+              <div class="lufs-box-label">TRUE PEAK</div>
+            </div>
+          </div>
+
+          <div class="loudness-bar-wrap">
+            <div class="loudness-fill" id="loudnessFill" style="width:0%"></div>
+            <div class="loudness-target-line" id="targetLine" style="left:70%"></div>
+          </div>
+          <div class="loudness-labels">
+            <span>-24 LUFS</span>
+            <span id="targetLabel" style="color:var(--accent2);">TARGET: -14</span>
+            <span>0 LUFS</span>
+          </div>
+        </div>
+
+        <div class="master-section">
+          <button class="btn-master" id="btnMaster" disabled onclick="startMastering()">
+            MASTERIZAR
+          </button>
+        </div>
+        <div class="progress-section" id="progressSection">
+          <div class="progress-bar-wrap">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-label" id="progressLabel">ANALIZANDO...</div>
+        </div>
+      </div>
+
+      <!-- FORMAT OUTPUT -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">FORMATO DE EXPORTACIÓN</span>
+        </div>
+        <div class="panel-body" style="display:flex;flex-direction:column;gap:10px;">
+          <div class="control-group">
+            <div class="control-label">FORMATO</div>
+            <select id="exportFormat" style="width:100%;background:var(--bg);border:1px solid var(--border-bright);color:var(--text);padding:6px 8px;border-radius:2px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;">
+              <option value="wav">WAV (sin pérdida)</option>
+              <option value="flac">FLAC (comprimido sin pérdida)</option>
+              <option value="mp3">MP3 320kbps</option>
+              <option value="aac">AAC 256kbps</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <div class="control-label">SAMPLE RATE <span class="control-value" id="srOutVal">44100 Hz</span></div>
+            <input type="range" min="0" max="3" value="0" step="1" id="srSlider" oninput="updateSR(this.value)">
+          </div>
+          <div class="control-group">
+            <div class="control-label">BIT DEPTH <span class="control-value" id="bitOutVal">24-bit</span></div>
+            <input type="range" min="0" max="2" value="1" step="1" id="bitSlider" oninput="updateBit(this.value)">
+          </div>
+          <div class="toggle-wrap" onclick="toggleDither()">
+            <div class="toggle on" id="ditherToggle"></div>
+            <span>DITHERING (TPDF)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- OUTPUT -->
-
   <div class="output-section" id="outputSection">
     <div class="output-header">
       <div class="output-badge">✓ MASTER COMPLETADO</div>
@@ -1326,7 +1315,6 @@ padding: 8px;
 </main>
 
 <!-- TOAST -->
-
 <div class="toast" id="toast"></div>
 
 <script>
@@ -2004,6 +1992,5 @@ window.addEventListener('load', () => {
   });
 });
 </script>
-
 </body>
 </html>
