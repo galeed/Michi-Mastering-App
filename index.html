@@ -582,7 +582,7 @@ async function loadMain(file) {
     document.getElementById('udefaultMain').classList.add('hidden');
     document.getElementById('uloadedMain').classList.add('visible');
     document.getElementById('uploadZone').classList.add('has-file-main');
-    ['waveformSection','workspaceEQ','workspaceDyn','workspacePlat','workspaceFmt','masterBtnWrap'].forEach(id=>{ document.getElementById(id).style.display=''; });
+    ['waveformSection','workspaceEQ','workspaceDyn','workspacePlat','workspaceFmt','masterBtnWrap'].forEach(id=>{ document.getElementById(id).style.display='block'; });
     document.getElementById('btnMaster').disabled = false;
     document.getElementById('engineMode').textContent = 'LISTO';
     drawWaveform(audioBuf,'waveformCanvas','#00ff88');
@@ -802,9 +802,26 @@ function updateSlider(id,val,unit){
   else d=n+' '+unit;
   el.textContent=d;
 }
-function toggleEQ(){eqEnabled=!eqEnabled;const t=document.getElementById('eqToggle');t.classList.toggle('on',eqEnabled);t.nextSibling.textContent=eqEnabled?'ON':'OFF';}
-function toggleControl(id){const map={compressor:'compEnabled',limiter:'limEnabled'};window[map[id]]=!window[map[id]];document.getElementById(id+'Toggle').classList.toggle('on',window[map[id]]);}
-function toggleDither(){ditherEnabled=!ditherEnabled;document.getElementById('ditherToggle').classList.toggle('on',ditherEnabled);}
+function toggleEQ(){
+  eqEnabled=!eqEnabled;
+  const t=document.getElementById('eqToggle');
+  t.classList.toggle('on',eqEnabled);
+  const lbl=t.parentElement.querySelector('span');
+  if(lbl) lbl.textContent=eqEnabled?'ON':'OFF';
+}
+function toggleControl(id){
+  if(id==='compressor'){
+    compEnabled=!compEnabled;
+    document.getElementById('compressorToggle').classList.toggle('on',compEnabled);
+  } else if(id==='limiter'){
+    limEnabled=!limEnabled;
+    document.getElementById('limiterToggle').classList.toggle('on',limEnabled);
+  }
+}
+function toggleDither(){
+  ditherEnabled=!ditherEnabled;
+  document.getElementById('ditherToggle').classList.toggle('on',ditherEnabled);
+}
 function selectPlatform(el){document.querySelectorAll('.plat-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');const l=parseInt(el.dataset.lufs);selPlatform={name:el.dataset.platform,lufs:l};document.getElementById('targetLbl').textContent='TARGET: '+l;document.getElementById('loudTarget').style.left=((l+24)/24*100)+'%';if(audioBuf)analyzeLoudness(audioBuf,false);}
 function updateSR(i){curSR=srVals[parseInt(i)];document.getElementById('srOutVal').textContent=curSR+' Hz';}
 function updateBit(i){curBit=bitVals[parseInt(i)];document.getElementById('bitOutVal').textContent=curBit+'-bit';}
@@ -892,7 +909,6 @@ function bufToWav(buf,bits){
   return new Blob([ab],{type:'audio/wav'});
 }
 
-// ===================== RESET =====================
 function resetAll(){
   stopPlay();audioBuf=null;refBuf=null;masteredBuf=null;playingMaster=false;origStats=null;refStats=null;
   ['waveformSection','workspaceEQ','workspaceDyn','workspacePlat','workspaceFmt','masterBtnWrap'].forEach(id=>{document.getElementById(id).style.display='none';});
@@ -908,7 +924,9 @@ function resetAll(){
   document.getElementById('uploadZone').classList.remove('has-file-main');
   document.getElementById('refZone').classList.remove('has-file-ref');
   document.getElementById('abWrap').style.display='none';
-  document.getElementById('lufsIntVal').textContent='—';document.getElementById('lufsShortVal').textContent='—';document.getElementById('lufsTpVal').textContent='—';
+  document.getElementById('lufsIntVal').textContent='—';
+  document.getElementById('lufsShortVal').textContent='—';
+  document.getElementById('lufsTpVal').textContent='—';
   document.getElementById('loudFill').style.width='0%';
   showToast('✓ Listo para nueva pista');
 }
