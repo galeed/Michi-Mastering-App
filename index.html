@@ -445,6 +445,56 @@ main {
 .mfill { position: absolute; bottom: 0; left: 0; right: 0; background: -webkit-linear-gradient(bottom, #00ff88, #00ff88 70%, #ffaa00 85%, #ff2244 100%); background: linear-gradient(to top, #00ff88, #00ff88 70%, #ffaa00 85%, #ff2244 100%); -webkit-transition: height 0.08s; transition: height 0.08s; }
 .mlbl { font-family: 'Orbitron', Arial, sans-serif; font-size: 10px; color: #666666; margin-top: 3px; }
 
+/* ===== RAINBOW VU METER CANVAS ===== */
+#vuMeterCanvas {
+  display: block;
+  width: 100%;
+  height: 120px;
+  border-radius: 6px;
+  background-color: #020202;
+  border: 1px solid #1a1a1a;
+  margin-top: 12px;
+  -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+.vu-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.vu-peak-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 14px;
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.vu-peak-l { color: #00ff88; text-shadow: 0 0 10px #00ff88; }
+.vu-peak-r { color: #ff00cc; text-shadow: 0 0 10px #ff00cc; }
+
+.vu-db-scale {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 0;
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-size: 10px;
+  color: #444444;
+  letter-spacing: 1px;
+}
+
 /* ===== SPECTRUM ===== */
 #spectrumCanvas { display: block; width: 100%; height: 54px; border-radius: 4px; background-color: #040404; border: 1px solid #1a1a1a; margin-top: 10px; }
 
@@ -1072,6 +1122,17 @@ input[type="file"] { display: none; }
     <div class="card-body">
       <div class="wform-wrap"><canvas id="waveformCanvas"></canvas><div class="playhead" id="playhead"></div></div>
       <canvas id="spectrumCanvas"></canvas>
+
+      <!-- RAINBOW VU METER -->
+      <canvas id="vuMeterCanvas"></canvas>
+      <div class="vu-footer">
+        <div class="vu-peak-row">
+          <span>L: <span class="vu-peak-l" id="peakL">-∞</span></span>
+          <span>R: <span class="vu-peak-r" id="peakR">-∞</span></span>
+        </div>
+        <div class="vu-db-scale">-60 &nbsp;&nbsp; -40 &nbsp;&nbsp; -20 &nbsp;&nbsp; -12 &nbsp;&nbsp; -6 &nbsp;&nbsp; 0</div>
+      </div>
+
       <div class="transport">
         <button class="btn-t" id="btnPlay" type="button">▶</button>
         <button class="btn-t" id="btnStop" type="button">■</button>
@@ -1620,6 +1681,13 @@ function stopPlay() {
   cancelAnimationFrame(animFr);
   document.getElementById('meterL').style.height = '0%';
   document.getElementById('meterR').style.height = '0%';
+  peakHoldL = -60; peakHoldR = -60;
+  peakMaxL = -Infinity; peakMaxR = -Infinity;
+  document.getElementById('peakL').textContent = '-∞';
+  document.getElementById('peakR').textContent = '-∞';
+  // Clear VU canvas
+  var c = document.getElementById('vuMeterCanvas');
+  if (c) { var ctx = c.getContext('2d'); ctx.fillStyle = '#020202'; ctx.fillRect(0,0,c.width,c.height); }
 }
 
 function updatePlayhead() {
@@ -1631,18 +1699,202 @@ function updatePlayhead() {
   animFr = requestAnimationFrame(updatePlayhead);
 }
 
+// ===== RAINBOW VU METER =====
+var peakHoldL = 0, peakHoldR = 0;
+var peakHoldTimerL = 0, peakHoldTimerR = 0;
+var peakMaxL = -Infinity, peakMaxR = -Infinity;
+
 function updateMeters() {
   if (!isPlaying || !analL) return;
+
   var dL = new Float32Array(analL.fftSize);
   var dR = new Float32Array(analR.fftSize);
   analL.getFloatTimeDomainData(dL);
   analR.getFloatTimeDomainData(dR);
+
   var rL = 0, rR = 0;
   for (var i = 0; i < dL.length; i++) { rL += dL[i]*dL[i]; rR += dR[i]*dR[i]; }
-  rL = Math.sqrt(rL / dL.length); rR = Math.sqrt(rR / dR.length);
-  document.getElementById('meterL').style.height = Math.max(0, Math.min(100, (1 + 20 * Math.log(rL + 1e-10) / Math.LN10 / 60) * 100)) + '%';
-  document.getElementById('meterR').style.height = Math.max(0, Math.min(100, (1 + 20 * Math.log(rR + 1e-10) / Math.LN10 / 60) * 100)) + '%';
+  rL = Math.sqrt(rL / dL.length);
+  rR = Math.sqrt(rR / dR.length);
+
+  var dbL = 20 * Math.log(rL + 1e-10) / Math.LN10;
+  var dbR = 20 * Math.log(rR + 1e-10) / Math.LN10;
+
+  // Mini bar meters in header
+  document.getElementById('meterL').style.height = Math.max(0, Math.min(100, (1 + dbL / 60) * 100)) + '%';
+  document.getElementById('meterR').style.height = Math.max(0, Math.min(100, (1 + dbR / 60) * 100)) + '%';
+
+  // Peak hold
+  if (dbL > peakHoldL) { peakHoldL = dbL; peakHoldTimerL = 60; }
+  else if (peakHoldTimerL > 0) peakHoldTimerL--;
+  else peakHoldL -= 0.5;
+
+  if (dbR > peakHoldR) { peakHoldR = dbR; peakHoldTimerR = 60; }
+  else if (peakHoldTimerR > 0) peakHoldTimerR--;
+  else peakHoldR -= 0.5;
+
+  if (dbL > peakMaxL) peakMaxL = dbL;
+  if (dbR > peakMaxR) peakMaxR = dbR;
+
+  document.getElementById('peakL').textContent = peakMaxL > -60 ? peakMaxL.toFixed(1) + ' dB' : '-∞';
+  document.getElementById('peakR').textContent = peakMaxR > -60 ? peakMaxR.toFixed(1) + ' dB' : '-∞';
+
+  drawVUMeter(dbL, dbR, peakHoldL, peakHoldR);
   requestAnimationFrame(updateMeters);
+}
+
+function drawVUMeter(dbL, dbR, phL, phR) {
+  var canvas = document.getElementById('vuMeterCanvas');
+  var W = canvas.offsetWidth || 300;
+  var H = canvas.offsetHeight || 120;
+  if (canvas.width !== W) canvas.width = W;
+  if (canvas.height !== H) canvas.height = H;
+  var ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#020202';
+  ctx.fillRect(0, 0, W, H);
+
+  // dB range: -60 to 0
+  var DB_MIN = -60, DB_MAX = 0;
+  var RANGE = DB_MAX - DB_MIN;
+
+  // Layout: two rows — L and R
+  var PAD_LEFT = 28;
+  var PAD_RIGHT = 10;
+  var PAD_TOP = 12;
+  var ROW_H = (H - PAD_TOP - 16) / 2;
+  var BAR_H = ROW_H - 14;
+  var BAR_W = W - PAD_LEFT - PAD_RIGHT;
+
+  function dbToX(db) {
+    return PAD_LEFT + ((db - DB_MIN) / RANGE) * BAR_W;
+  }
+
+  // Draw grid lines + dB labels
+  var gridDBs = [-60, -48, -36, -24, -18, -12, -9, -6, -3, 0];
+  for (var gi = 0; gi < gridDBs.length; gi++) {
+    var gx = dbToX(gridDBs[gi]);
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(gx, PAD_TOP); ctx.lineTo(gx, H - 12); ctx.stroke();
+    ctx.fillStyle = '#444';
+    ctx.font = '9px Orbitron, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(gridDBs[gi] === 0 ? '0' : gridDBs[gi], gx, H - 2);
+  }
+
+  // Channel labels
+  ctx.textAlign = 'center';
+  ctx.font = 'bold 10px Orbitron, monospace';
+
+  // Draw one channel bar
+  function drawChannel(db, phDb, rowY, colorStart, colorMid, colorEnd, labelColor, label) {
+    var fillW = Math.max(0, dbToX(Math.min(0, db)) - PAD_LEFT);
+
+    // Background track
+    ctx.fillStyle = '#0d0d0d';
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    roundRect(ctx, PAD_LEFT, rowY, BAR_W, BAR_H, 3);
+    ctx.fill();
+    ctx.stroke();
+
+    if (fillW > 0) {
+      // Rainbow gradient fill
+      var grad = ctx.createLinearGradient(PAD_LEFT, 0, PAD_LEFT + BAR_W, 0);
+      grad.addColorStop(0,    '#0000ff'); // blue (low end)
+      grad.addColorStop(0.15, '#00aaff'); // cyan
+      grad.addColorStop(0.30, '#00ff88'); // green
+      grad.addColorStop(0.50, '#88ff00'); // yellow-green
+      grad.addColorStop(0.65, '#ffee00'); // yellow
+      grad.addColorStop(0.80, '#ff8800'); // orange
+      grad.addColorStop(0.90, '#ff2244'); // red (near 0dB)
+      grad.addColorStop(1.0,  '#ff00aa'); // hot pink (clip)
+
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      roundRect(ctx, PAD_LEFT, rowY, fillW, BAR_H, 3);
+      ctx.fill();
+
+      // Glow effect
+      ctx.save();
+      ctx.globalAlpha = 0.25;
+      ctx.filter = 'blur(4px)';
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      roundRect(ctx, PAD_LEFT, rowY - 2, fillW, BAR_H + 4, 3);
+      ctx.fill();
+      ctx.restore();
+
+      // Segment separators (LED look)
+      ctx.fillStyle = '#020202';
+      var segW = BAR_W / 60;
+      for (var si = 1; si < 60; si++) {
+        ctx.fillRect(PAD_LEFT + si * segW, rowY, 1, BAR_H);
+      }
+    }
+
+    // Peak hold line
+    if (phDb > DB_MIN) {
+      var px = dbToX(Math.min(0, phDb));
+      var phGrad = ctx.createLinearGradient(px - 2, 0, px + 2, 0);
+      phGrad.addColorStop(0, 'rgba(255,255,255,0)');
+      phGrad.addColorStop(0.5, '#ffffff');
+      phGrad.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = phGrad;
+      ctx.fillRect(px - 1, rowY, 3, BAR_H);
+    }
+
+    // Clip indicator
+    if (db >= -0.1) {
+      ctx.fillStyle = '#ff2244';
+      ctx.shadowColor = '#ff2244';
+      ctx.shadowBlur = 12;
+      ctx.beginPath();
+      roundRect(ctx, PAD_LEFT + BAR_W - 8, rowY + 2, 6, BAR_H - 4, 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    // Channel label on left
+    ctx.fillStyle = labelColor;
+    ctx.shadowColor = labelColor;
+    ctx.shadowBlur = 6;
+    ctx.font = 'bold 11px Orbitron, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, PAD_LEFT / 2, rowY + BAR_H / 2 + 4);
+    ctx.shadowBlur = 0;
+  }
+
+  var rowL = PAD_TOP;
+  var rowR = PAD_TOP + ROW_H + 4;
+
+  drawChannel(dbL, phL, rowL, '#0000ff', '#00ff88', '#ff2244', '#00ff88', 'L');
+  drawChannel(dbR, phR, rowR, '#0000ff', '#ff00cc', '#ff2244', '#ff00cc', 'R');
+
+  // Correlation / stereo image bar (tiny bar between L and R)
+  // RMS difference as rough stereo indicator
+  var diff = Math.abs(dbL - dbR);
+  var corrW = BAR_W * (1 - Math.min(diff / 20, 1));
+  var corrX = PAD_LEFT + (BAR_W - corrW) / 2;
+  ctx.fillStyle = 'rgba(170,0,255,0.15)';
+  ctx.fillRect(corrX, rowL + ROW_H - 2, corrW, 4);
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  if (w < 2 * r) r = w / 2;
+  if (h < 2 * r) r = h / 2;
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
 }
 
 function updateSpectrum() {
