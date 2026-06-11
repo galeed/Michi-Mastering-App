@@ -1,1144 +1,450 @@
-<!DOCTYPE html>
+python3 - << 'PYEOF'
+html = '''<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>🐈 Michi Mastering App</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Michi Mastering App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* ===== RESET ===== */
-* { -webkit-box-sizing: border-box; box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ===== VARIABLES (sin CSS custom props para Safari antiguo) ===== */
-/* Colores neón definidos directamente en cada regla */
-
-body {
-  background-color: #000000;
-  color: #ffffff;
-  font-family: 'Rajdhani', Arial, sans-serif;
-  font-size: 17px;
-  font-weight: 500;
-  min-height: 100vh;
-  overflow-x: hidden;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-}
-
-/* Grid background — usando background-image compatible */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image:
-    -webkit-linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px),
-    -webkit-linear-gradient(left, rgba(0,255,136,0.04) 1px, transparent 1px);
-  background-image:
-    linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px);
-  background-size: 32px 32px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ===== HEADER ===== */
-header {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  background-color: rgba(0,0,0,0.97);
-  border-bottom: 2px solid #00ff88;
-  -webkit-box-shadow: 0 0 24px rgba(0,255,136,0.35);
-  box-shadow: 0 0 24px rgba(0,255,136,0.35);
-  padding: 0 16px;
-  height: 68px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.logo {
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-weight: 900;
-  font-size: 22px;
-  color: #00ff88;
-  text-shadow: 0 0 10px #00ff88, 0 0 30px #00ff88;
-  letter-spacing: 2px;
-  line-height: 1.1;
-}
-
-.logo small {
-  display: block;
-  font-size: 11px;
-  color: #ff00cc;
-  text-shadow: 0 0 8px #ff00cc;
-  letter-spacing: 4px;
-  font-weight: 400;
-  margin-top: 2px;
-}
-
-.hdr-right {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: flex-end;
-}
-
-.status-chip {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 11px;
-  color: #00ff88;
-  letter-spacing: 1px;
-  margin-bottom: 3px;
-}
-
-.sdot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background-color: #00ff88;
-  -webkit-box-shadow: 0 0 8px #00ff88;
-  box-shadow: 0 0 8px #00ff88;
-  margin-right: 8px;
-  -webkit-animation: blink 1.5s ease-in-out infinite;
-  animation: blink 1.5s ease-in-out infinite;
-}
-
-@-webkit-keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-.eng-info { font-size: 11px; color: #666666; letter-spacing: 1px; }
-
-/* ===== MAIN ===== */
-main {
-  position: relative;
-  z-index: 1;
-  padding: 16px;
-  max-width: 860px;
-  margin: 0 auto;
-}
-
-.section-gap { margin-bottom: 16px; }
-
-/* ===== SECTION TITLE ===== */
-.stitle {
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: #00c8ff;
-  text-shadow: 0 0 10px #00c8ff;
-  text-transform: uppercase;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.stitle-line {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  height: 1px;
-  background: -webkit-linear-gradient(left, #00c8ff, transparent);
-  background: linear-gradient(90deg, #00c8ff, transparent);
-  margin-left: 10px;
-}
-
-/* ===== CARD ===== */
-.card {
-  background-color: #080808;
-  border: 1px solid #1f1f1f;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  margin-bottom: 16px;
-}
-
-.card-top-bar {
-  height: 2px;
-  background: -webkit-linear-gradient(left, #00ff88, #00c8ff, #ff00cc);
-  background: linear-gradient(90deg, #00ff88, #00c8ff, #ff00cc);
-  -webkit-box-shadow: 0 0 10px rgba(0,255,136,0.5);
-  box-shadow: 0 0 10px rgba(0,255,136,0.5);
-}
-
-.card-hdr {
-  padding: 14px 16px;
-  border-bottom: 1px solid #1a1a1a;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  background-color: rgba(0,255,136,0.02);
-}
-
-.card-title {
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #00ff88;
-  text-shadow: 0 0 8px rgba(0,255,136,0.5);
-}
-
-.card-body { padding: 16px; }
-
-/* ===== UPLOAD ROW ===== */
-.upload-row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin: -6px;
-  margin-bottom: 10px;
-}
-
-.upload-col {
-  width: 50%;
-  padding: 6px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-@media (max-width: 540px) {
-  .upload-col { width: 100%; }
-}
-
-.uzone {
-  border: 2px dashed #333333;
-  border-radius: 8px;
-  padding: 24px 14px;
-  text-align: center;
-  cursor: pointer;
-  background-color: #060606;
-  position: relative;
-  overflow: hidden;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-transition: border-color 0.3s, box-shadow 0.3s;
-  transition: border-color 0.3s, -webkit-box-shadow 0.3s;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.uzone:hover { border-color: #00ff88; -webkit-box-shadow: 0 0 20px rgba(0,255,136,0.2); box-shadow: 0 0 20px rgba(0,255,136,0.2); }
-.uzone.ref-zone:hover { border-color: #ff00cc; -webkit-box-shadow: 0 0 20px rgba(255,0,204,0.2); box-shadow: 0 0 20px rgba(255,0,204,0.2); }
-.uzone.drag-over { border-color: #00ff88; -webkit-box-shadow: 0 0 20px rgba(0,255,136,0.3); box-shadow: 0 0 20px rgba(0,255,136,0.3); }
-.uzone.ref-zone.drag-over { border-color: #ff00cc; -webkit-box-shadow: 0 0 20px rgba(255,0,204,0.3); box-shadow: 0 0 20px rgba(255,0,204,0.3); }
-.uzone.has-file-main { border-style: solid; border-color: #00ff88; }
-.uzone.has-file-ref { border-style: solid; border-color: #ff00cc; }
-
-.uicon {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: 2px solid #333333;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  margin: 0 auto 12px auto;
-  font-size: 22px;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-}
-
-.utitle {
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #00ff88;
-  text-shadow: 0 0 8px rgba(0,255,136,0.5);
-  margin-bottom: 8px;
-}
-
-.ref-zone .utitle { color: #ff00cc; text-shadow: 0 0 8px rgba(255,0,204,0.5); }
-
-.usub { font-size: 14px; color: #666666; line-height: 1.6; }
-.usub span { color: #00ff88; cursor: pointer; }
-.ref-zone .usub span { color: #ff00cc; }
-
-.udefault { display: block; }
-.udefault.hidden { display: none; }
-.uloaded { display: none; }
-.uloaded.visible {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.uloaded-icon { font-size: 28px; margin-bottom: 6px; }
-.uloaded-name { font-family: 'Orbitron', Arial, sans-serif; font-size: 12px; color: #00ff88; text-shadow: 0 0 8px #00ff88; word-break: break-all; text-align: center; max-width: 100%; margin-bottom: 6px; }
-.ref-zone .uloaded-name { color: #ff00cc; text-shadow: 0 0 8px #ff00cc; }
-.uloaded-meta { font-size: 13px; color: #666666; text-align: center; margin-bottom: 6px; }
-.ref-active-tag { font-family: 'Orbitron', Arial, sans-serif; font-size: 11px; padding: 4px 12px; border-radius: 20px; border: 1px solid #ff00cc; color: #ff00cc; text-shadow: 0 0 6px #ff00cc; }
-
-/* ===== WAVEFORM ===== */
-.wform-wrap {
-  position: relative;
-  height: 76px;
-  background-color: #040404;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid #1a1a1a;
-  margin-bottom: 10px;
-}
-
-.wform-wrap canvas { display: block; }
-
-.playhead {
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 2px;
-  background-color: #00ff88;
-  -webkit-box-shadow: 0 0 8px #00ff88;
-  box-shadow: 0 0 8px #00ff88;
-  left: 0;
-  pointer-events: none;
-  -webkit-transition: left 0.1s linear;
-  transition: left 0.1s linear;
-}
-
-/* ===== TRANSPORT ===== */
-.transport {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-top: 12px;
-}
-
-.btn-t {
-  min-width: 52px;
-  height: 52px;
-  border: 1px solid #333333;
-  border-radius: 6px;
-  background-color: #0d0d0d;
-  color: #ffffff;
-  font-size: 20px;
-  cursor: pointer;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  margin-right: 10px;
-  -webkit-transition: border-color 0.2s, color 0.2s;
-  transition: border-color 0.2s, color 0.2s;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.btn-t:hover, .btn-t:active { border-color: #00ff88; color: #00ff88; }
-.btn-t.active { background-color: #00ff88; color: #000000; border-color: #00ff88; }
-
-.time-disp {
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 15px;
-  color: #00ff88;
-  text-shadow: 0 0 8px #00ff88;
-  letter-spacing: 2px;
-  min-width: 100px;
-}
-
-.ab-wrap {
-  margin-left: auto;
-  display: none;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.ab-wrap.visible {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.ab-lbl { font-family: 'Orbitron', Arial, sans-serif; font-size: 11px; color: #666666; letter-spacing: 1px; margin-left: 8px; }
-
-/* ===== VU METERS ===== */
-.meters-inline {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: flex-end;
-  height: 48px;
-  margin-left: 8px;
-}
-
-.mbar-wrap {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-left: 6px;
-}
-
-.mbar { width: 11px; height: 38px; background-color: #0d0d0d; border: 1px solid #222222; border-radius: 2px; overflow: hidden; position: relative; }
-.mfill { position: absolute; bottom: 0; left: 0; right: 0; background: -webkit-linear-gradient(bottom, #00ff88, #00ff88 70%, #ffaa00 85%, #ff2244 100%); background: linear-gradient(to top, #00ff88, #00ff88 70%, #ffaa00 85%, #ff2244 100%); -webkit-transition: height 0.08s; transition: height 0.08s; }
-.mlbl { font-family: 'Orbitron', Arial, sans-serif; font-size: 10px; color: #666666; margin-top: 3px; }
-
-/* ===== RAINBOW VU METER CANVAS ===== */
-#vuMeterCanvas {
-  display: block;
-  width: 100%;
-  height: 120px;
-  border-radius: 6px;
-  background-color: #020202;
-  border: 1px solid #1a1a1a;
-  margin-top: 12px;
-  -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.8);
-  box-shadow: 0 0 20px rgba(0,0,0,0.8);
-}
-
-.vu-footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-top: 6px;
-}
-
-.vu-peak-row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 14px;
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 13px;
-  letter-spacing: 1px;
-}
-
-.vu-peak-l { color: #00ff88; text-shadow: 0 0 10px #00ff88; }
-.vu-peak-r { color: #ff00cc; text-shadow: 0 0 10px #ff00cc; }
-
-.vu-db-scale {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 0;
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 10px;
-  color: #444444;
-  letter-spacing: 1px;
-}
-
-/* ===== SPECTRUM ===== */
-#spectrumCanvas { display: block; width: 100%; height: 54px; border-radius: 4px; background-color: #040404; border: 1px solid #1a1a1a; margin-top: 10px; }
-
-/* ===== REF PANEL ===== */
-.ref-panel {
-  background-color: #060606;
-  border: 1px solid rgba(255,0,204,0.2);
-  border-radius: 8px;
-  padding: 16px;
-  display: none;
-  position: relative;
-  margin-bottom: 16px;
-}
-
-.ref-panel.visible { display: block; }
-
-.ref-top-bar { height: 2px; background: -webkit-linear-gradient(left, #ff00cc, #aa00ff, #ff00cc); background: linear-gradient(90deg, #ff00cc, #aa00ff, #ff00cc); margin: -16px -16px 14px -16px; }
-
-.ref-panel-title { font-family: 'Orbitron', Arial, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #ff00cc; text-shadow: 0 0 10px #ff00cc; margin-bottom: 14px; }
-
-.ref-stats-grid {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin: -4px;
-  margin-bottom: 10px;
-}
-
-.ref-stat-col { width: 33.333%; padding: 4px; -webkit-box-sizing: border-box; box-sizing: border-box; }
-
-.ref-stat-box { background-color: #0a0a0a; border: 1px solid rgba(255,0,204,0.15); border-radius: 6px; padding: 12px 8px; text-align: center; }
-.ref-stat-val { font-family: 'Orbitron', Arial, sans-serif; font-size: 22px; font-weight: 900; color: #ff00cc; text-shadow: 0 0 12px #ff00cc; line-height: 1; }
-.ref-stat-lbl { font-family: 'Orbitron', Arial, sans-serif; font-size: 10px; color: #666666; letter-spacing: 1px; margin-top: 5px; }
-
-.ref-wform-wrap { position: relative; height: 52px; background-color: #040404; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,0,204,0.15); margin-bottom: 12px; }
-.ref-wform-wrap canvas { display: block; }
-
-.ref-suggestion-box { background-color: rgba(255,0,204,0.06); border: 1px solid rgba(255,0,204,0.2); border-radius: 6px; padding: 12px 14px; }
-.ref-sug-title { font-family: 'Orbitron', Arial, sans-serif; font-size: 11px; color: #ff00cc; letter-spacing: 1px; margin-bottom: 6px; }
-.ref-sug-text { font-size: 14px; color: #cccccc; line-height: 1.6; white-space: pre-line; }
-
-.ref-auto-row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-top: 12px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.ref-auto-lbl { font-size: 13px; color: #cccccc; letter-spacing: 1px; margin-left: 10px; }
-
-/* ===== EQ ===== */
-.eq-canvas-wrap { background-color: #040404; border: 1px solid #1a1a1a; border-radius: 4px; margin-bottom: 14px; overflow: hidden; }
-#eqCanvas { display: block; width: 100%; }
-
-.eq-bands {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.eq-band {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.eq-val { font-family: 'Orbitron', Arial, sans-serif; font-size: 10px; color: #00ff88; text-shadow: 0 0 6px #00ff88; min-width: 28px; text-align: center; margin-bottom: 4px; }
-
-/* Vertical slider — compatible cross-browser */
-.eq-slider-wrap { height: 90px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; }
-
-/* Safari / Chrome vertical slider */
-input.eq-slider {
-  -webkit-appearance: slider-vertical;
-  writing-mode: vertical-lr;
-  direction: rtl;
-  width: 22px;
-  height: 80px;
-  cursor: pointer;
-  accent-color: #00ff88;
-  background: transparent;
-  border: none;
-  outline: none;
-  padding: 0;
-}
-
-/* Firefox fallback — rotate horizontal slider */
-@-moz-document url-prefix() {
-  input.eq-slider {
-    -webkit-appearance: none;
-    appearance: none;
-    writing-mode: horizontal-tb;
-    direction: ltr;
-    width: 80px;
-    height: 22px;
-    -webkit-transform: rotate(-90deg);
-    transform: rotate(-90deg);
-  }
-}
-
-.eq-freq { font-family: 'Orbitron', Arial, sans-serif; font-size: 9px; color: #555555; text-align: center; margin-top: 4px; }
-
-/* ===== PRESETS ROW ===== */
-.presets-row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  padding: 10px 14px;
-  border-bottom: 1px solid #1a1a1a;
-}
-
-.preset-btn {
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 12px;
-  letter-spacing: 1px;
-  padding: 8px 12px;
-  border: 1px solid #333333;
-  background-color: #0d0d0d;
-  color: #666666;
-  cursor: pointer;
-  border-radius: 4px;
-  margin: 3px;
-  -webkit-transition: border-color 0.2s, color 0.2s;
-  transition: border-color 0.2s, color 0.2s;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.preset-btn:hover, .preset-btn:active { border-color: #aa00ff; color: #aa00ff; }
-.preset-btn.active { border-color: #00ff88; color: #00ff88; background-color: rgba(0,255,136,0.08); }
-
-/* ===== CONTROLS GRID ===== */
-.ctrl-grid {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin: -6px;
-}
-
-.ctrl-col {
-  width: 50%;
-  padding: 6px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-@media (max-width: 480px) {
-  .ctrl-col { width: 100%; }
-}
-
-.ctrl-panel {
-  background-color: #060606;
-  border: 1px solid #1a1a1a;
-  border-radius: 6px;
-  padding: 14px;
-  position: relative;
-  height: 100%;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.ctrl-top-accent { height: 1px; background: -webkit-linear-gradient(left, transparent, #00c8ff, transparent); background: linear-gradient(90deg, transparent, #00c8ff, transparent); margin: -14px -14px 12px -14px; }
-
-.ctrl-title {
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #00c8ff;
-  text-shadow: 0 0 8px #00c8ff;
-  margin-bottom: 12px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.ctrl-row { margin-bottom: 12px; }
-
-.ctrl-lbl {
-  font-size: 13px;
-  color: #666666;
-  letter-spacing: 1px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-bottom: 7px;
-}
-
-.ctrl-val { font-family: 'Orbitron', Arial, sans-serif; font-size: 13px; color: #ff6600; text-shadow: 0 0 8px #ff6600; }
-
-/* ===== RANGE INPUTS — cross-browser ===== */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 4px;
-  background-color: #222222;
-  border-radius: 2px;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 4px;
-  background-color: #222222;
-  border-radius: 2px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background-color: #00ff88;
-  border: 3px solid #000000;
-  -webkit-box-shadow: 0 0 8px #00ff88;
-  box-shadow: 0 0 8px #00ff88;
-  margin-top: -9px;
-  cursor: pointer;
-}
-
-input[type="range"]::-moz-range-track {
-  height: 4px;
-  background-color: #222222;
-  border-radius: 2px;
-  border: none;
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background-color: #00ff88;
-  border: 3px solid #000000;
-  box-shadow: 0 0 8px #00ff88;
-  cursor: pointer;
-}
-
-input[type="range"]::-ms-track {
-  height: 4px;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-
-input[type="range"]::-ms-fill-lower { background-color: #00ff88; border-radius: 2px; }
-input[type="range"]::-ms-fill-upper { background-color: #222222; border-radius: 2px; }
-input[type="range"]::-ms-thumb { width: 22px; height: 22px; border-radius: 50%; background-color: #00ff88; border: 3px solid #000; cursor: pointer; }
-
-/* ===== TOGGLE SWITCH ===== */
-.toggle-wrap {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  cursor: pointer;
-  font-size: 13px;
-  color: #666666;
-  letter-spacing: 1px;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.toggle {
-  width: 44px;
-  height: 24px;
-  background-color: #222222;
-  border-radius: 12px;
-  position: relative;
-  -webkit-transition: background-color 0.2s;
-  transition: background-color 0.2s;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  border: 1px solid #333333;
-  display: inline-block;
-}
-
-.toggle.on { background-color: #00ff88; border-color: #00ff88; -webkit-box-shadow: 0 0 10px #00ff88; box-shadow: 0 0 10px #00ff88; }
-
-.toggle::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background-color: #ffffff;
-  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-  -webkit-transition: -webkit-transform 0.2s;
-  transition: -webkit-transform 0.2s;
-  transition: transform 0.2s;
-}
-
-.toggle.on::after { -webkit-transform: translateX(20px); transform: translateX(20px); }
-
-.toggle-lbl { margin-left: 10px; }
-
-/* ===== PLATFORM GRID ===== */
-.plat-grid {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin: -4px;
-}
-
-.plat-col { width: 33.333%; padding: 4px; -webkit-box-sizing: border-box; box-sizing: border-box; }
-
-@media (max-width: 360px) { .plat-col { width: 50%; } }
-
-.plat-card {
-  border: 1px solid #222222;
-  border-radius: 6px;
-  padding: 14px 6px;
-  cursor: pointer;
-  -webkit-transition: border-color 0.2s;
-  transition: border-color 0.2s;
-  background-color: #060606;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  position: relative;
-  text-align: center;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.plat-card:active { opacity: 0.8; }
-.plat-card.selected { border-color: #00ff88; background-color: rgba(0,255,136,0.06); -webkit-box-shadow: 0 0 12px rgba(0,255,136,0.2); box-shadow: 0 0 12px rgba(0,255,136,0.2); }
-.plat-check { display: none; position: absolute; top: 5px; right: 7px; font-size: 13px; color: #00ff88; text-shadow: 0 0 6px #00ff88; }
-.plat-card.selected .plat-check { display: block; }
-.plat-icon { font-size: 26px; margin-bottom: 6px; }
-.plat-name { font-family: 'Orbitron', Arial, sans-serif; font-size: 10px; letter-spacing: 1px; color: #666666; margin-bottom: 4px; }
-.plat-card.selected .plat-name { color: #00ff88; }
-.plat-lufs { font-family: 'Orbitron', Arial, sans-serif; font-size: 12px; color: #ff6600; text-shadow: 0 0 6px #ff6600; }
-
-/* ===== LUFS DISPLAY ===== */
-.lufs-boxes {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  margin: 0 -4px 12px -4px;
-}
-
-.lufs-col { width: 33.333%; padding: 0 4px; -webkit-box-sizing: border-box; box-sizing: border-box; }
-
-.lufs-box { background-color: #040404; border: 1px solid #1a1a1a; border-radius: 6px; padding: 14px 4px; text-align: center; }
-.lufs-val { font-family: 'Orbitron', Arial, sans-serif; font-size: 24px; font-weight: 900; color: #ffffff; line-height: 1; }
-.lufs-val.ok { color: #00ff88; text-shadow: 0 0 12px #00ff88; }
-.lufs-val.warn { color: #ffaa00; text-shadow: 0 0 12px #ffaa00; }
-.lufs-val.bad { color: #ff2244; text-shadow: 0 0 12px #ff2244; }
-.lufs-lbl { font-family: 'Orbitron', Arial, sans-serif; font-size: 9px; color: #666666; letter-spacing: 1px; margin-top: 5px; }
-
-.loud-bar-wrap { background-color: #040404; border: 1px solid #1a1a1a; border-radius: 4px; height: 22px; position: relative; overflow: hidden; margin-bottom: 6px; }
-.loud-fill { height: 100%; background: -webkit-linear-gradient(left, #aa00ff, #00ff88); background: linear-gradient(90deg, #aa00ff, #00ff88); border-radius: 4px; -webkit-transition: width 0.5s ease; transition: width 0.5s ease; width: 0%; }
-.loud-target { position: absolute; top: 0; bottom: 0; width: 2px; background-color: #ff6600; -webkit-box-shadow: 0 0 6px #ff6600; box-shadow: 0 0 6px #ff6600; }
-.loud-labels { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; font-family: 'Orbitron', Arial, sans-serif; font-size: 10px; color: #555555; margin-top: 4px; }
-.loud-target-lbl { color: #ff6600; text-shadow: 0 0 6px #ff6600; }
-
-/* ===== MASTER BUTTON ===== */
-.btn-master {
-  display: block;
-  width: 100%;
-  padding: 22px;
-  background: transparent;
-  border: 2px solid #00ff88;
-  border-radius: 8px;
-  color: #00ff88;
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 26px;
-  font-weight: 900;
-  letter-spacing: 4px;
-  cursor: pointer;
-  -webkit-box-shadow: 0 0 20px rgba(0,255,136,0.2);
-  box-shadow: 0 0 20px rgba(0,255,136,0.2);
-  text-shadow: 0 0 10px #00ff88;
-  -webkit-tap-highlight-color: transparent;
-  text-align: center;
-  -webkit-transition: background-color 0.3s, -webkit-box-shadow 0.3s;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  -webkit-animation: neon-pulse 2s ease-in-out infinite;
-  animation: neon-pulse 2s ease-in-out infinite;
-}
-
-@-webkit-keyframes neon-pulse {
-  0%, 100% { -webkit-box-shadow: 0 0 20px rgba(0,255,136,0.2); }
-  50% { -webkit-box-shadow: 0 0 40px rgba(0,255,136,0.5); }
-}
-
-@keyframes neon-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(0,255,136,0.2); }
-  50% { box-shadow: 0 0 40px rgba(0,255,136,0.5); }
-}
-
-.btn-master:hover, .btn-master:active { background-color: rgba(0,255,136,0.1); }
-.btn-master:disabled { border-color: #333333; color: #444444; text-shadow: none; cursor: not-allowed; -webkit-box-shadow: none; box-shadow: none; background: transparent; -webkit-animation: none; animation: none; }
-
-/* ===== PROGRESS ===== */
-.prog-wrap { display: none; margin-top: 14px; }
-.prog-wrap.visible { display: block; }
-.prog-bar { background-color: #111111; border: 1px solid #222222; border-radius: 4px; height: 10px; overflow: hidden; margin-bottom: 8px; }
-.prog-fill { height: 100%; background: -webkit-linear-gradient(left, #aa00ff, #00ff88); background: linear-gradient(90deg, #aa00ff, #00ff88); border-radius: 4px; -webkit-transition: width 0.3s ease; transition: width 0.3s ease; width: 0%; }
-.prog-lbl { font-family: 'Orbitron', Arial, sans-serif; font-size: 13px; color: #00ff88; text-shadow: 0 0 6px #00ff88; text-align: center; letter-spacing: 2px; }
-
-/* ===== OUTPUT ===== */
-.out-section { display: none; }
-.out-section.visible { display: block; }
-.out-hdr { background-color: rgba(0,255,136,0.05); border-bottom: 1px solid rgba(0,255,136,0.15); padding: 14px 16px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -ms-flex-wrap: wrap; flex-wrap: wrap; }
-.out-badge { font-family: 'Orbitron', Arial, sans-serif; font-size: 13px; letter-spacing: 2px; color: #00ff88; padding: 6px 14px; border: 1px solid #00ff88; border-radius: 4px; text-shadow: 0 0 8px #00ff88; margin-right: 12px; }
-.out-title { font-family: 'Orbitron', Arial, sans-serif; font-size: 15px; font-weight: 700; color: #ffffff; letter-spacing: 1px; }
-
-.cmp-table { border: 1px solid #1a1a1a; border-radius: 4px; overflow: hidden; margin-bottom: 14px; }
-.cmp-row { display: -webkit-box; display: -ms-flexbox; display: flex; border-bottom: 1px solid #1a1a1a; }
-.cmp-row:last-child { border-bottom: none; }
-.cmp-cell { -webkit-box-flex: 1; -ms-flex: 1; flex: 1; padding: 10px 8px; font-size: 14px; border-right: 1px solid #1a1a1a; -webkit-box-sizing: border-box; box-sizing: border-box; word-break: break-all; }
-.cmp-cell:last-child { border-right: none; }
-.cmp-hdr { background-color: #0d0d0d; font-family: 'Orbitron', Arial, sans-serif; font-size: 10px; color: #555555; letter-spacing: 1px; }
-.cmp-lbl { color: #666666; }
-.cmp-before { color: #ffffff; font-family: 'Orbitron', Arial, sans-serif; font-size: 13px; }
-.cmp-after { color: #00ff88; text-shadow: 0 0 6px #00ff88; font-family: 'Orbitron', Arial, sans-serif; font-size: 13px; }
-
-.dl-row { display: -webkit-box; display: -ms-flexbox; display: flex; margin: -5px; }
-.dl-col { width: 50%; padding: 5px; -webkit-box-sizing: border-box; box-sizing: border-box; }
-
-.btn-dl { display: block; width: 100%; padding: 18px; border: 2px solid #00ff88; background: transparent; color: #00ff88; font-family: 'Orbitron', Arial, sans-serif; font-size: 17px; letter-spacing: 2px; cursor: pointer; border-radius: 6px; text-align: center; text-shadow: 0 0 8px #00ff88; -webkit-tap-highlight-color: transparent; -webkit-transition: background-color 0.2s; transition: background-color 0.2s; }
-.btn-dl:hover, .btn-dl:active { background-color: rgba(0,255,136,0.1); }
-
-.btn-reset { display: block; width: 100%; padding: 18px; border: 1px solid #333333; background: transparent; color: #666666; font-family: 'Rajdhani', Arial, sans-serif; font-size: 17px; letter-spacing: 2px; cursor: pointer; border-radius: 6px; text-align: center; -webkit-tap-highlight-color: transparent; -webkit-transition: border-color 0.2s, color 0.2s; transition: border-color 0.2s, color 0.2s; }
-.btn-reset:hover, .btn-reset:active { border-color: #ff00cc; color: #ff00cc; }
-
-/* ===== FORMAT ===== */
-.fmt-grid { display: -webkit-box; display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap; margin: -6px; }
-.fmt-col { width: 50%; padding: 6px; -webkit-box-sizing: border-box; box-sizing: border-box; }
-@media (max-width: 380px) { .fmt-col { width: 100%; } }
-
-select {
-  width: 100%;
-  background-color: #040404;
-  border: 1px solid #333333;
-  color: #ffffff;
-  padding: 13px;
-  border-radius: 4px;
-  font-family: 'Rajdhani', Arial, sans-serif;
-  font-size: 15px;
-  letter-spacing: 1px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-  outline: none;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-select:focus { border-color: #00ff88; }
-
-/* ===== TOAST ===== */
-.toast {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  -webkit-transform: translateX(-50%) translateY(100px);
-  transform: translateX(-50%) translateY(100px);
-  background-color: #0d0d0d;
-  border: 1px solid #00ff88;
-  border-radius: 30px;
-  padding: 13px 24px;
-  font-family: 'Orbitron', Arial, sans-serif;
-  font-size: 13px;
-  color: #00ff88;
-  text-shadow: 0 0 8px #00ff88;
-  -webkit-box-shadow: 0 0 20px rgba(0,255,136,0.3);
-  box-shadow: 0 0 20px rgba(0,255,136,0.3);
-  z-index: 9999;
-  -webkit-transition: -webkit-transform 0.3s ease;
-  transition: transform 0.3s ease;
-  letter-spacing: 1px;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.toast.show { -webkit-transform: translateX(-50%) translateY(0); transform: translateX(-50%) translateY(0); }
-.toast.error { border-color: #ff2244; color: #ff2244; text-shadow: 0 0 8px #ff2244; -webkit-box-shadow: 0 0 20px rgba(255,34,68,0.3); box-shadow: 0 0 20px rgba(255,34,68,0.3); }
-
-input[type="file"] { display: none; }
-
-/* ===== SCROLLBAR (webkit) ===== */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background-color: #000000; }
-::-webkit-scrollbar-thumb { background-color: #333333; border-radius: 2px; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:linear-gradient(135deg,#0a0a0f 0%,#0d0f1a 40%,#0a0d16 100%);min-height:100vh;color:#e8eaf0;font-family:"Inter",system-ui,sans-serif;font-size:16px;overflow-x:hidden}
+body::before{content:"";position:fixed;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(99,102,241,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+
+/* HEADER */
+header{position:-webkit-sticky;position:sticky;top:0;z-index:100;background:rgba(10,10,20,.95);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,.25);padding:0 20px;height:70px;display:flex;align-items:center;justify-content:space-between}
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.logo-cat{font-size:28px;line-height:1}
+.logo-text{font-size:20px;font-weight:900;letter-spacing:-.5px;background:linear-gradient(135deg,#a78bfa,#60a5fa,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.logo-sub{font-size:11px;font-weight:600;letter-spacing:2px;color:#6366f1;text-transform:uppercase;margin-top:1px}
+.hdr-status{display:flex;align-items:center;gap:8px}
+.status-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-family:"JetBrains Mono",monospace;font-size:12px;color:#94a3b8;letter-spacing:1px}
+.sdot{width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 6px #10b981;animation:sdot 2s ease-in-out infinite;flex-shrink:0}
+@keyframes sdot{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* MAIN */
+main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+/* SECTION HEADING */
+.sec-hd{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:2px;color:#6366f1;text-transform:uppercase;margin-bottom:14px}
+.sec-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(99,102,241,.4),transparent)}
+
+/* CARD */
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.card-accent{height:3px;background:linear-gradient(90deg,#6366f1,#8b5cf6,#06b6d4,#10b981)}
+.card-hdr{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(255,255,255,.02)}
+.card-title{font-size:14px;font-weight:700;letter-spacing:1px;color:#c4b5fd;text-transform:uppercase}
+.card-body{padding:18px}
+
+/* UPLOAD */
+.upload-row{display:flex;gap:14px}
+@media(max-width:560px){.upload-row{flex-direction:column}}
+.uzone{flex:1;border:2px dashed rgba(255,255,255,.12);border-radius:14px;padding:24px 14px;text-align:center;cursor:pointer;background:rgba(255,255,255,.02);transition:all .25s;-webkit-tap-highlight-color:transparent}
+.uzone:hover,.uzone.drag-over{border-color:#6366f1;background:rgba(99,102,241,.06);box-shadow:0 0 24px rgba(99,102,241,.15)}
+.uzone.ref-zone:hover,.uzone.ref-zone.drag-over{border-color:#8b5cf6;background:rgba(139,92,246,.06);box-shadow:0 0 24px rgba(139,92,246,.15)}
+.uzone.has-main{border-style:solid;border-color:#10b981;background:rgba(16,185,129,.05)}
+.uzone.has-ref{border-style:solid;border-color:#8b5cf6;background:rgba(139,92,246,.05)}
+.u-emoji{font-size:30px;margin-bottom:10px;display:block}
+.u-title{font-size:14px;font-weight:700;letter-spacing:1px;color:#a78bfa;text-transform:uppercase;margin-bottom:6px}
+.ref-zone .u-title{color:#c4b5fd}
+.u-sub{font-size:13px;color:#64748b;line-height:1.5}
+.u-sub em{color:#6366f1;font-style:normal;font-weight:600}
+.ref-zone .u-sub em{color:#8b5cf6}
+.udefault.hidden{display:none}
+.uloaded{display:none;flex-direction:column;align-items:center;gap:6px}
+.uloaded.visible{display:flex}
+.u-fn{font-family:"JetBrains Mono",monospace;font-size:12px;color:#10b981;word-break:break-all;text-align:center}
+.ref-zone .u-fn{color:#a78bfa}
+.u-meta{font-size:12px;color:#64748b;text-align:center}
+.ref-badge{font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:20px;border:1px solid #8b5cf6;color:#c4b5fd;background:rgba(139,92,246,.1);margin-top:4px}
+
+/* ============================================================
+   MASTERING STYLE CARDS
+   ============================================================ */
+.style-grid{display:flex;gap:12px;flex-wrap:wrap}
+.style-card{
+  flex:1 1 calc(33% - 12px);min-width:140px;
+  background:rgba(255,255,255,.04);
+  border:2px solid rgba(255,255,255,.1);
+  border-radius:14px;padding:16px 14px;cursor:pointer;
+  display:flex;flex-direction:column;gap:8px;
+  transition:all .25s;position:relative;overflow:hidden;
+  -webkit-tap-highlight-color:transparent
+}
+@media(max-width:500px){.style-card{flex:1 1 100%}}
+
+.style-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity .25s}
+.style-card:hover{transform:translateY(-2px)}
+.style-card.selected{border-width:2px}
+
+/* Standard */
+.style-card.sc-standard{border-color:rgba(99,102,241,.3)}
+.style-card.sc-standard::before{background:linear-gradient(90deg,#6366f1,#8b5cf6);opacity:.5}
+.style-card.sc-standard.selected{border-color:#6366f1;background:rgba(99,102,241,.1);box-shadow:0 0 24px rgba(99,102,241,.2)}
+.style-card.sc-standard.selected::before{opacity:1}
+
+/* Pulido Pop */
+.style-card.sc-pop{border-color:rgba(236,72,153,.3)}
+.style-card.sc-pop::before{background:linear-gradient(90deg,#ec4899,#f43f5e,#fb923c)}
+.style-card.sc-pop:hover{box-shadow:0 4px 24px rgba(236,72,153,.15)}
+.style-card.sc-pop.selected{border-color:#ec4899;background:rgba(236,72,153,.08);box-shadow:0 0 28px rgba(236,72,153,.25)}
+.style-card.sc-pop.selected::before{opacity:1}
+
+/* Festival EDM */
+.style-card.sc-edm{border-color:rgba(6,182,212,.3)}
+.style-card.sc-edm::before{background:linear-gradient(90deg,#06b6d4,#6366f1,#8b5cf6,#ec4899)}
+.style-card.sc-edm:hover{box-shadow:0 4px 24px rgba(6,182,212,.15)}
+.style-card.sc-edm.selected{border-color:#06b6d4;background:rgba(6,182,212,.08);box-shadow:0 0 28px rgba(6,182,212,.25)}
+.style-card.sc-edm.selected::before{opacity:1}
+
+.sc-check{
+  position:absolute;top:8px;right:10px;
+  width:18px;height:18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;background:#6366f1;color:#fff;
+  opacity:0;transition:opacity .2s;
+}
+.style-card.sc-pop.selected .sc-check{background:#ec4899;opacity:1}
+.style-card.sc-edm.selected .sc-check{background:#06b6d4;opacity:1}
+.style-card.sc-standard.selected .sc-check{background:#6366f1;opacity:1}
+
+.sc-emoji{font-size:26px;line-height:1}
+.sc-name{font-size:15px;font-weight:800;letter-spacing:.5px;color:#e2e8f0}
+.style-card.sc-pop.selected .sc-name{color:#f9a8d4}
+.style-card.sc-edm.selected .sc-name{color:#67e8f9}
+.style-card.sc-standard.selected .sc-name{color:#c4b5fd}
+
+.sc-desc{font-size:12px;color:#64748b;line-height:1.5}
+.sc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.sc-tag{font-size:10px;font-weight:600;letter-spacing:.5px;padding:2px 7px;border-radius:20px;background:rgba(255,255,255,.06);color:#475569;border:1px solid rgba(255,255,255,.08)}
+.style-card.sc-pop.selected .sc-tag{background:rgba(236,72,153,.12);color:#f9a8d4;border-color:rgba(236,72,153,.25)}
+.style-card.sc-edm.selected .sc-tag{background:rgba(6,182,212,.12);color:#67e8f9;border-color:rgba(6,182,212,.25)}
+.style-card.sc-standard.selected .sc-tag{background:rgba(99,102,241,.12);color:#c4b5fd;border-color:rgba(99,102,241,.25)}
+
+.sc-params{
+  margin-top:6px;padding:10px;
+  background:rgba(0,0,0,.2);border-radius:8px;
+  display:none;flex-direction:column;gap:5px;
+}
+.style-card.selected .sc-params{display:flex}
+.sc-param-row{display:flex;justify-content:space-between;align-items:center;font-size:11px}
+.sc-param-lbl{color:#475569;letter-spacing:.5px}
+.sc-param-val{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700}
+.style-card.sc-pop.selected .sc-param-val{color:#f9a8d4}
+.style-card.sc-edm.selected .sc-param-val{color:#67e8f9}
+.style-card.sc-standard.selected .sc-param-val{color:#a5b4fc}
+
+/* REF PANEL */
+.ref-panel{display:none}
+.ref-panel.visible{display:block}
+.ref-stats-row{display:flex;gap:10px;margin-bottom:14px}
+.ref-stat{flex:1;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);border-radius:10px;padding:12px 8px;text-align:center}
+.ref-sv{font-family:"JetBrains Mono",monospace;font-size:22px;font-weight:700;color:#a78bfa;line-height:1}
+.ref-sl{font-size:11px;color:#64748b;letter-spacing:1px;margin-top:4px;text-transform:uppercase}
+.ref-wform{height:50px;background:#030303;border-radius:8px;overflow:hidden;border:1px solid rgba(139,92,246,.15);margin-bottom:12px;position:relative}
+.ref-wform canvas{display:block;width:100%;height:100%}
+.ref-sug{background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.15);border-radius:10px;padding:12px 14px}
+.ref-sug-t{font-size:12px;font-weight:700;color:#a78bfa;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase}
+.ref-sug-txt{font-size:13px;color:#94a3b8;line-height:1.6;white-space:pre-line}
+.ref-auto-row{display:flex;align-items:center;gap:10px;margin-top:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+.ref-auto-lbl{font-size:13px;color:#94a3b8}
+
+/* TOGGLE */
+.toggle-wrap{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#64748b;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+.toggle{width:42px;height:24px;background:#1e293b;border-radius:12px;position:relative;transition:background .2s;flex-shrink:0;border:1px solid rgba(255,255,255,.1)}
+.toggle.on{background:#6366f1;border-color:#6366f1;box-shadow:0 0 12px rgba(99,102,241,.4)}
+.toggle-k{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.4);transition:transform .2s}
+.toggle.on .toggle-k{transform:translateX(18px)}
+
+/* WAVEFORM */
+.wform-outer{background:#040408;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.07);margin-bottom:14px;position:relative;cursor:pointer;user-select:none;-webkit-user-select:none}
+.wform-outer canvas{display:block;width:100%;height:100%}
+.playhead{position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#f59e0b,#ef4444);box-shadow:0 0 8px rgba(245,158,11,.8);pointer-events:none;left:0}
+.wform-time-overlay{position:absolute;top:4px;right:8px;font-family:"JetBrains Mono",monospace;font-size:11px;color:rgba(255,255,255,.5);pointer-events:none;background:rgba(0,0,0,.4);padding:2px 6px;border-radius:4px}
+.wform-hover-line{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.2);pointer-events:none;display:none}
+
+/* VU */
+.vu-wrap{background:#020204;border-radius:8px;border:1px solid rgba(255,255,255,.06);padding:10px 10px 6px;margin-bottom:14px}
+#vuMeterCanvas{display:block;width:100%;height:90px;border-radius:4px}
+.vu-footer{display:flex;justify-content:space-between;align-items:center;margin-top:5px}
+.vu-peaks{display:flex;gap:14px;font-family:"JetBrains Mono",monospace;font-size:12px}
+.vu-L{color:#10b981}.vu-R{color:#a78bfa}
+.vu-scale{font-family:"JetBrains Mono",monospace;font-size:10px;color:#334155;letter-spacing:1px}
+
+/* SPECTRUM */
+.spec-wrap{background:#020204;border-radius:8px;border:1px solid rgba(255,255,255,.06);padding:8px;margin-bottom:14px}
+#spectrumCanvas{display:block;width:100%;height:50px;border-radius:4px}
+
+/* TRANSPORT */
+.transport{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn-t{height:48px;min-width:48px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#e2e8f0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;gap:4px;-webkit-tap-highlight-color:transparent;-webkit-appearance:none}
+.btn-t:hover{background:rgba(99,102,241,.15);border-color:#6366f1;color:#a78bfa}
+.btn-t.active{background:#6366f1;border-color:#6366f1;color:#fff;box-shadow:0 0 16px rgba(99,102,241,.4)}
+.btn-t .btn-lbl{font-size:11px;font-weight:700;letter-spacing:1px}
+.time-disp{font-family:"JetBrains Mono",monospace;font-size:15px;color:#10b981;letter-spacing:2px;min-width:100px;font-weight:700;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:8px;padding:6px 10px}
+.ab-wrap{margin-left:auto;display:flex;align-items:center;gap:8px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ab-lbl{font-size:12px;color:#64748b;font-weight:600;letter-spacing:1px}
+
+/* EQ */
+.eq-canvas-wrap{background:#020204;border-radius:8px;border:1px solid rgba(255,255,255,.06);margin-bottom:12px}
+#eqCanvas{display:block;width:100%}
+.eq-bands{display:flex;gap:4px}
+.eq-band{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.eq-v{font-family:"JetBrains Mono",monospace;font-size:10px;color:#10b981;text-align:center;min-width:26px;font-weight:700}
+.eq-slider-wrap{height:85px;display:flex;align-items:center;justify-content:center}
+input.vslider{-webkit-appearance:slider-vertical;appearance:slider-vertical;writing-mode:vertical-lr;direction:rtl;width:20px;height:75px;cursor:pointer;accent-color:#6366f1;background:transparent;padding:0;margin:0}
+.eq-freq{font-size:10px;color:#475569;text-align:center;font-weight:600}
+
+/* PRESETS */
+.presets-row{display:flex;gap:7px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.07)}
+.preset-btn{font-size:12px;font-weight:700;letter-spacing:1px;padding:7px 12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#64748b;cursor:pointer;border-radius:8px;transition:all .2s;-webkit-tap-highlight-color:transparent;-webkit-appearance:none}
+.preset-btn:hover{border-color:#6366f1;color:#a78bfa;background:rgba(99,102,241,.08)}
+.preset-btn.active{border-color:#6366f1;color:#a78bfa;background:rgba(99,102,241,.15)}
+
+/* CTRL */
+.ctrl-grid{display:flex;gap:12px}
+@media(max-width:500px){.ctrl-grid{flex-direction:column}}
+.ctrl-panel{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px}
+.ctrl-title{font-size:12px;font-weight:800;letter-spacing:2px;color:#8b5cf6;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.ctrl-row{margin-bottom:11px}
+.ctrl-lbl{font-size:12px;color:#64748b;font-weight:600;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;letter-spacing:.5px}
+.ctrl-val{font-family:"JetBrains Mono",monospace;font-size:12px;color:#f59e0b;font-weight:700}
+
+/* RANGE */
+input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:#1e293b;border-radius:2px;outline:none;cursor:pointer;padding:0;margin:0;border:none}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:#6366f1;border:2px solid #0f172a;box-shadow:0 0 8px rgba(99,102,241,.4);cursor:pointer}
+input[type="range"]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#6366f1;border:2px solid #0f172a;cursor:pointer}
+input[type="range"]::-webkit-slider-runnable-track{background:#1e293b;border-radius:2px;height:4px}
+input[type="range"]::-moz-range-track{background:#1e293b;border-radius:2px;height:4px}
+
+/* PLATFORMS */
+.plat-grid{display:flex;flex-wrap:wrap;gap:8px}
+.plat-card{flex:1 1 calc(33% - 8px);min-width:80px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;text-align:center;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.plat-card:active{transform:scale(.96)}
+.plat-card.selected{border-color:#6366f1;background:rgba(99,102,241,.1);box-shadow:0 0 16px rgba(99,102,241,.2)}
+.plat-check{display:none;position:absolute;top:5px;right:7px;font-size:12px;color:#a78bfa}
+.plat-card.selected .plat-check{display:block}
+.plat-icon{font-size:24px}
+.plat-name{font-size:11px;font-weight:700;color:#64748b;letter-spacing:.5px}
+.plat-card.selected .plat-name{color:#a78bfa}
+.plat-lufs{font-family:"JetBrains Mono",monospace;font-size:12px;color:#f59e0b;font-weight:700}
+
+/* LUFS */
+.lufs-boxes{display:flex;gap:8px;margin-bottom:10px;margin-top:14px}
+.lufs-box{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 6px;text-align:center}
+.lufs-val{font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:900;color:#e2e8f0;line-height:1}
+.lufs-val.ok{color:#10b981;text-shadow:0 0 12px rgba(16,185,129,.4)}
+.lufs-val.warn{color:#f59e0b;text-shadow:0 0 12px rgba(245,158,11,.4)}
+.lufs-val.bad{color:#ef4444;text-shadow:0 0 12px rgba(239,68,68,.4)}
+.lufs-lbl{font-size:10px;color:#475569;letter-spacing:1px;margin-top:4px;text-transform:uppercase;font-weight:600}
+.loud-bar-wrap{background:#0f172a;border:1px solid rgba(255,255,255,.07);border-radius:6px;height:20px;position:relative;overflow:hidden;margin-bottom:6px}
+.loud-fill{height:100%;background:linear-gradient(90deg,#6366f1,#8b5cf6,#06b6d4,#10b981);border-radius:6px;transition:width .5s ease;width:0%}
+.loud-target{position:absolute;top:0;bottom:0;width:2px;background:#f59e0b;box-shadow:0 0 6px #f59e0b}
+.loud-labels{display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:11px;color:#334155}
+.loud-target-lbl{color:#f59e0b;font-weight:700}
+
+/* SELECT */
+select{width:100%;background:#0f172a;border:1px solid rgba(255,255,255,.1);color:#e2e8f0;padding:11px 12px;border-radius:8px;font-family:"Inter",sans-serif;font-size:14px;-webkit-appearance:none;appearance:none;cursor:pointer;outline:none;font-weight:500}
+select:focus{border-color:#6366f1}
+.fmt-grid{display:flex;flex-wrap:wrap;gap:12px}
+.fmt-item{flex:1 1 calc(50% - 12px);min-width:140px}
+
+/* MINI METERS */
+.meters-inline{display:flex;align-items:flex-end;height:46px;margin-left:8px;gap:5px}
+.mbar-wrap{display:flex;flex-direction:column;align-items:center;gap:2px}
+.mbar{width:10px;height:36px;background:#0f172a;border:1px solid #1e293b;border-radius:2px;overflow:hidden;position:relative}
+.mfill{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,#10b981 70%,#f59e0b 85%,#ef4444 100%);transition:height .08s}
+.mlbl{font-family:"JetBrains Mono",monospace;font-size:10px;color:#475569;margin-top:2px}
+
+/* MASTER BTN */
+.btn-master{display:block;width:100%;padding:20px;border:none;border-radius:14px;color:#fff;font-family:"Inter",sans-serif;font-size:18px;font-weight:900;letter-spacing:2px;cursor:pointer;text-align:center;transition:all .3s;text-transform:uppercase;-webkit-tap-highlight-color:transparent;-webkit-appearance:none}
+.btn-master.style-standard{background:linear-gradient(135deg,#6366f1,#8b5cf6);box-shadow:0 8px 32px rgba(99,102,241,.35)}
+.btn-master.style-pop{background:linear-gradient(135deg,#ec4899,#f43f5e,#fb923c);box-shadow:0 8px 32px rgba(236,72,153,.35)}
+.btn-master.style-edm{background:linear-gradient(135deg,#06b6d4,#6366f1,#8b5cf6);box-shadow:0 8px 32px rgba(6,182,212,.35)}
+.btn-master:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.btn-master:active{transform:translateY(0)}
+.btn-master:disabled{background:rgba(255,255,255,.06)!important;color:#475569!important;cursor:not-allowed!important;box-shadow:none!important;transform:none!important;filter:none!important}
+
+/* PROGRESS */
+.prog-wrap{display:none;margin-top:14px}
+.prog-wrap.visible{display:block}
+.prog-bar{background:#0f172a;border:1px solid rgba(255,255,255,.07);border-radius:6px;height:8px;overflow:hidden;margin-bottom:8px}
+.prog-fill{height:100%;background:linear-gradient(90deg,#6366f1,#8b5cf6,#06b6d4);border-radius:6px;transition:width .3s ease;width:0%}
+.prog-lbl{font-family:"JetBrains Mono",monospace;font-size:13px;color:#8b5cf6;text-align:center;letter-spacing:1px;font-weight:600}
+
+/* OUTPUT */
+.out-section{display:none}
+.out-section.visible{display:block}
+.out-hdr{padding:14px 18px;background:rgba(16,185,129,.06);border-bottom:1px solid rgba(16,185,129,.15);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.out-badge{font-size:12px;font-weight:800;letter-spacing:2px;color:#10b981;padding:5px 12px;border:1px solid rgba(16,185,129,.4);border-radius:20px;background:rgba(16,185,129,.1);text-transform:uppercase}
+.out-title{font-size:15px;font-weight:700;color:#e2e8f0;letter-spacing:.5px}
+.cmp-table{border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.cmp-row{display:flex;border-bottom:1px solid rgba(255,255,255,.07)}
+.cmp-row:last-child{border-bottom:none}
+.cmp-cell{flex:1;padding:10px 12px;font-size:14px;border-right:1px solid rgba(255,255,255,.07)}
+.cmp-cell:last-child{border-right:none}
+.cmp-hdr{background:rgba(255,255,255,.03);font-size:11px;font-weight:700;color:#475569;letter-spacing:1px;text-transform:uppercase}
+.cmp-lbl{color:#64748b;font-weight:600}
+.cmp-before{color:#94a3b8;font-family:"JetBrains Mono",monospace;font-size:13px}
+.cmp-after{color:#10b981;font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700}
+.dl-row{display:flex;gap:10px}
+.btn-dl{flex:1;padding:15px;background:linear-gradient(135deg,#059669,#10b981);border:none;border-radius:10px;color:#fff;font-family:"Inter",sans-serif;font-size:15px;font-weight:800;letter-spacing:1px;cursor:pointer;text-align:center;box-shadow:0 4px 16px rgba(16,185,129,.3);transition:all .2s;-webkit-tap-highlight-color:transparent;-webkit-appearance:none}
+.btn-dl:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(16,185,129,.4)}
+.btn-reset{flex:1;padding:15px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#94a3b8;font-family:"Inter",sans-serif;font-size:15px;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;-webkit-tap-highlight-color:transparent;-webkit-appearance:none}
+.btn-reset:hover{border-color:#8b5cf6;color:#c4b5fd}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120px);background:rgba(15,23,42,.95);border:1px solid rgba(99,102,241,.4);border-radius:30px;padding:12px 24px;font-size:14px;font-weight:600;color:#a78bfa;box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:9000;transition:transform .3s ease;white-space:nowrap;pointer-events:none;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.error{border-color:rgba(239,68,68,.4);color:#fca5a5}
+
+input[type="file"]{display:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#0a0a0f}
+::-webkit-scrollbar-thumb{background:#1e293b;border-radius:2px}
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
-  <div class="logo">MICHI<small>MASTERING APP</small></div>
-  <div class="hdr-right">
-    <div class="status-chip"><div class="sdot"></div><span id="engineMode">OFFLINE</span></div>
-    <div class="eng-info">96kHz · 32-bit · Web Audio</div>
+  <div class="logo-wrap">
+    <span class="logo-cat">&#128049;</span>
+    <div>
+      <div class="logo-text">Michi Mastering</div>
+      <div class="logo-sub">// Audio Mastering App //</div>
+    </div>
+  </div>
+  <div class="hdr-status">
+    <div class="status-pill"><div class="sdot"></div><span id="engineMode">OFFLINE</span></div>
   </div>
 </header>
 
 <main>
 
   <!-- CARGAR PISTAS -->
-  <div class="section-gap">
-    <div class="stitle">⚡ CARGAR PISTAS<div class="stitle-line"></div></div>
+  <div>
+    <div class="sec-hd">&#127925; Cargar Pistas <div class="sec-line"></div></div>
     <div class="upload-row">
-      <div class="upload-col">
-        <div class="uzone" id="uploadZone"
-          ondragover="onDragOver(event,'main')" ondragleave="onDragLeave('main')" ondrop="onDrop(event,'main')"
-          onclick="document.getElementById('fileInput').click()">
-          <div class="udefault" id="udefaultMain">
-            <div class="uicon">🎵</div>
-            <div class="utitle">PISTA A MASTERIZAR</div>
-            <div class="usub">WAV · FLAC · MP3 · AIFF<br><span>SELECCIONAR ARCHIVO</span></div>
-          </div>
-          <div class="uloaded" id="uloadedMain">
-            <div class="uloaded-icon">🎵</div>
-            <div class="uloaded-name" id="mainFileName">—</div>
-            <div class="uloaded-meta" id="mainFileMeta">—</div>
-          </div>
-          <input type="file" id="fileInput" accept=".wav,.aiff,.flac,.mp3">
-        </div>
+      <div class="uzone" id="uploadZone" ondragover="onDragOver(event,'main')" ondragleave="onDragLeave('main')" ondrop="onDrop(event,'main')" onclick="document.getElementById('fileInput').click()">
+        <div class="udefault" id="udefaultMain"><span class="u-emoji">&#127925;</span><div class="u-title">Pista a Masterizar</div><div class="u-sub">WAV &middot; FLAC &middot; MP3 &middot; AIFF<br><em>Seleccionar archivo</em></div></div>
+        <div class="uloaded" id="uloadedMain"><span class="u-emoji">&#127925;</span><div class="u-fn" id="mainFileName">&mdash;</div><div class="u-meta" id="mainFileMeta">&mdash;</div></div>
+        <input type="file" id="fileInput" accept=".wav,.aif,.aiff,.flac,.mp3">
       </div>
-      <div class="upload-col">
-        <div class="uzone ref-zone" id="refZone"
-          ondragover="onDragOver(event,'ref')" ondragleave="onDragLeave('ref')" ondrop="onDrop(event,'ref')"
-          onclick="document.getElementById('refInput').click()">
-          <div class="udefault" id="udefaultRef">
-            <div class="uicon" style="border-color:#333">🎯</div>
-            <div class="utitle">PISTA DE REFERENCIA</div>
-            <div class="usub">Pista ya masterizada<br>que usaremos como guía<br><span>SELECCIONAR ARCHIVO</span></div>
-          </div>
-          <div class="uloaded" id="uloadedRef">
-            <div class="uloaded-icon">🎯</div>
-            <div class="uloaded-name" id="refFileName">—</div>
-            <div class="uloaded-meta" id="refFileMeta">—</div>
-            <div class="ref-active-tag">✓ REFERENCIA ACTIVA</div>
-          </div>
-          <input type="file" id="refInput" accept=".wav,.aiff,.flac,.mp3">
-        </div>
+      <div class="uzone ref-zone" id="refZone" ondragover="onDragOver(event,'ref')" ondragleave="onDragLeave('ref')" ondrop="onDrop(event,'ref')" onclick="document.getElementById('refInput').click()">
+        <div class="udefault" id="udefaultRef"><span class="u-emoji">&#127919;</span><div class="u-title">Pista de Referencia</div><div class="u-sub">Pista ya masterizada<br>para usarla como gu&iacute;a<br><em>Seleccionar archivo</em></div></div>
+        <div class="uloaded" id="uloadedRef"><span class="u-emoji">&#127919;</span><div class="u-fn" id="refFileName">&mdash;</div><div class="u-meta" id="refFileMeta">&mdash;</div><div class="ref-badge">&#10003; Referencia activa</div></div>
+        <input type="file" id="refInput" accept=".wav,.aif,.aiff,.flac,.mp3">
       </div>
     </div>
   </div>
 
-  <!-- ANÁLISIS DE REFERENCIA -->
-  <div class="ref-panel" id="refPanel">
-    <div class="ref-top-bar"></div>
-    <div class="ref-panel-title">🎯 ANÁLISIS DE PISTA REFERENCIA</div>
-    <div class="ref-stats-grid">
-      <div class="ref-stat-col"><div class="ref-stat-box"><div class="ref-stat-val" id="refLufsVal">—</div><div class="ref-stat-lbl">LUFS INT.</div></div></div>
-      <div class="ref-stat-col"><div class="ref-stat-box"><div class="ref-stat-val" id="refTpVal">—</div><div class="ref-stat-lbl">TRUE PEAK</div></div></div>
-      <div class="ref-stat-col"><div class="ref-stat-box"><div class="ref-stat-val" id="refRmsVal">—</div><div class="ref-stat-lbl">RMS</div></div></div>
+  <!-- ESTILO DE MASTERIZACI&#211;N -->
+  <div>
+    <div class="sec-hd">&#127911; Estilo de Masterizaci&oacute;n <div class="sec-line"></div></div>
+    <div class="style-grid">
+
+      <!-- STANDARD -->
+      <div class="style-card sc-standard selected" id="styleStandard" onclick="selectMasterStyle('standard',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#9878;&#65039;</div>
+        <div class="sc-name">Est&aacute;ndar</div>
+        <div class="sc-desc">Balance tonal y din&aacute;mico natural. Ideal para cualquier g&eacute;nero.</div>
+        <div class="sc-tags"><span class="sc-tag">Todo g&eacute;nero</span><span class="sc-tag">Neutral</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">3:1 &bull; -12dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.0 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">100%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-14 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- PULIDO POP -->
+      <div class="style-card sc-pop" id="stylePop" onclick="selectMasterStyle('pop',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#10024;</div>
+        <div class="sc-name">Pulido Pop</div>
+        <div class="sc-desc">Bajos contundentes y claridad en el rango medio. Sonido comercial brillante.</div>
+        <div class="sc-tags"><span class="sc-tag">Pop</span><span class="sc-tag">Reggaet&oacute;n</span><span class="sc-tag">Trap</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">4:1 &bull; -14dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.8 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">118%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-14 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- FESTIVAL EDM -->
+      <div class="style-card sc-edm" id="styleEdm" onclick="selectMasterStyle('edm',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#127963;&#65039;</div>
+        <div class="sc-name">Festival EDM</div>
+        <div class="sc-desc">Ancho est&eacute;reo mejorado y graves energ&eacute;ticos. M&aacute;xima potencia para el dancefloor.</div>
+        <div class="sc-tags"><span class="sc-tag">EDM</span><span class="sc-tag">House</span><span class="sc-tag">Electr&oacute;nica</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">3:1 &bull; -10dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.3 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">162%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-9 LUFS</span></div>
+        </div>
+      </div>
+
     </div>
-    <div class="ref-wform-wrap"><canvas id="refWaveformCanvas"></canvas></div>
-    <div class="ref-suggestion-box">
-      <div class="ref-sug-title">💡 SUGERENCIAS AUTOMÁTICAS</div>
-      <div class="ref-sug-text" id="refSugText">Carga una pista de referencia para obtener sugerencias.</div>
-    </div>
-    <div class="ref-auto-row" onclick="toggleAutoRef()">
-      <div class="toggle on" id="autoRefToggle"></div>
-      <span class="ref-auto-lbl">APLICAR AJUSTES AUTOMÁTICOS BASADOS EN REFERENCIA</span>
+  </div>
+
+  <!-- AN&Aacute;LISIS REFERENCIA -->
+  <div class="card ref-panel" id="refPanel">
+    <div class="card-accent" style="background:linear-gradient(90deg,#8b5cf6,#a78bfa,#8b5cf6)"></div>
+    <div class="card-hdr"><span class="card-title">&#127919; An&aacute;lisis de Referencia</span></div>
+    <div class="card-body">
+      <div class="ref-stats-row">
+        <div class="ref-stat"><div class="ref-sv" id="refLufsVal">&mdash;</div><div class="ref-sl">LUFS</div></div>
+        <div class="ref-stat"><div class="ref-sv" id="refTpVal">&mdash;</div><div class="ref-sl">True Peak</div></div>
+        <div class="ref-stat"><div class="ref-sv" id="refRmsVal">&mdash;</div><div class="ref-sl">RMS</div></div>
+      </div>
+      <div class="ref-wform"><canvas id="refWaveformCanvas"></canvas></div>
+      <div class="ref-sug"><div class="ref-sug-t">&#128161; Sugerencias autom&aacute;ticas</div><div class="ref-sug-txt" id="refSugText">Carga una referencia para ver sugerencias.</div></div>
+      <div class="ref-auto-row" onclick="toggleAutoRef()">
+        <div class="toggle on" id="autoRefToggle"><div class="toggle-k"></div></div>
+        <span class="ref-auto-lbl">Aplicar ajustes autom&aacute;ticos basados en referencia</span>
+      </div>
     </div>
   </div>
 
   <!-- WAVEFORM -->
   <div class="card" id="waveformSection" style="display:none">
-    <div class="card-top-bar"></div>
+    <div class="card-accent"></div>
     <div class="card-hdr">
-      <span class="card-title">📊 FORMA DE ONDA</span>
+      <span class="card-title">&#128202; Forma de Onda</span>
       <div class="meters-inline">
         <div class="mbar-wrap"><div class="mbar"><div class="mfill" id="meterL" style="height:0%"></div></div><div class="mlbl">L</div></div>
         <div class="mbar-wrap"><div class="mbar"><div class="mfill" id="meterR" style="height:0%"></div></div><div class="mlbl">R</div></div>
       </div>
     </div>
     <div class="card-body">
-      <div class="wform-wrap"><canvas id="waveformCanvas"></canvas><div class="playhead" id="playhead"></div></div>
-      <canvas id="spectrumCanvas"></canvas>
-
-      <!-- RAINBOW VU METER -->
-      <canvas id="vuMeterCanvas"></canvas>
-      <div class="vu-footer">
-        <div class="vu-peak-row">
-          <span>L: <span class="vu-peak-l" id="peakL">-∞</span></span>
-          <span>R: <span class="vu-peak-r" id="peakR">-∞</span></span>
-        </div>
-        <div class="vu-db-scale">-60 &nbsp;&nbsp; -40 &nbsp;&nbsp; -20 &nbsp;&nbsp; -12 &nbsp;&nbsp; -6 &nbsp;&nbsp; 0</div>
+      <div class="wform-outer" id="wformOuter" style="height:80px" onclick="seekFromClick(event)" onmousemove="onWformHover(event)" onmouseleave="onWformLeave()">
+        <canvas id="waveformCanvas"></canvas>
+        <div class="playhead" id="playhead"></div>
+        <div class="wform-time-overlay" id="wformTimeOverlay">0:00.000</div>
+        <div class="wform-hover-line" id="wformHoverLine"></div>
       </div>
-
+      <div class="vu-wrap"><canvas id="vuMeterCanvas"></canvas>
+        <div class="vu-footer">
+          <div class="vu-peaks"><span>L: <span class="vu-L" id="peakL">-&#8734;</span></span><span>R: <span class="vu-R" id="peakR">-&#8734;</span></span></div>
+          <div class="vu-scale">-60 &nbsp; -40 &nbsp; -20 &nbsp; -12 &nbsp; -6 &nbsp; 0</div>
+        </div>
+      </div>
+      <div class="spec-wrap"><canvas id="spectrumCanvas"></canvas></div>
       <div class="transport">
-        <button class="btn-t" id="btnPlay" type="button">▶</button>
-        <button class="btn-t" id="btnStop" type="button">■</button>
+        <button class="btn-t" type="button" onclick="seekRel(-5)">&#9664;&#9664; <span class="btn-lbl">5s</span></button>
+        <button class="btn-t" id="btnPlay" type="button" onclick="togglePlay()">&#9654;</button>
+        <button class="btn-t" type="button" onclick="stopPlay()">&#9632;</button>
+        <button class="btn-t" type="button" onclick="seekRel(5)"><span class="btn-lbl">5s</span> &#9654;&#9654;</button>
         <span class="time-disp" id="timeDisplay">0:00.000</span>
-        <div class="ab-wrap" id="abWrap" onclick="toggleAB()">
-          <div class="toggle" id="abToggle"></div>
+        <div class="ab-wrap" id="abWrap" style="display:none" onclick="toggleAB()">
+          <div class="toggle" id="abToggle"><div class="toggle-k"></div></div>
           <span class="ab-lbl" id="abLabel">ORIGINAL</span>
         </div>
       </div>
@@ -1147,64 +453,44 @@ input[type="file"] { display: none; }
 
   <!-- EQ -->
   <div class="card" id="workspaceEQ" style="display:none">
-    <div class="card-top-bar"></div>
+    <div class="card-accent"></div>
     <div class="card-hdr">
-      <span class="card-title">🎛️ EQ PARAMÉTRICO — 8 BANDAS</span>
-      <div class="toggle-wrap" onclick="toggleEQ()">
-        <div class="toggle on" id="eqToggle"></div>
-        <span class="toggle-lbl" id="eqToggleLbl">ON</span>
-      </div>
+      <span class="card-title">&#127897;&#65039; EQ Param&eacute;trico &mdash; 8 Bandas</span>
+      <div class="toggle-wrap" onclick="toggleEQ()"><div class="toggle on" id="eqToggle"><div class="toggle-k"></div></div><span id="eqToggleLbl">ON</span></div>
     </div>
     <div class="presets-row">
-      <button class="preset-btn active" type="button" onclick="applyEQPreset('flat',this)">FLAT</button>
-      <button class="preset-btn" type="button" onclick="applyEQPreset('warm',this)">WARM</button>
-      <button class="preset-btn" type="button" onclick="applyEQPreset('bright',this)">BRIGHT</button>
-      <button class="preset-btn" type="button" onclick="applyEQPreset('punchy',this)">PUNCHY</button>
-      <button class="preset-btn" type="button" onclick="applyEQPreset('vocal',this)">VOCAL</button>
-      <button class="preset-btn" type="button" onclick="applyEQPreset('hifi',this)">HI-FI</button>
+      <button class="preset-btn active" type="button" onclick="applyEQPreset('flat',this)">Flat</button>
+      <button class="preset-btn" type="button" onclick="applyEQPreset('warm',this)">Warm</button>
+      <button class="preset-btn" type="button" onclick="applyEQPreset('bright',this)">Bright</button>
+      <button class="preset-btn" type="button" onclick="applyEQPreset('punchy',this)">Punchy</button>
+      <button class="preset-btn" type="button" onclick="applyEQPreset('vocal',this)">Vocal</button>
+      <button class="preset-btn" type="button" onclick="applyEQPreset('hifi',this)">Hi-Fi</button>
     </div>
-    <div class="card-body">
-      <div class="eq-canvas-wrap"><canvas id="eqCanvas" height="110"></canvas></div>
-      <div class="eq-bands" id="eqBands"></div>
-    </div>
+    <div class="card-body"><div class="eq-canvas-wrap"><canvas id="eqCanvas" height="100"></canvas></div><div class="eq-bands" id="eqBands"></div></div>
   </div>
 
-  <!-- DINÁMICA -->
+  <!-- DIN&Aacute;MICA -->
   <div class="card" id="workspaceDyn" style="display:none">
-    <div class="card-top-bar"></div>
-    <div class="card-hdr"><span class="card-title">⚡ DINÁMICA &amp; EFECTOS</span></div>
+    <div class="card-accent"></div>
+    <div class="card-hdr"><span class="card-title">&#9889; Din&aacute;mica &amp; Efectos</span></div>
     <div class="card-body">
       <div class="ctrl-grid">
-        <div class="ctrl-col">
-          <div class="ctrl-panel">
-            <div class="ctrl-top-accent"></div>
-            <div class="ctrl-title">COMPRESOR
-              <div class="toggle-wrap" onclick="toggleControl('compressor')">
-                <div class="toggle on" id="compressorToggle"></div>
-              </div>
-            </div>
-            <div class="ctrl-row"><div class="ctrl-lbl">THRESHOLD <span class="ctrl-val" id="threshVal">-12 dB</span></div><input type="range" min="-40" max="0" value="-12" id="threshSlider" oninput="updateSlider('thresh',this.value)"></div>
-            <div class="ctrl-row"><div class="ctrl-lbl">RATIO <span class="ctrl-val" id="ratioVal">3:1</span></div><input type="range" min="1" max="20" value="3" step="0.5" id="ratioSlider" oninput="updateSlider('ratio',this.value)"></div>
-            <div class="ctrl-row"><div class="ctrl-lbl">ATTACK <span class="ctrl-val" id="attackVal">10 ms</span></div><input type="range" min="0" max="200" value="10" id="attackSlider" oninput="updateSlider('attack',this.value)"></div>
-            <div class="ctrl-row"><div class="ctrl-lbl">RELEASE <span class="ctrl-val" id="releaseVal">150 ms</span></div><input type="range" min="10" max="1000" value="150" id="releaseSlider" oninput="updateSlider('release',this.value)"></div>
-            <div class="ctrl-row"><div class="ctrl-lbl">MAKEUP GAIN <span class="ctrl-val" id="makeupVal">+0 dB</span></div><input type="range" min="-12" max="12" value="0" id="makeupSlider" oninput="updateSlider('makeup',this.value)"></div>
-          </div>
+        <div class="ctrl-panel">
+          <div class="ctrl-title">Compresor <div class="toggle-wrap" onclick="toggleComp()"><div class="toggle on" id="compToggle"><div class="toggle-k"></div></div></div></div>
+          <div class="ctrl-row"><div class="ctrl-lbl">Threshold <span class="ctrl-val" id="threshVal">-12 dB</span></div><input type="range" min="-40" max="0" value="-12" id="threshSlider" oninput="updCtrl('thresh',this.value)"></div>
+          <div class="ctrl-row"><div class="ctrl-lbl">Ratio <span class="ctrl-val" id="ratioVal">3:1</span></div><input type="range" min="1" max="20" value="3" step="0.5" id="ratioSlider" oninput="updCtrl('ratio',this.value)"></div>
+          <div class="ctrl-row"><div class="ctrl-lbl">Attack <span class="ctrl-val" id="attackVal">10 ms</span></div><input type="range" min="0" max="200" value="10" id="attackSlider" oninput="updCtrl('attack',this.value)"></div>
+          <div class="ctrl-row"><div class="ctrl-lbl">Release <span class="ctrl-val" id="releaseVal">150 ms</span></div><input type="range" min="10" max="1000" value="150" id="releaseSlider" oninput="updCtrl('release',this.value)"></div>
+          <div class="ctrl-row"><div class="ctrl-lbl">Makeup Gain <span class="ctrl-val" id="makeupVal">+0 dB</span></div><input type="range" min="-12" max="12" value="0" id="makeupSlider" oninput="updCtrl('makeup',this.value)"></div>
         </div>
-        <div class="ctrl-col">
-          <div class="ctrl-panel">
-            <div class="ctrl-top-accent"></div>
-            <div class="ctrl-title">LIMITER
-              <div class="toggle-wrap" onclick="toggleControl('limiter')">
-                <div class="toggle on" id="limiterToggle"></div>
-              </div>
-            </div>
-            <div class="ctrl-row"><div class="ctrl-lbl">CEILING <span class="ctrl-val" id="ceilVal">-1.0 dBTP</span></div><input type="range" min="-6" max="0" value="-1" step="0.1" id="ceilSlider" oninput="updateSlider('ceil',this.value)"></div>
-            <div class="ctrl-row"><div class="ctrl-lbl">LIM RELEASE <span class="ctrl-val" id="limRelVal">50 ms</span></div><input type="range" min="1" max="500" value="50" id="limRelSlider" oninput="updateSlider('limRel',this.value)"></div>
-            <div class="ctrl-title" style="margin-top:14px">REALCE</div>
-            <div class="ctrl-row"><div class="ctrl-lbl">EXCITER <span class="ctrl-val" id="exciterVal">20%</span></div><input type="range" min="0" max="100" value="20" id="exciterSlider" oninput="updateSlider('exciter',this.value)"></div>
-            <div class="ctrl-row"><div class="ctrl-lbl">STEREO WIDTH <span class="ctrl-val" id="widthVal">100%</span></div><input type="range" min="0" max="200" value="100" id="widthSlider" oninput="updateSlider('width',this.value)"></div>
-            <div class="ctrl-row"><div class="ctrl-lbl">OUTPUT GAIN <span class="ctrl-val" id="outputVal">+0.0 dB</span></div><input type="range" min="-12" max="6" value="0" step="0.1" id="outputSlider" oninput="updateSlider('output',this.value)"></div>
-          </div>
+        <div class="ctrl-panel">
+          <div class="ctrl-title">Limiter <div class="toggle-wrap" onclick="toggleLim()"><div class="toggle on" id="limToggle"><div class="toggle-k"></div></div></div></div>
+          <div class="ctrl-row"><div class="ctrl-lbl">Ceiling <span class="ctrl-val" id="ceilVal">-1.0 dBTP</span></div><input type="range" min="-6" max="0" value="-1" step="0.1" id="ceilSlider" oninput="updCtrl('ceil',this.value)"></div>
+          <div class="ctrl-row"><div class="ctrl-lbl">Lim Release <span class="ctrl-val" id="limRelVal">50 ms</span></div><input type="range" min="1" max="500" value="50" id="limRelSlider" oninput="updCtrl('limRel',this.value)"></div>
+          <div class="ctrl-title" style="margin-top:12px">Realce</div>
+          <div class="ctrl-row"><div class="ctrl-lbl">Exciter <span class="ctrl-val" id="exciterVal">20%</span></div><input type="range" min="0" max="100" value="20" id="exciterSlider" oninput="updCtrl('exciter',this.value)"></div>
+          <div class="ctrl-row"><div class="ctrl-lbl">Stereo Width <span class="ctrl-val" id="widthVal">100%</span></div><input type="range" min="0" max="200" value="100" id="widthSlider" oninput="updCtrl('width',this.value)"></div>
+          <div class="ctrl-row"><div class="ctrl-lbl">Output Gain <span class="ctrl-val" id="outputVal">+0.0 dB</span></div><input type="range" min="-12" max="6" value="0" step="0.1" id="outputSlider" oninput="updCtrl('output',this.value)"></div>
         </div>
       </div>
     </div>
@@ -1212,85 +498,64 @@ input[type="file"] { display: none; }
 
   <!-- PLATAFORMA -->
   <div class="card" id="workspacePlat" style="display:none">
-    <div class="card-top-bar"></div>
-    <div class="card-hdr"><span class="card-title">🚀 PLATAFORMA &amp; LOUDNESS</span></div>
+    <div class="card-accent"></div>
+    <div class="card-hdr"><span class="card-title">&#128640; Plataforma &amp; Loudness</span></div>
     <div class="card-body">
       <div class="plat-grid" id="platformGrid">
-        <div class="plat-col"><div class="plat-card selected" data-lufs="-14" data-platform="spotify" onclick="selectPlatform(this)"><span class="plat-check">✓</span><div class="plat-icon">🎧</div><div class="plat-name">SPOTIFY</div><div class="plat-lufs">-14 LUFS</div></div></div>
-        <div class="plat-col"><div class="plat-card" data-lufs="-16" data-platform="apple" onclick="selectPlatform(this)"><span class="plat-check">✓</span><div class="plat-icon">🍎</div><div class="plat-name">APPLE MUSIC</div><div class="plat-lufs">-16 LUFS</div></div></div>
-        <div class="plat-col"><div class="plat-card" data-lufs="-14" data-platform="youtube" onclick="selectPlatform(this)"><span class="plat-check">✓</span><div class="plat-icon">▶</div><div class="plat-name">YOUTUBE</div><div class="plat-lufs">-14 LUFS</div></div></div>
-        <div class="plat-col"><div class="plat-card" data-lufs="-14" data-platform="tidal" onclick="selectPlatform(this)"><span class="plat-check">✓</span><div class="plat-icon">🌊</div><div class="plat-name">TIDAL</div><div class="plat-lufs">-14 LUFS</div></div></div>
-        <div class="plat-col"><div class="plat-card" data-lufs="-14" data-platform="amazon" onclick="selectPlatform(this)"><span class="plat-check">✓</span><div class="plat-icon">📦</div><div class="plat-name">AMAZON</div><div class="plat-lufs">-14 LUFS</div></div></div>
-        <div class="plat-col"><div class="plat-card" data-lufs="-8" data-platform="soundcloud" onclick="selectPlatform(this)"><span class="plat-check">✓</span><div class="plat-icon">☁</div><div class="plat-name">SOUNDCLOUD</div><div class="plat-lufs">-8 LUFS</div></div></div>
+        <div class="plat-card selected" data-lufs="-14" data-platform="spotify" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#127911;</div><div class="plat-name">Spotify</div><div class="plat-lufs">-14 LUFS</div></div>
+        <div class="plat-card" data-lufs="-16" data-platform="apple" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#127822;</div><div class="plat-name">Apple Music</div><div class="plat-lufs">-16 LUFS</div></div>
+        <div class="plat-card" data-lufs="-14" data-platform="youtube" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#9654;</div><div class="plat-name">YouTube</div><div class="plat-lufs">-14 LUFS</div></div>
+        <div class="plat-card" data-lufs="-14" data-platform="tidal" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#127754;</div><div class="plat-name">Tidal</div><div class="plat-lufs">-14 LUFS</div></div>
+        <div class="plat-card" data-lufs="-14" data-platform="amazon" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#128230;</div><div class="plat-name">Amazon</div><div class="plat-lufs">-14 LUFS</div></div>
+        <div class="plat-card" data-lufs="-8" data-platform="soundcloud" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#9729;</div><div class="plat-name">SoundCloud</div><div class="plat-lufs">-8 LUFS</div></div>
       </div>
-      <div style="margin-top:14px">
-        <div class="lufs-boxes">
-          <div class="lufs-col"><div class="lufs-box"><div class="lufs-val" id="lufsIntVal">—</div><div class="lufs-lbl">INTEGRADO</div></div></div>
-          <div class="lufs-col"><div class="lufs-box"><div class="lufs-val" id="lufsShortVal">—</div><div class="lufs-lbl">SHORT TERM</div></div></div>
-          <div class="lufs-col"><div class="lufs-box"><div class="lufs-val" id="lufsTpVal">—</div><div class="lufs-lbl">TRUE PEAK</div></div></div>
-        </div>
-        <div class="loud-bar-wrap"><div class="loud-fill" id="loudFill"></div><div class="loud-target" id="loudTarget" style="left:70%"></div></div>
-        <div class="loud-labels"><span>-24 LUFS</span><span class="loud-target-lbl" id="targetLbl">TARGET: -14</span><span>0 LUFS</span></div>
+      <div class="lufs-boxes">
+        <div class="lufs-box"><div class="lufs-val" id="lufsIntVal">&mdash;</div><div class="lufs-lbl">Integrado</div></div>
+        <div class="lufs-box"><div class="lufs-val" id="lufsShortVal">&mdash;</div><div class="lufs-lbl">Short Term</div></div>
+        <div class="lufs-box"><div class="lufs-val" id="lufsTpVal">&mdash;</div><div class="lufs-lbl">True Peak</div></div>
       </div>
+      <div class="loud-bar-wrap"><div class="loud-fill" id="loudFill"></div><div class="loud-target" id="loudTarget" style="left:70%"></div></div>
+      <div class="loud-labels"><span>-24 LUFS</span><span class="loud-target-lbl" id="targetLbl">Target: -14</span><span>0 LUFS</span></div>
     </div>
   </div>
 
-  <!-- FORMATO EXPORTACIÓN -->
+  <!-- EXPORTACI&Oacute;N -->
   <div class="card" id="workspaceFmt" style="display:none">
-    <div class="card-top-bar"></div>
-    <div class="card-hdr"><span class="card-title">💾 FORMATO DE EXPORTACIÓN</span></div>
+    <div class="card-accent"></div>
+    <div class="card-hdr"><span class="card-title">&#128190; Formato de Exportaci&oacute;n</span></div>
     <div class="card-body">
       <div class="fmt-grid">
-        <div class="fmt-col">
-          <div class="ctrl-row"><div class="ctrl-lbl" style="margin-bottom:8px">FORMATO</div>
-          <select id="exportFormat"><option value="wav">WAV (sin pérdida)</option><option value="flac">FLAC</option><option value="mp3">MP3 320kbps</option><option value="aac">AAC 256kbps</option></select></div>
-        </div>
-        <div class="fmt-col">
-          <div class="ctrl-row"><div class="ctrl-lbl" style="margin-bottom:8px">SAMPLE RATE <span class="ctrl-val" id="srOutVal">44100 Hz</span></div><input type="range" min="0" max="3" value="0" step="1" id="srSlider" oninput="updateSR(this.value)"></div>
-        </div>
-        <div class="fmt-col">
-          <div class="ctrl-row"><div class="ctrl-lbl" style="margin-bottom:8px">BIT DEPTH <span class="ctrl-val" id="bitOutVal">24-bit</span></div><input type="range" min="0" max="2" value="1" step="1" id="bitSlider" oninput="updateBit(this.value)"></div>
-        </div>
-        <div class="fmt-col">
-          <div class="ctrl-row" style="padding-top:8px">
-            <div class="toggle-wrap" onclick="toggleDither()">
-              <div class="toggle on" id="ditherToggle"></div>
-              <span class="toggle-lbl">DITHERING (TPDF)</span>
-            </div>
-          </div>
-        </div>
+        <div class="fmt-item"><div class="ctrl-lbl" style="margin-bottom:8px">Formato</div><select id="exportFormat"><option value="wav">WAV (sin p&eacute;rdida)</option><option value="flac">FLAC</option><option value="mp3">MP3 320kbps</option><option value="aac">AAC 256kbps</option></select></div>
+        <div class="fmt-item"><div class="ctrl-lbl" style="margin-bottom:8px">Sample Rate <span class="ctrl-val" id="srOutVal">44100 Hz</span></div><input type="range" min="0" max="3" value="0" step="1" id="srSlider" oninput="updateSR(this.value)"></div>
+        <div class="fmt-item"><div class="ctrl-lbl" style="margin-bottom:8px">Bit Depth <span class="ctrl-val" id="bitOutVal">24-bit</span></div><input type="range" min="0" max="2" value="1" step="1" id="bitSlider" oninput="updateBit(this.value)"></div>
+        <div class="fmt-item" style="display:flex;align-items:center;padding-top:8px"><div class="toggle-wrap" onclick="toggleDither()"><div class="toggle on" id="ditherToggle"><div class="toggle-k"></div></div><span>Dithering (TPDF)</span></div></div>
       </div>
     </div>
   </div>
 
-  <!-- BOTÓN MASTERIZAR -->
-  <div id="masterBtnWrap" style="display:none" class="section-gap">
-    <button class="btn-master" id="btnMaster" disabled type="button" onclick="startMastering()">⚡ MASTERIZAR ⚡</button>
-    <div class="prog-wrap" id="progWrap">
-      <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
-      <div class="prog-lbl" id="progLbl">INICIANDO...</div>
-    </div>
+  <!-- MASTERIZAR -->
+  <div id="masterBtnWrap" style="display:none">
+    <button class="btn-master style-standard" id="btnMaster" type="button" disabled onclick="startMastering()">&#128049; Masterizar</button>
+    <div class="prog-wrap" id="progWrap"><div class="prog-bar"><div class="prog-fill" id="progFill"></div></div><div class="prog-lbl" id="progLbl">Iniciando...</div></div>
   </div>
 
   <!-- OUTPUT -->
   <div class="card out-section" id="outputSection">
-    <div class="card-top-bar"></div>
-    <div class="out-hdr"><div class="out-badge">✓ MASTER LISTO</div><div class="out-title" id="outputTitle">TRACK MASTERIZADO</div></div>
+    <div class="card-accent"></div>
+    <div class="out-hdr"><div class="out-badge">&#10003; Master listo</div><div class="out-title" id="outputTitle">Track masterizado</div></div>
     <div class="card-body">
-      <div style="margin-bottom:14px">
-        <div style="font-family:'Orbitron',Arial,sans-serif;font-size:11px;color:#555;letter-spacing:2px;margin-bottom:8px">WAVEFORM — MASTER</div>
-        <div class="wform-wrap" style="height:60px"><canvas id="waveformCanvasMastered"></canvas></div>
-      </div>
+      <div style="margin-bottom:12px"><div style="font-size:12px;font-weight:700;color:#475569;letter-spacing:1px;margin-bottom:7px;text-transform:uppercase">Waveform &mdash; Master</div><div class="wform-outer" style="height:56px;cursor:default"><canvas id="waveformCanvasMastered"></canvas></div></div>
       <div class="cmp-table">
-        <div class="cmp-row"><div class="cmp-cell cmp-hdr"></div><div class="cmp-cell cmp-hdr">ORIGINAL</div><div class="cmp-cell cmp-hdr">MASTER</div></div>
-        <div class="cmp-row"><div class="cmp-cell cmp-lbl">LUFS INT.</div><div class="cmp-cell cmp-before" id="cmpLufsBefore">—</div><div class="cmp-cell cmp-after" id="cmpLufsAfter">—</div></div>
-        <div class="cmp-row"><div class="cmp-cell cmp-lbl">TRUE PEAK</div><div class="cmp-cell cmp-before" id="cmpTpBefore">—</div><div class="cmp-cell cmp-after" id="cmpTpAfter">—</div></div>
-        <div class="cmp-row"><div class="cmp-cell cmp-lbl">DYN. RANGE</div><div class="cmp-cell cmp-before" id="cmpDynBefore">—</div><div class="cmp-cell cmp-after" id="cmpDynAfter">—</div></div>
-        <div class="cmp-row"><div class="cmp-cell cmp-lbl">RMS</div><div class="cmp-cell cmp-before" id="cmpRmsBefore">—</div><div class="cmp-cell cmp-after" id="cmpRmsAfter">—</div></div>
+        <div class="cmp-row"><div class="cmp-cell cmp-hdr"></div><div class="cmp-cell cmp-hdr">Original</div><div class="cmp-cell cmp-hdr">Master</div></div>
+        <div class="cmp-row"><div class="cmp-cell cmp-lbl">LUFS Int.</div><div class="cmp-cell cmp-before" id="cmpLufsBefore">&mdash;</div><div class="cmp-cell cmp-after" id="cmpLufsAfter">&mdash;</div></div>
+        <div class="cmp-row"><div class="cmp-cell cmp-lbl">True Peak</div><div class="cmp-cell cmp-before" id="cmpTpBefore">&mdash;</div><div class="cmp-cell cmp-after" id="cmpTpAfter">&mdash;</div></div>
+        <div class="cmp-row"><div class="cmp-cell cmp-lbl">Dyn. Range</div><div class="cmp-cell cmp-before" id="cmpDynBefore">&mdash;</div><div class="cmp-cell cmp-after" id="cmpDynAfter">&mdash;</div></div>
+        <div class="cmp-row"><div class="cmp-cell cmp-lbl">RMS</div><div class="cmp-cell cmp-before" id="cmpRmsBefore">&mdash;</div><div class="cmp-cell cmp-after" id="cmpRmsAfter">&mdash;</div></div>
+        <div class="cmp-row"><div class="cmp-cell cmp-lbl">Estilo</div><div class="cmp-cell cmp-before" id="cmpStyleBefore">&mdash;</div><div class="cmp-cell cmp-after" id="cmpStyleAfter">&mdash;</div></div>
       </div>
       <div class="dl-row">
-        <div class="dl-col"><button class="btn-dl" type="button" onclick="downloadMaster()">↓ DESCARGAR</button></div>
-        <div class="dl-col"><button class="btn-reset" type="button" onclick="resetAll()">↩ NUEVA PISTA</button></div>
+        <button class="btn-dl" type="button" onclick="downloadMaster()">&#8595; Descargar Master</button>
+        <button class="btn-reset" type="button" onclick="resetAll()">&#8629; Nueva pista</button>
       </div>
     </div>
   </div>
@@ -1299,903 +564,461 @@ input[type="file"] { display: none; }
 <div class="toast" id="toast"></div>
 
 <script>
-// ===================== STATE =====================
-var audioCtx = null;
-var audioBuf = null, refBuf = null, masteredBuf = null;
-var srcNode = null, analL = null, analR = null;
-var isPlaying = false, playingMaster = false;
-var startTime = 0, pauseOffset = 0;
-var animFr = null;
-var eqEnabled = true, compEnabled = true, limEnabled = true, ditherEnabled = true, autoRefEnabled = true;
-var selPlatform = { name:'spotify', lufs:-14 };
-var origStats = null, refStats = null;
-var srVals = [44100,48000,88200,96000];
-var bitVals = [16,24,32];
-var curSR = 44100, curBit = 24;
-var eqFreqs = [60,120,250,500,1000,3000,8000,16000];
-var eqLabels = ['60','120','250','500','1k','3k','8k','16k'];
-var eqGains = [0,0,0,0,0,0,0,0];
-var eqPresets = {
-  flat:[0,0,0,0,0,0,0,0], warm:[2,1.5,1,0,-1,-1,-2,-3],
-  bright:[-1,-1,0,0,1,2,3,4], punchy:[3,2,0,-1,-2,0,1,1],
-  vocal:[-1,-1,0,0,2,3,1,-1], hifi:[1,1,0,0,0,1,2,3]
+// ===== STATE =====
+var audioCtx=null,audioBuf=null,refBuf=null,masteredBuf=null;
+var srcNode=null,analL=null,analR=null;
+var isPlaying=false,playingMaster=false;
+var startTime=0,pauseOffset=0;
+var animFr=null;
+var eqEnabled=true,compEnabled=true,limEnabled=true,ditherEnabled=true,autoRefEnabled=true;
+var selPlatform={name:'spotify',lufs:-14};
+var origStats=null,refStats=null;
+var curSR=44100,curBit=24;
+var srVals=[44100,48000,88200,96000];
+var bitVals=[16,24,32];
+var eqFreqs=[60,120,250,500,1000,3000,8000,16000];
+var eqLabels=['60','120','250','500','1k','3k','8k','16k'];
+var eqGains=[0,0,0,0,0,0,0,0];
+var eqPresets={flat:[0,0,0,0,0,0,0,0],warm:[2,1.5,1,0,-1,-1,-2,-3],bright:[-1,-1,0,0,1,2,3,4],punchy:[3,2,0,-1,-2,0,1,1],vocal:[-1,-1,0,0,2,3,1,-1],hifi:[1,1,0,0,0,1,2,3]};
+var peakHoldL=-60,peakHoldR=-60,peakTimerL=0,peakTimerR=0,peakMaxL=-Infinity,peakMaxR=-Infinity;
+var currentMasterStyle='standard';
+
+// ===== MASTERING STYLE PRESETS =====
+var masterStyles={
+  standard:{
+    name:'Estandar',emoji:'',
+    eq:[0,0,0,0,0,0,0,0],
+    thresh:-12,ratio:3,attack:10,release:150,makeup:0,
+    ceil:-1.0,limRel:50,width:100,output:0,
+    platform:'spotify',steps:['Analizando espectro...','Aplicando EQ neutro...','Compresion balanceada...','Normalizando a -14 LUFS...','Limiter transparente...','Dithering y render...','Master listo']
+  },
+  pop:{
+    name:'Pulido Pop',emoji:'',
+    // EQ: Sub boost, cut mud @250Hz, boost presence @3k, air @8k+16k
+    eq:[3.0, 1.5, -1.5, -0.5, 1.0, 3.0, 2.0, 2.5],
+    thresh:-14,ratio:4,attack:15,release:80,makeup:3,
+    ceil:-0.8,limRel:35,width:118,output:0.5,
+    platform:'spotify',steps:['Analizando espectro...','Realzando graves y presencia...','Compresion pop (4:1)...','Normalizando a -14 LUFS...','Limiter brillante -0.8 dBTP...','Puliendo estereo 118%...','Pulido Pop listo']
+  },
+  edm:{
+    name:'Festival EDM',emoji:'',
+    // EQ: Big sub @60Hz, punch @120Hz, cut mud, open air, wide stereo
+    eq:[5.0, 2.0, -1.0, -1.5, 0.5, 2.0, 3.0, 4.0],
+    thresh:-10,ratio:3,attack:5,release:200,makeup:5,
+    ceil:-0.3,limRel:25,width:162,output:1.5,
+    platform:'soundcloud',steps:['Analizando espectro EDM...','Amplificando sub y graves...','Compresion fast-attack (3:1)...','Normalizando -9 LUFS (club)...','Hard limiter -0.3 dBTP...','Ensanchando estereo 162%...','Festival EDM listo']
+  }
 };
 
-// ===================== AUDIO CONTEXT =====================
-function getCtx() {
-  if (!audioCtx) {
-    var AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) { showToast('Web Audio no soportado en este navegador','error'); return null; }
-    audioCtx = new AC();
-  }
+function getCtx(){
+  if(!audioCtx){var AC=window.AudioContext||window.webkitAudioContext;audioCtx=new AC();}
   return audioCtx;
 }
 
-// ===================== BUILD EQ BANDS =====================
-function buildEQBands() {
-  var wrap = document.getElementById('eqBands');
-  wrap.innerHTML = '';
-  for (var i = 0; i < eqFreqs.length; i++) {
-    (function(idx) {
-      var d = document.createElement('div');
-      d.className = 'eq-band';
-      d.innerHTML =
-        '<div class="eq-val" id="eqV'+idx+'">0.0</div>' +
-        '<div class="eq-slider-wrap">' +
-          '<input class="eq-slider" type="range" min="-12" max="12" value="0" step="0.5" id="eqS'+idx+'">' +
-        '</div>' +
-        '<div class="eq-freq">'+eqLabels[idx]+'</div>';
-      wrap.appendChild(d);
-      document.getElementById('eqS'+idx).addEventListener('input', function() {
-        updateEQ(idx, this.value);
-      });
+// ===== SELECT MASTER STYLE =====
+function selectMasterStyle(style,el){
+  currentMasterStyle=style;
+  // Update card UI
+  var cards=document.querySelectorAll('.style-card');
+  for(var i=0;i<cards.length;i++)cards[i].classList.remove('selected');
+  el.classList.add('selected');
+  var s=masterStyles[style];
+  // Apply EQ
+  for(var i=0;i<eqGains.length;i++){
+    eqGains[i]=s.eq[i];
+    var sl=document.getElementById('eqS'+i);
+    if(sl){sl.value=s.eq[i];document.getElementById('eqV'+i).textContent=(s.eq[i]>0?'+':'')+parseFloat(s.eq[i]).toFixed(1);}
+  }
+  drawEQCurve();
+  // Apply dynamics
+  document.getElementById('threshSlider').value=s.thresh;updCtrl('thresh',s.thresh);
+  document.getElementById('ratioSlider').value=s.ratio;updCtrl('ratio',s.ratio);
+  document.getElementById('attackSlider').value=s.attack;updCtrl('attack',s.attack);
+  document.getElementById('releaseSlider').value=s.release;updCtrl('release',s.release);
+  document.getElementById('makeupSlider').value=s.makeup;updCtrl('makeup',s.makeup);
+  document.getElementById('ceilSlider').value=s.ceil;updCtrl('ceil',s.ceil);
+  document.getElementById('limRelSlider').value=s.limRel;updCtrl('limRel',s.limRel);
+  document.getElementById('widthSlider').value=s.width;updCtrl('width',s.width);
+  document.getElementById('outputSlider').value=s.output;updCtrl('output',s.output);
+  // Select platform
+  var platCards=document.querySelectorAll('.plat-card');
+  for(var i=0;i<platCards.length;i++){
+    if(platCards[i].getAttribute('data-platform')===s.platform){selectPlatform(platCards[i]);break;}
+  }
+  // Update master button color
+  var btn=document.getElementById('btnMaster');
+  btn.className='btn-master style-'+style;
+  // Mark EQ preset as custom
+  var presetBtns=document.querySelectorAll('.preset-btn');
+  for(var i=0;i<presetBtns.length;i++)presetBtns[i].classList.remove('active');
+  var names={standard:'Flat',pop:'Bright',edm:'Punchy'};
+  showToast('Estilo: '+s.name+' aplicado');
+}
+
+// ===== BUILD EQ BANDS =====
+function buildEQBands(){
+  var w=document.getElementById('eqBands');w.innerHTML='';
+  for(var i=0;i<eqFreqs.length;i++){
+    (function(idx){
+      var d=document.createElement('div');d.className='eq-band';
+      d.innerHTML='<div class="eq-v" id="eqV'+idx+'">0.0</div><div class="eq-slider-wrap"><input class="vslider" type="range" min="-12" max="12" value="0" step="0.5" id="eqS'+idx+'" oninput="updateEQ('+idx+',this.value)"></div><div class="eq-freq">'+eqLabels[idx]+'</div>';
+      w.appendChild(d);
     })(i);
   }
   drawEQCurve();
 }
 
-// ===================== DRAG & DROP =====================
-function onDragOver(e, z) {
-  e.preventDefault();
-  document.getElementById(z === 'main' ? 'uploadZone' : 'refZone').classList.add('drag-over');
-}
-function onDragLeave(z) {
-  document.getElementById(z === 'main' ? 'uploadZone' : 'refZone').classList.remove('drag-over');
-}
-function onDrop(e, z) {
-  e.preventDefault();
-  document.getElementById(z === 'main' ? 'uploadZone' : 'refZone').classList.remove('drag-over');
-  var f = e.dataTransfer.files[0];
-  if (f) { z === 'main' ? loadMain(f) : loadRef(f); }
-}
+// ===== DRAG & DROP =====
+function onDragOver(e,z){e.preventDefault();document.getElementById(z==='main'?'uploadZone':'refZone').classList.add('drag-over');}
+function onDragLeave(z){document.getElementById(z==='main'?'uploadZone':'refZone').classList.remove('drag-over');}
+function onDrop(e,z){e.preventDefault();document.getElementById(z==='main'?'uploadZone':'refZone').classList.remove('drag-over');var f=e.dataTransfer.files[0];if(f){z==='main'?loadMain(f):loadRef(f);}}
+document.getElementById('fileInput').addEventListener('change',function(e){if(e.target.files[0])loadMain(e.target.files[0]);});
+document.getElementById('refInput').addEventListener('change',function(e){if(e.target.files[0])loadRef(e.target.files[0]);});
 
-document.getElementById('fileInput').addEventListener('change', function() {
-  if (this.files[0]) loadMain(this.files[0]);
-});
-document.getElementById('refInput').addEventListener('change', function() {
-  if (this.files[0]) loadRef(this.files[0]);
-});
-
-// ===================== LOAD MAIN =====================
-function loadMain(file) {
-  if (!/\.(wav|aiff?|flac|mp3)$/i.test(file.name)) { showToast('Formato no soportado','error'); return; }
-  showToast('⚡ Cargando pista...');
-  document.getElementById('engineMode').textContent = 'CARGANDO';
-  var ctx = getCtx();
-  if (!ctx) return;
-
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    ctx.decodeAudioData(e.target.result, function(buf) {
-      audioBuf = buf;
-      document.getElementById('mainFileName').textContent = file.name;
-      document.getElementById('mainFileMeta').textContent =
-        buf.sampleRate + 'Hz · ' + fmtTime(buf.duration) + ' · ' + (file.size/1024/1024).toFixed(1) + 'MB';
+function loadMain(file){
+  if(!/\\.(wav|aif|aiff|flac|mp3)$/i.test(file.name)){showToast('Formato no soportado','error');return;}
+  showToast('Cargando pista...');document.getElementById('engineMode').textContent='CARGANDO';
+  var ctx=getCtx();var r=new FileReader();
+  r.onload=function(e){
+    ctx.decodeAudioData(e.target.result,function(buf){
+      audioBuf=buf;
+      document.getElementById('mainFileName').textContent=file.name;
+      document.getElementById('mainFileMeta').textContent=buf.sampleRate+'Hz \xb7 '+fmtTime(buf.duration)+' \xb7 '+(file.size/1048576).toFixed(1)+'MB';
       document.getElementById('udefaultMain').classList.add('hidden');
       document.getElementById('uloadedMain').classList.add('visible');
-      document.getElementById('uploadZone').classList.add('has-file-main');
-      var ids = ['waveformSection','workspaceEQ','workspaceDyn','workspacePlat','workspaceFmt','masterBtnWrap'];
-      for (var i = 0; i < ids.length; i++) document.getElementById(ids[i]).style.display = 'block';
-      document.getElementById('btnMaster').disabled = false;
-      document.getElementById('engineMode').textContent = 'LISTO';
-      drawWaveform(buf, 'waveformCanvas', '#00ff88');
-      analyzeLoudness(buf, false);
-      showToast('✓ Pista cargada correctamente');
-    }, function() {
-      showToast('Error al decodificar el audio','error');
-      document.getElementById('engineMode').textContent = 'ERROR';
-    });
-  };
-  reader.readAsArrayBuffer(file);
+      document.getElementById('uploadZone').classList.add('has-main');
+      var ids=['waveformSection','workspaceEQ','workspaceDyn','workspacePlat','workspaceFmt','masterBtnWrap'];
+      for(var i=0;i<ids.length;i++)document.getElementById(ids[i]).style.display='block';
+      document.getElementById('btnMaster').disabled=false;
+      document.getElementById('engineMode').textContent='LISTO';
+      drawWaveform(buf,'waveformCanvas','#6366f1','#8b5cf6');
+      analyzeLoudness(buf,false);
+      showToast('\u2713 Pista cargada');
+    },function(){showToast('Error al decodificar','error');document.getElementById('engineMode').textContent='ERROR';});
+  };r.readAsArrayBuffer(file);
 }
 
-// ===================== LOAD REFERENCE =====================
-function loadRef(file) {
-  if (!/\.(wav|aiff?|flac|mp3)$/i.test(file.name)) { showToast('Formato no soportado','error'); return; }
-  showToast('🎯 Analizando referencia...');
-  var ctx = getCtx();
-  if (!ctx) return;
-
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    ctx.decodeAudioData(e.target.result, function(buf) {
-      refBuf = buf;
-      document.getElementById('refFileName').textContent = file.name;
-      document.getElementById('refFileMeta').textContent =
-        buf.sampleRate + 'Hz · ' + fmtTime(buf.duration) + ' · ' + (file.size/1024/1024).toFixed(1) + 'MB';
+function loadRef(file){
+  if(!/\\.(wav|aif|aiff|flac|mp3)$/i.test(file.name)){showToast('Formato no soportado','error');return;}
+  showToast('Analizando referencia...');
+  var ctx=getCtx();var r=new FileReader();
+  r.onload=function(e){
+    ctx.decodeAudioData(e.target.result,function(buf){
+      refBuf=buf;
+      document.getElementById('refFileName').textContent=file.name;
+      document.getElementById('refFileMeta').textContent=buf.sampleRate+'Hz \xb7 '+fmtTime(buf.duration);
       document.getElementById('udefaultRef').classList.add('hidden');
       document.getElementById('uloadedRef').classList.add('visible');
-      document.getElementById('refZone').classList.add('has-file-ref');
-      analyzeLoudness(buf, true);
-      drawWaveform(buf, 'refWaveformCanvas', '#ff00cc');
+      document.getElementById('refZone').classList.add('has-ref');
+      analyzeLoudness(buf,true);
+      drawWaveform(buf,'refWaveformCanvas','#8b5cf6','#a78bfa');
       document.getElementById('refPanel').classList.add('visible');
-      if (autoRefEnabled) applyRefAdjustments();
-      showToast('✓ Referencia cargada y analizada');
-    }, function() {
-      showToast('Error al cargar la referencia','error');
-    });
-  };
-  reader.readAsArrayBuffer(file);
+      if(autoRefEnabled)applyRefAdjustments();
+      showToast('\u2713 Referencia cargada');
+    },function(){showToast('Error al cargar referencia','error');});
+  };r.readAsArrayBuffer(file);
 }
 
-// ===================== LOUDNESS ANALYSIS =====================
-function analyzeLoudness(buf, isRef) {
-  var data = buf.getChannelData(0);
-  var sumSq = 0, peak = 0;
-  for (var i = 0; i < data.length; i++) {
-    sumSq += data[i] * data[i];
-    if (Math.abs(data[i]) > peak) peak = Math.abs(data[i]);
-  }
-  var rms = Math.sqrt(sumSq / data.length);
-  var lufs = parseFloat((20 * Math.log(rms + 1e-10) / Math.LN10 - 0.691).toFixed(1));
-  var tp   = parseFloat((20 * Math.log(peak + 1e-10) / Math.LN10).toFixed(1));
-  var rmsDb= parseFloat((20 * Math.log(rms + 1e-10) / Math.LN10).toFixed(1));
-  var dr   = parseFloat((20 * Math.log(peak + 1e-10) / Math.LN10 - rmsDb).toFixed(1));
-
-  if (isRef) {
-    refStats = { lufs: lufs, tp: tp, rmsDb: rmsDb, dr: dr };
-    document.getElementById('refLufsVal').textContent = lufs;
-    document.getElementById('refTpVal').textContent = tp + ' dB';
-    document.getElementById('refRmsVal').textContent = rmsDb + ' dB';
+function analyzeLoudness(buf,isRef){
+  var data=buf.getChannelData(0),sq=0,peak=0;
+  for(var i=0;i<data.length;i++){sq+=data[i]*data[i];if(Math.abs(data[i])>peak)peak=Math.abs(data[i]);}
+  var rms=Math.sqrt(sq/data.length);
+  var lufs=parseFloat((20*Math.log(rms+1e-10)/Math.LN10-0.691).toFixed(1));
+  var tp=parseFloat((20*Math.log(peak+1e-10)/Math.LN10).toFixed(1));
+  var rmsDb=parseFloat((20*Math.log(rms+1e-10)/Math.LN10).toFixed(1));
+  if(isRef){
+    refStats={lufs:lufs,tp:tp,rmsDb:rmsDb};
+    document.getElementById('refLufsVal').textContent=lufs;
+    document.getElementById('refTpVal').textContent=tp+'dB';
+    document.getElementById('refRmsVal').textContent=rmsDb+'dB';
     buildRefSuggestion();
-  } else {
-    origStats = { lufs: lufs, tp: tp, rmsDb: rmsDb, dr: dr };
-    document.getElementById('lufsIntVal').textContent = lufs;
-    document.getElementById('lufsShortVal').textContent = (lufs + 1.5).toFixed(1);
-    document.getElementById('lufsTpVal').textContent = tp;
-    var el = document.getElementById('lufsIntVal');
-    el.className = 'lufs-val' + (lufs > -8 ? ' bad' : lufs > -14 ? ' warn' : ' ok');
-    var pct = Math.max(0, Math.min(100, ((lufs + 24) / 24) * 100));
-    document.getElementById('loudFill').style.width = pct + '%';
-    if (refStats) buildRefSuggestion();
+  }else{
+    origStats={lufs:lufs,tp:tp,rmsDb:rmsDb,dr:parseFloat((tp-rmsDb).toFixed(1))};
+    document.getElementById('lufsIntVal').textContent=lufs;
+    document.getElementById('lufsShortVal').textContent=(lufs+1.5).toFixed(1);
+    document.getElementById('lufsTpVal').textContent=tp;
+    var el=document.getElementById('lufsIntVal');
+    el.className='lufs-val'+(lufs>-8?' bad':lufs>-14?' warn':' ok');
+    document.getElementById('loudFill').style.width=Math.max(0,Math.min(100,((lufs+24)/24)*100))+'%';
+    if(refStats)buildRefSuggestion();
   }
 }
 
-function buildRefSuggestion() {
-  if (!refStats) return;
-  var origL = origStats ? origStats.lufs : null;
-  var refL = refStats.lufs;
-  var gainNeeded = origL !== null ? (refL - origL).toFixed(1) : '?';
-  var ceilSug = Math.max(-6, Math.min(-0.1, refStats.tp - 0.3)).toFixed(1);
-  var txt = '📊 Referencia: ' + refL + ' LUFS | True Peak: ' + refStats.tp + ' dBTP | RMS: ' + refStats.rmsDb + ' dB';
-  if (origL !== null) {
-    txt += '\n\n🎚️ Tu pista está en ' + origL + ' LUFS. Necesitas ' + (gainNeeded > 0 ? '+' : '') + gainNeeded + ' dB para igualar la referencia.';
-  }
-  txt += '\n\n🔒 Ceiling sugerido: ' + ceilSug + ' dBTP.\n\n✅ Ajustes automáticos aplicados.';
-  document.getElementById('refSugText').textContent = txt;
+function buildRefSuggestion(){
+  if(!refStats)return;
+  var origL=origStats?origStats.lufs:null;
+  var gn=origL!==null?(refStats.lufs-origL).toFixed(1):'?';
+  var ceil=Math.max(-6,Math.min(-0.1,refStats.tp-0.3)).toFixed(1);
+  var txt='Referencia: '+refStats.lufs+' LUFS | TP: '+refStats.tp+' dBTP | RMS: '+refStats.rmsDb+' dB';
+  if(origL!==null)txt+='\\n\\nTu pista est\xe1 en '+origL+' LUFS. Necesitas '+(gn>0?'+':'')+gn+' dB de ganancia.';
+  txt+='\\n\\nCeiling sugerido: '+ceil+' dBTP.\\nMakeup Gain y Ceiling configurados autom\xe1ticamente.';
+  document.getElementById('refSugText').textContent=txt;
 }
 
-function applyRefAdjustments() {
-  if (!refStats) return;
-  var ceil = Math.max(-6, Math.min(-0.1, refStats.tp - 0.3));
-  document.getElementById('ceilSlider').value = ceil;
-  updateSlider('ceil', ceil);
-  if (origStats) {
-    var g = Math.max(-12, Math.min(12, refStats.lufs - origStats.lufs));
-    document.getElementById('makeupSlider').value = g;
-    updateSlider('makeup', g);
-  }
-  var cards = document.querySelectorAll('.plat-card');
-  var best = null, bestDiff = Infinity;
-  for (var i = 0; i < cards.length; i++) {
-    var diff = Math.abs(parseInt(cards[i].getAttribute('data-lufs')) - refStats.lufs);
-    if (diff < bestDiff) { bestDiff = diff; best = cards[i]; }
-  }
-  if (best) selectPlatform(best);
+function applyRefAdjustments(){
+  if(!refStats)return;
+  var ceil=Math.max(-6,Math.min(-0.1,refStats.tp-0.3));
+  document.getElementById('ceilSlider').value=ceil;updCtrl('ceil',ceil);
+  if(origStats){var gn=Math.max(-12,Math.min(12,refStats.lufs-origStats.lufs));document.getElementById('makeupSlider').value=gn;updCtrl('makeup',gn);}
+  var cards=document.querySelectorAll('.plat-card'),best=null,bestD=Infinity;
+  for(var i=0;i<cards.length;i++){var d=Math.abs(parseInt(cards[i].getAttribute('data-lufs'))-refStats.lufs);if(d<bestD){bestD=d;best=cards[i];}}
+  if(best)selectPlatform(best);
+}
+function toggleAutoRef(){autoRefEnabled=!autoRefEnabled;document.getElementById('autoRefToggle').classList.toggle('on',autoRefEnabled);if(autoRefEnabled&&refStats)applyRefAdjustments();}
+
+function drawWaveform(buf,canvasId,c1,c2){
+  var canvas=document.getElementById(canvasId);if(!canvas)return;
+  var par=canvas.parentElement,W=par.offsetWidth||300,H=par.offsetHeight||80;
+  var dpr=window.devicePixelRatio||1;
+  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  var data=buf.getChannelData(0),step=Math.ceil(data.length/W),mid=H/2;
+  ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,mid);ctx.lineTo(W,mid);ctx.stroke();
+  var g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,(c1||'#6366f1')+'55');g.addColorStop(.5,(c2||'#8b5cf6')+'cc');g.addColorStop(1,(c1||'#6366f1')+'55');
+  ctx.fillStyle=g;ctx.shadowColor=c2||'#8b5cf6';ctx.shadowBlur=4;
+  for(var i=0;i<W;i++){var mn=1,mx=-1;for(var j=0;j<step;j++){var v=data[i*step+j]||0;if(v<mn)mn=v;if(v>mx)mx=v;}var h=Math.max(1,(mx-mn)*mid*.9);ctx.fillRect(i,mid-h/2,1,h);}
 }
 
-function toggleAutoRef() {
-  autoRefEnabled = !autoRefEnabled;
-  document.getElementById('autoRefToggle').classList.toggle('on', autoRefEnabled);
-  if (autoRefEnabled && refStats) applyRefAdjustments();
+function onWformHover(e){var el=document.getElementById('wformHoverLine');if(!el)return;var rect=document.getElementById('wformOuter').getBoundingClientRect();el.style.left=(e.clientX-rect.left)+'px';el.style.display='block';}
+function onWformLeave(){var el=document.getElementById('wformHoverLine');if(el)el.style.display='none';}
+function seekFromClick(e){
+  if(!audioBuf)return;
+  var rect=document.getElementById('wformOuter').getBoundingClientRect();
+  var pct=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
+  var newOff=pct*audioBuf.duration;
+  if(isPlaying){if(srcNode){try{srcNode.stop();}catch(err){}}pauseOffset=newOff;play();}
+  else{pauseOffset=newOff;document.getElementById('playhead').style.left=(pct*100)+'%';document.getElementById('timeDisplay').textContent=fmtTime(newOff);document.getElementById('wformTimeOverlay').textContent=fmtTime(newOff);}
+}
+function seekRel(sec){
+  if(!audioBuf)return;
+  var cur=isPlaying?(audioCtx.currentTime-startTime):pauseOffset;
+  var newOff=Math.max(0,Math.min(audioBuf.duration,cur+sec));
+  if(isPlaying){if(srcNode){try{srcNode.stop();}catch(err){}}pauseOffset=newOff;play();}
+  else{pauseOffset=newOff;document.getElementById('playhead').style.left=(newOff/audioBuf.duration*100)+'%';document.getElementById('timeDisplay').textContent=fmtTime(newOff);document.getElementById('wformTimeOverlay').textContent=fmtTime(newOff);}
 }
 
-// ===================== WAVEFORM =====================
-function drawWaveform(buf, canvasId, color) {
-  var canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  var par = canvas.parentElement;
-  var dpr = window.devicePixelRatio || 1;
-  var W = par.offsetWidth;
-  var H = par.offsetHeight;
-  if (W === 0 || H === 0) return;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  canvas.style.width = W + 'px';
-  canvas.style.height = H + 'px';
-  var ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  var data = buf.getChannelData(0);
-  var step = Math.ceil(data.length / W);
-  var mid = H / 2;
-  ctx.clearRect(0, 0, W, H);
-  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-  ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(0, mid); ctx.lineTo(W, mid); ctx.stroke();
-  var grad = ctx.createLinearGradient(0, 0, 0, H);
-  grad.addColorStop(0, color + '55');
-  grad.addColorStop(0.5, color + 'bb');
-  grad.addColorStop(1, color + '55');
-  ctx.fillStyle = grad;
-  for (var i = 0; i < W; i++) {
-    var mn = 1, mx = -1;
-    for (var j = 0; j < step; j++) {
-      var s = data[i * step + j] || 0;
-      if (s < mn) mn = s;
-      if (s > mx) mx = s;
-    }
-    var h = Math.max(1, (mx - mn) * mid * 0.9);
-    ctx.fillRect(i, mid - h / 2, 1, h);
-  }
-}
-
-// ===================== EQ =====================
-function updateEQ(i, val) {
-  eqGains[i] = parseFloat(val);
-  document.getElementById('eqV' + i).textContent = (val > 0 ? '+' : '') + parseFloat(val).toFixed(1);
+function updateEQ(i,val){eqGains[i]=parseFloat(val);document.getElementById('eqV'+i).textContent=(val>0?'+':'')+parseFloat(val).toFixed(1);drawEQCurve();}
+function applyEQPreset(name,btn){
+  var btns=document.querySelectorAll('.preset-btn');for(var i=0;i<btns.length;i++)btns[i].classList.remove('active');btn.classList.add('active');
+  var presets={flat:[0,0,0,0,0,0,0,0],warm:[2,1.5,1,0,-1,-1,-2,-3],bright:[-1,-1,0,0,1,2,3,4],punchy:[3,2,0,-1,-2,0,1,1],vocal:[-1,-1,0,0,2,3,1,-1],hifi:[1,1,0,0,0,1,2,3]};
+  eqGains=presets[name].slice();
+  for(var i=0;i<eqGains.length;i++){var s=document.getElementById('eqS'+i);if(s){s.value=eqGains[i];document.getElementById('eqV'+i).textContent=(eqGains[i]>0?'+':'')+parseFloat(eqGains[i]).toFixed(1);}}
   drawEQCurve();
 }
-
-function applyEQPreset(name, btn) {
-  var btns = document.querySelectorAll('.preset-btn');
-  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
-  btn.classList.add('active');
-  eqGains = eqPresets[name].slice();
-  for (var i = 0; i < eqGains.length; i++) {
-    var sl = document.getElementById('eqS' + i);
-    if (sl) { sl.value = eqGains[i]; updateEQ(i, eqGains[i]); }
-  }
+function drawEQCurve(){
+  var canvas=document.getElementById('eqCanvas'),W=canvas.parentElement.offsetWidth||300;canvas.width=W;
+  var H=canvas.height,ctx=canvas.getContext('2d');ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;for(var i=1;i<4;i++){ctx.beginPath();ctx.moveTo(0,H*i/4);ctx.lineTo(W,H*i/4);ctx.stroke();}
+  ctx.strokeStyle='rgba(255,255,255,.07)';ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+  var logMin=Math.log(20)/Math.LN10,logMax=Math.log(20000)/Math.LN10,pts=[];
+  for(var x=0;x<W;x++){var freq=Math.pow(10,logMin+(x/W)*(logMax-logMin)),gain=0;for(var k=0;k<eqFreqs.length;k++){var q=1.4,lf=Math.log(freq/eqFreqs[k])/Math.LN10;gain+=eqGains[k]*Math.exp(-lf*lf*q*q);}pts.push({x:x,y:H/2-(gain/12)*(H/2-4)});}
+  ctx.beginPath();ctx.moveTo(0,H/2);for(var i=0;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);ctx.lineTo(W,H/2);ctx.closePath();ctx.fillStyle='rgba(99,102,241,.1)';ctx.fill();
+  ctx.beginPath();for(var i=0;i<pts.length;i++){if(i===0)ctx.moveTo(pts[i].x,pts[i].y);else ctx.lineTo(pts[i].x,pts[i].y);}
+  ctx.strokeStyle='#6366f1';ctx.lineWidth=2;ctx.shadowColor='#6366f1';ctx.shadowBlur=8;ctx.stroke();
 }
 
-function drawEQCurve() {
-  var canvas = document.getElementById('eqCanvas');
-  if (!canvas) return;
-  var W = canvas.parentElement.offsetWidth;
-  if (W === 0) return;
-  canvas.width = W;
-  var H = canvas.height;
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, W, H);
-  ctx.strokeStyle = 'rgba(255,255,255,0.04)';
-  ctx.lineWidth = 1;
-  for (var i = 1; i < 4; i++) {
-    ctx.beginPath(); ctx.moveTo(0, H * i / 4); ctx.lineTo(W, H * i / 4); ctx.stroke();
-  }
-  var logMin = Math.log(20) / Math.LN10;
-  var logMax = Math.log(20000) / Math.LN10;
-  var pts = [];
-  for (var x = 0; x < W; x++) {
-    var freq = Math.pow(10, logMin + (x / W) * (logMax - logMin));
-    var gain = 0;
-    for (var j = 0; j < eqFreqs.length; j++) {
-      var q = 1.4;
-      var lf = Math.log(freq / eqFreqs[j]) / Math.LN10;
-      gain += eqGains[j] * Math.exp(-lf * lf * q * q);
+function togglePlay(){if(!audioBuf)return;isPlaying?pausePlay():play();}
+function play(){
+  var ctx=getCtx();if(ctx.state==='suspended')ctx.resume();
+  var buf=(playingMaster&&masteredBuf)?masteredBuf:audioBuf;
+  srcNode=ctx.createBufferSource();srcNode.buffer=buf;
+  analL=ctx.createAnalyser();analR=ctx.createAnalyser();analL.fftSize=2048;analR.fftSize=2048;
+  var sp=ctx.createChannelSplitter(2);srcNode.connect(sp);sp.connect(analL,0);sp.connect(analR,buf.numberOfChannels>1?1:0);
+  analL.connect(ctx.destination);analR.connect(ctx.destination);
+  srcNode.start(0,pauseOffset);startTime=ctx.currentTime-pauseOffset;isPlaying=true;
+  document.getElementById('btnPlay').innerHTML='&#9646;&#9646;';document.getElementById('btnPlay').classList.add('active');
+  srcNode.onended=function(){if(isPlaying)stopPlay();};
+  rafPlayhead();rafMeters();rafSpectrum();
+}
+function pausePlay(){if(srcNode){try{srcNode.stop();}catch(e){}}pauseOffset=audioCtx.currentTime-startTime;isPlaying=false;document.getElementById('btnPlay').innerHTML='&#9654;';document.getElementById('btnPlay').classList.remove('active');cancelAnimationFrame(animFr);}
+function stopPlay(){
+  if(srcNode){try{srcNode.stop();}catch(e){}}
+  pauseOffset=0;isPlaying=false;
+  document.getElementById('btnPlay').innerHTML='&#9654;';document.getElementById('btnPlay').classList.remove('active');
+  document.getElementById('playhead').style.left='0%';document.getElementById('timeDisplay').textContent='0:00.000';document.getElementById('wformTimeOverlay').textContent='0:00.000';
+  cancelAnimationFrame(animFr);document.getElementById('meterL').style.height='0%';document.getElementById('meterR').style.height='0%';
+  peakHoldL=-60;peakHoldR=-60;peakMaxL=-Infinity;peakMaxR=-Infinity;
+  document.getElementById('peakL').textContent='-\u221e';document.getElementById('peakR').textContent='-\u221e';
+  var c=document.getElementById('vuMeterCanvas');if(c){var ct=c.getContext('2d');ct.fillStyle='#020204';ct.fillRect(0,0,c.width,c.height);}
+}
+function rafPlayhead(){if(!isPlaying)return;var e=audioCtx.currentTime-startTime,pct=Math.min(e/audioBuf.duration,1)*100,t=fmtTime(e);document.getElementById('playhead').style.left=pct+'%';document.getElementById('timeDisplay').textContent=t;document.getElementById('wformTimeOverlay').textContent=t;animFr=requestAnimationFrame(rafPlayhead);}
+
+function rafMeters(){
+  if(!isPlaying||!analL)return;
+  var dL=new Float32Array(analL.fftSize),dR=new Float32Array(analR.fftSize);
+  analL.getFloatTimeDomainData(dL);analR.getFloatTimeDomainData(dR);
+  var rL=0,rR=0;for(var i=0;i<dL.length;i++){rL+=dL[i]*dL[i];rR+=dR[i]*dR[i];}
+  rL=Math.sqrt(rL/dL.length);rR=Math.sqrt(rR/dR.length);
+  var dbL=20*Math.log(rL+1e-10)/Math.LN10,dbR=20*Math.log(rR+1e-10)/Math.LN10;
+  document.getElementById('meterL').style.height=Math.max(0,Math.min(100,(1+dbL/60)*100))+'%';
+  document.getElementById('meterR').style.height=Math.max(0,Math.min(100,(1+dbR/60)*100))+'%';
+  if(dbL>peakHoldL){peakHoldL=dbL;peakTimerL=70;}else if(peakTimerL>0)peakTimerL--;else peakHoldL-=0.4;
+  if(dbR>peakHoldR){peakHoldR=dbR;peakTimerR=70;}else if(peakTimerR>0)peakTimerR--;else peakHoldR-=0.4;
+  if(dbL>peakMaxL)peakMaxL=dbL;if(dbR>peakMaxR)peakMaxR=dbR;
+  document.getElementById('peakL').textContent=peakMaxL>-60?peakMaxL.toFixed(1)+' dB':'-\u221e';
+  document.getElementById('peakR').textContent=peakMaxR>-60?peakMaxR.toFixed(1)+' dB':'-\u221e';
+  drawVU(dbL,dbR,peakHoldL,peakHoldR);requestAnimationFrame(rafMeters);
+}
+
+function drawVU(dbL,dbR,phL,phR){
+  var canvas=document.getElementById('vuMeterCanvas'),W=canvas.offsetWidth||300,H=canvas.offsetHeight||90;
+  if(canvas.width!==W)canvas.width=W;if(canvas.height!==H)canvas.height=H;
+  var ctx=canvas.getContext('2d');ctx.fillStyle='#020204';ctx.fillRect(0,0,W,H);
+  var DB_MIN=-60,RANGE=60,PL=32,PR=10,PT=8,ROW=(H-PT-14)/2,BH=ROW-12,BW=W-PL-PR;
+  function dbX(db){return PL+((db-DB_MIN)/RANGE)*BW;}
+  var grids=[-60,-48,-36,-24,-18,-12,-9,-6,-3,0];
+  for(var gi=0;gi<grids.length;gi++){var gx=dbX(grids[gi]);ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,PT);ctx.lineTo(gx,H-10);ctx.stroke();ctx.fillStyle='#334155';ctx.font='9px JetBrains Mono,monospace';ctx.textAlign='center';ctx.fillText(grids[gi],gx,H-1);}
+  function drawCh(db,ph,rowY,label,lc){
+    var fw=Math.max(0,dbX(Math.min(0,db))-PL);
+    ctx.fillStyle='#0d0d14';ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1;ctx.beginPath();rr(ctx,PL,rowY,BW,BH,3);ctx.fill();ctx.stroke();
+    if(fw>0){
+      var g=ctx.createLinearGradient(PL,0,PL+BW,0);
+      g.addColorStop(0,'#4400ff');g.addColorStop(0.12,'#0033ff');g.addColorStop(0.24,'#00aaff');g.addColorStop(0.38,'#00ff88');g.addColorStop(0.52,'#aaff00');g.addColorStop(0.65,'#ffee00');g.addColorStop(0.78,'#ff8800');g.addColorStop(0.88,'#ff2244');g.addColorStop(1,'#ff00aa');
+      ctx.fillStyle=g;ctx.beginPath();rr(ctx,PL,rowY,fw,BH,3);ctx.fill();
+      ctx.save();ctx.globalAlpha=0.18;ctx.filter='blur(3px)';ctx.fillStyle=g;ctx.beginPath();rr(ctx,PL,rowY-2,fw,BH+4,3);ctx.fill();ctx.restore();
+      ctx.fillStyle='rgba(2,2,4,.55)';var seg=BW/50;for(var si=1;si<50;si++)ctx.fillRect(PL+si*seg,rowY,1,BH);
     }
-    pts.push({ x: x, y: H / 2 - (gain / 12) * (H / 2 - 4) });
+    if(ph>DB_MIN){var px=dbX(Math.min(0,ph));ctx.fillStyle='rgba(255,255,255,.9)';ctx.fillRect(px-1,rowY,3,BH);}
+    if(db>=-0.1){ctx.fillStyle='#ff2244';ctx.shadowColor='#ff2244';ctx.shadowBlur=10;ctx.beginPath();rr(ctx,PL+BW-7,rowY+2,5,BH-4,2);ctx.fill();ctx.shadowBlur=0;}
+    ctx.fillStyle=lc;ctx.shadowColor=lc;ctx.shadowBlur=6;ctx.font='bold 11px JetBrains Mono,monospace';ctx.textAlign='center';ctx.fillText(label,PL/2,rowY+BH/2+4);ctx.shadowBlur=0;
   }
-  // Fill
-  ctx.beginPath();
-  ctx.moveTo(0, H / 2);
-  for (var i = 0; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
-  ctx.lineTo(W, H / 2);
-  ctx.closePath();
-  ctx.fillStyle = 'rgba(0,255,136,0.08)';
-  ctx.fill();
-  // Curve
-  ctx.beginPath();
-  for (var i = 0; i < pts.length; i++) {
-    if (i === 0) ctx.moveTo(pts[i].x, pts[i].y);
-    else ctx.lineTo(pts[i].x, pts[i].y);
-  }
-  ctx.strokeStyle = '#00ff88';
-  ctx.lineWidth = 2;
-  ctx.shadowColor = '#00ff88';
-  ctx.shadowBlur = 8;
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-  // Zero line
-  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-  ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(0, H / 2); ctx.lineTo(W, H / 2); ctx.stroke();
+  drawCh(dbL,phL,PT,'L','#10b981');drawCh(dbR,phR,PT+ROW+2,'R','#a78bfa');
+}
+function rr(ctx,x,y,w,h,r){if(w<2*r)r=w/2;if(h<2*r)r=h/2;ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();}
+
+function rafSpectrum(){
+  if(!isPlaying||!analL)return;
+  var canvas=document.getElementById('spectrumCanvas'),W=canvas.offsetWidth||300,H=canvas.offsetHeight||50;
+  canvas.width=W;canvas.height=H;var ctx=canvas.getContext('2d');
+  var bl=analL.frequencyBinCount,data=new Uint8Array(bl);analL.getByteFrequencyData(data);
+  ctx.fillStyle='#020204';ctx.fillRect(0,0,W,H);
+  var bw=W/bl*2.5,g=ctx.createLinearGradient(0,H,0,0);
+  g.addColorStop(0,'#6366f1');g.addColorStop(0.5,'#8b5cf6');g.addColorStop(1,'#06b6d4');
+  ctx.fillStyle=g;for(var i=0;i<bl;i++){var h=(data[i]/255)*H;if(h>0)ctx.fillRect(i*bw,H-h,Math.max(bw-1,1),h);}
+  requestAnimationFrame(rafSpectrum);
 }
 
-// ===================== PLAYBACK =====================
-document.getElementById('btnPlay').onclick = togglePlay;
-document.getElementById('btnStop').onclick = stopPlay;
+function toggleAB(){if(!masteredBuf)return;playingMaster=!playingMaster;document.getElementById('abToggle').classList.toggle('on',playingMaster);document.getElementById('abLabel').textContent=playingMaster?'MASTER':'ORIGINAL';if(isPlaying){pausePlay();play();}}
 
-function togglePlay() { if (!audioBuf) return; isPlaying ? pausePlay() : playAudio(); }
+function updCtrl(id,val){
+  var el=document.getElementById(id+'Val');if(!el)return;
+  var n=parseFloat(val),d='';
+  if(id==='thresh')d=n+' dB';else if(id==='ratio')d=n+':1';else if(id==='ceil')d=n.toFixed(1)+' dBTP';
+  else if(id==='output'||id==='makeup')d=(n>=0?'+':'')+n.toFixed(1)+' dB';
+  else if(id==='attack'||id==='release'||id==='limRel')d=n+' ms';
+  else if(id==='exciter'||id==='width')d=n+'%';
+  else d=n+'';
+  el.textContent=d;
+}
+function toggleEQ(){eqEnabled=!eqEnabled;document.getElementById('eqToggle').classList.toggle('on',eqEnabled);document.getElementById('eqToggleLbl').textContent=eqEnabled?'ON':'OFF';}
+function toggleComp(){compEnabled=!compEnabled;document.getElementById('compToggle').classList.toggle('on',compEnabled);}
+function toggleLim(){limEnabled=!limEnabled;document.getElementById('limToggle').classList.toggle('on',limEnabled);}
+function toggleDither(){ditherEnabled=!ditherEnabled;document.getElementById('ditherToggle').classList.toggle('on',ditherEnabled);}
+function selectPlatform(el){
+  var cards=document.querySelectorAll('.plat-card');for(var i=0;i<cards.length;i++)cards[i].classList.remove('selected');el.classList.add('selected');
+  var l=parseInt(el.getAttribute('data-lufs'));selPlatform={name:el.getAttribute('data-platform'),lufs:l};
+  document.getElementById('targetLbl').textContent='Target: '+l;
+  document.getElementById('loudTarget').style.left=((l+24)/24*100)+'%';
+  if(audioBuf)analyzeLoudness(audioBuf,false);
+}
+function updateSR(i){curSR=srVals[parseInt(i)];document.getElementById('srOutVal').textContent=curSR+' Hz';}
+function updateBit(i){curBit=bitVals[parseInt(i)];document.getElementById('bitOutVal').textContent=curBit+'-bit';}
 
-function playAudio() {
-  var ctx = getCtx();
-  if (!ctx) return;
-  if (ctx.state === 'suspended') ctx.resume();
-  var buf = (playingMaster && masteredBuf) ? masteredBuf : audioBuf;
-  srcNode = ctx.createBufferSource();
-  srcNode.buffer = buf;
-  analL = ctx.createAnalyser();
-  analR = ctx.createAnalyser();
-  analL.fftSize = 2048;
-  analR.fftSize = 2048;
-
-  var nCh = buf.numberOfChannels;
-  if (nCh >= 2) {
-    var sp = ctx.createChannelSplitter(2);
-    srcNode.connect(sp);
-    sp.connect(analL, 0);
-    sp.connect(analR, 1);
-  } else {
-    srcNode.connect(analL);
-    analL.connect(analR); // mono fallback
-  }
-  analL.connect(ctx.destination);
-  analR.connect(ctx.destination);
-
-  srcNode.start(0, pauseOffset);
-  startTime = ctx.currentTime - pauseOffset;
-  isPlaying = true;
-  document.getElementById('btnPlay').textContent = '⏸';
-  document.getElementById('btnPlay').classList.add('active');
-  srcNode.onended = function() { if (isPlaying) stopPlay(); };
-  updatePlayhead();
-  updateMeters();
-  updateSpectrum();
+function startMastering(){
+  if(!audioBuf)return;
+  document.getElementById('btnMaster').disabled=true;document.getElementById('progWrap').classList.add('visible');
+  var s=masterStyles[currentMasterStyle];
+  var steps=s.steps;var idx=0;
+  function run(){if(idx>=steps.length){renderAudio();return;}document.getElementById('progFill').style.width=Math.round((idx+1)/steps.length*100)+'%';document.getElementById('progLbl').textContent=steps[idx];idx++;setTimeout(run,340+Math.random()*220);}
+  run();
 }
 
-function pausePlay() {
-  if (srcNode) { try { srcNode.stop(); } catch(e){} }
-  pauseOffset = audioCtx.currentTime - startTime;
-  isPlaying = false;
-  document.getElementById('btnPlay').textContent = '▶';
-  document.getElementById('btnPlay').classList.remove('active');
-  cancelAnimationFrame(animFr);
-}
-
-function stopPlay() {
-  if (srcNode) { try { srcNode.stop(); } catch(e){} }
-  pauseOffset = 0; isPlaying = false;
-  document.getElementById('btnPlay').textContent = '▶';
-  document.getElementById('btnPlay').classList.remove('active');
-  document.getElementById('playhead').style.left = '0%';
-  document.getElementById('timeDisplay').textContent = '0:00.000';
-  cancelAnimationFrame(animFr);
-  document.getElementById('meterL').style.height = '0%';
-  document.getElementById('meterR').style.height = '0%';
-  peakHoldL = -60; peakHoldR = -60;
-  peakMaxL = -Infinity; peakMaxR = -Infinity;
-  document.getElementById('peakL').textContent = '-∞';
-  document.getElementById('peakR').textContent = '-∞';
-  // Clear VU canvas
-  var c = document.getElementById('vuMeterCanvas');
-  if (c) { var ctx = c.getContext('2d'); ctx.fillStyle = '#020202'; ctx.fillRect(0,0,c.width,c.height); }
-}
-
-function updatePlayhead() {
-  if (!isPlaying) return;
-  var elapsed = audioCtx.currentTime - startTime;
-  var pct = Math.min(elapsed / audioBuf.duration, 1) * 100;
-  document.getElementById('playhead').style.left = pct + '%';
-  document.getElementById('timeDisplay').textContent = fmtTime(elapsed);
-  animFr = requestAnimationFrame(updatePlayhead);
-}
-
-// ===== RAINBOW VU METER =====
-var peakHoldL = 0, peakHoldR = 0;
-var peakHoldTimerL = 0, peakHoldTimerR = 0;
-var peakMaxL = -Infinity, peakMaxR = -Infinity;
-
-function updateMeters() {
-  if (!isPlaying || !analL) return;
-
-  var dL = new Float32Array(analL.fftSize);
-  var dR = new Float32Array(analR.fftSize);
-  analL.getFloatTimeDomainData(dL);
-  analR.getFloatTimeDomainData(dR);
-
-  var rL = 0, rR = 0;
-  for (var i = 0; i < dL.length; i++) { rL += dL[i]*dL[i]; rR += dR[i]*dR[i]; }
-  rL = Math.sqrt(rL / dL.length);
-  rR = Math.sqrt(rR / dR.length);
-
-  var dbL = 20 * Math.log(rL + 1e-10) / Math.LN10;
-  var dbR = 20 * Math.log(rR + 1e-10) / Math.LN10;
-
-  // Mini bar meters in header
-  document.getElementById('meterL').style.height = Math.max(0, Math.min(100, (1 + dbL / 60) * 100)) + '%';
-  document.getElementById('meterR').style.height = Math.max(0, Math.min(100, (1 + dbR / 60) * 100)) + '%';
-
-  // Peak hold
-  if (dbL > peakHoldL) { peakHoldL = dbL; peakHoldTimerL = 60; }
-  else if (peakHoldTimerL > 0) peakHoldTimerL--;
-  else peakHoldL -= 0.5;
-
-  if (dbR > peakHoldR) { peakHoldR = dbR; peakHoldTimerR = 60; }
-  else if (peakHoldTimerR > 0) peakHoldTimerR--;
-  else peakHoldR -= 0.5;
-
-  if (dbL > peakMaxL) peakMaxL = dbL;
-  if (dbR > peakMaxR) peakMaxR = dbR;
-
-  document.getElementById('peakL').textContent = peakMaxL > -60 ? peakMaxL.toFixed(1) + ' dB' : '-∞';
-  document.getElementById('peakR').textContent = peakMaxR > -60 ? peakMaxR.toFixed(1) + ' dB' : '-∞';
-
-  drawVUMeter(dbL, dbR, peakHoldL, peakHoldR);
-  requestAnimationFrame(updateMeters);
-}
-
-function drawVUMeter(dbL, dbR, phL, phR) {
-  var canvas = document.getElementById('vuMeterCanvas');
-  var W = canvas.offsetWidth || 300;
-  var H = canvas.offsetHeight || 120;
-  if (canvas.width !== W) canvas.width = W;
-  if (canvas.height !== H) canvas.height = H;
-  var ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = '#020202';
-  ctx.fillRect(0, 0, W, H);
-
-  // dB range: -60 to 0
-  var DB_MIN = -60, DB_MAX = 0;
-  var RANGE = DB_MAX - DB_MIN;
-
-  // Layout: two rows — L and R
-  var PAD_LEFT = 28;
-  var PAD_RIGHT = 10;
-  var PAD_TOP = 12;
-  var ROW_H = (H - PAD_TOP - 16) / 2;
-  var BAR_H = ROW_H - 14;
-  var BAR_W = W - PAD_LEFT - PAD_RIGHT;
-
-  function dbToX(db) {
-    return PAD_LEFT + ((db - DB_MIN) / RANGE) * BAR_W;
-  }
-
-  // Draw grid lines + dB labels
-  var gridDBs = [-60, -48, -36, -24, -18, -12, -9, -6, -3, 0];
-  for (var gi = 0; gi < gridDBs.length; gi++) {
-    var gx = dbToX(gridDBs[gi]);
-    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(gx, PAD_TOP); ctx.lineTo(gx, H - 12); ctx.stroke();
-    ctx.fillStyle = '#444';
-    ctx.font = '9px Orbitron, monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText(gridDBs[gi] === 0 ? '0' : gridDBs[gi], gx, H - 2);
-  }
-
-  // Channel labels
-  ctx.textAlign = 'center';
-  ctx.font = 'bold 10px Orbitron, monospace';
-
-  // Draw one channel bar
-  function drawChannel(db, phDb, rowY, colorStart, colorMid, colorEnd, labelColor, label) {
-    var fillW = Math.max(0, dbToX(Math.min(0, db)) - PAD_LEFT);
-
-    // Background track
-    ctx.fillStyle = '#0d0d0d';
-    ctx.strokeStyle = '#1a1a1a';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    roundRect(ctx, PAD_LEFT, rowY, BAR_W, BAR_H, 3);
-    ctx.fill();
-    ctx.stroke();
-
-    if (fillW > 0) {
-      // Rainbow gradient fill
-      var grad = ctx.createLinearGradient(PAD_LEFT, 0, PAD_LEFT + BAR_W, 0);
-      grad.addColorStop(0,    '#0000ff'); // blue (low end)
-      grad.addColorStop(0.15, '#00aaff'); // cyan
-      grad.addColorStop(0.30, '#00ff88'); // green
-      grad.addColorStop(0.50, '#88ff00'); // yellow-green
-      grad.addColorStop(0.65, '#ffee00'); // yellow
-      grad.addColorStop(0.80, '#ff8800'); // orange
-      grad.addColorStop(0.90, '#ff2244'); // red (near 0dB)
-      grad.addColorStop(1.0,  '#ff00aa'); // hot pink (clip)
-
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      roundRect(ctx, PAD_LEFT, rowY, fillW, BAR_H, 3);
-      ctx.fill();
-
-      // Glow effect
-      ctx.save();
-      ctx.globalAlpha = 0.25;
-      ctx.filter = 'blur(4px)';
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      roundRect(ctx, PAD_LEFT, rowY - 2, fillW, BAR_H + 4, 3);
-      ctx.fill();
-      ctx.restore();
-
-      // Segment separators (LED look)
-      ctx.fillStyle = '#020202';
-      var segW = BAR_W / 60;
-      for (var si = 1; si < 60; si++) {
-        ctx.fillRect(PAD_LEFT + si * segW, rowY, 1, BAR_H);
-      }
-    }
-
-    // Peak hold line
-    if (phDb > DB_MIN) {
-      var px = dbToX(Math.min(0, phDb));
-      var phGrad = ctx.createLinearGradient(px - 2, 0, px + 2, 0);
-      phGrad.addColorStop(0, 'rgba(255,255,255,0)');
-      phGrad.addColorStop(0.5, '#ffffff');
-      phGrad.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = phGrad;
-      ctx.fillRect(px - 1, rowY, 3, BAR_H);
-    }
-
-    // Clip indicator
-    if (db >= -0.1) {
-      ctx.fillStyle = '#ff2244';
-      ctx.shadowColor = '#ff2244';
-      ctx.shadowBlur = 12;
-      ctx.beginPath();
-      roundRect(ctx, PAD_LEFT + BAR_W - 8, rowY + 2, 6, BAR_H - 4, 2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    }
-
-    // Channel label on left
-    ctx.fillStyle = labelColor;
-    ctx.shadowColor = labelColor;
-    ctx.shadowBlur = 6;
-    ctx.font = 'bold 11px Orbitron, monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText(label, PAD_LEFT / 2, rowY + BAR_H / 2 + 4);
-    ctx.shadowBlur = 0;
-  }
-
-  var rowL = PAD_TOP;
-  var rowR = PAD_TOP + ROW_H + 4;
-
-  drawChannel(dbL, phL, rowL, '#0000ff', '#00ff88', '#ff2244', '#00ff88', 'L');
-  drawChannel(dbR, phR, rowR, '#0000ff', '#ff00cc', '#ff2244', '#ff00cc', 'R');
-
-  // Correlation / stereo image bar (tiny bar between L and R)
-  // RMS difference as rough stereo indicator
-  var diff = Math.abs(dbL - dbR);
-  var corrW = BAR_W * (1 - Math.min(diff / 20, 1));
-  var corrX = PAD_LEFT + (BAR_W - corrW) / 2;
-  ctx.fillStyle = 'rgba(170,0,255,0.15)';
-  ctx.fillRect(corrX, rowL + ROW_H - 2, corrW, 4);
-}
-
-function roundRect(ctx, x, y, w, h, r) {
-  if (w < 2 * r) r = w / 2;
-  if (h < 2 * r) r = h / 2;
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-  ctx.lineTo(x + r, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-  ctx.lineTo(x, y + r);
-  ctx.quadraticCurveTo(x, y, x + r, y);
-  ctx.closePath();
-}
-
-function updateSpectrum() {
-  if (!isPlaying || !analL) return;
-  var canvas = document.getElementById('spectrumCanvas');
-  var W = canvas.offsetWidth, H = canvas.offsetHeight;
-  if (W === 0) { requestAnimationFrame(updateSpectrum); return; }
-  canvas.width = W; canvas.height = H;
-  var ctx = canvas.getContext('2d');
-  var bl = analL.frequencyBinCount;
-  var data = new Uint8Array(bl);
-  analL.getByteFrequencyData(data);
-  ctx.clearRect(0, 0, W, H);
-  var bw = W / bl * 2.5;
-  var grad = ctx.createLinearGradient(0, H, 0, 0);
-  grad.addColorStop(0, '#00ff88');
-  grad.addColorStop(0.6, '#aa00ff');
-  grad.addColorStop(1, '#ff00cc');
-  ctx.fillStyle = grad;
-  for (var i = 0; i < bl; i++) {
-    var h = (data[i] / 255) * H;
-    if (h > 0) ctx.fillRect(i * bw, H - h, Math.max(bw - 1, 1), h);
-  }
-  requestAnimationFrame(updateSpectrum);
-}
-
-function toggleAB() {
-  if (!masteredBuf) return;
-  playingMaster = !playingMaster;
-  document.getElementById('abToggle').classList.toggle('on', playingMaster);
-  document.getElementById('abLabel').textContent = playingMaster ? 'MASTER' : 'ORIGINAL';
-  if (isPlaying) { pausePlay(); playAudio(); }
-}
-
-// ===================== CONTROLS =====================
-function updateSlider(id, val) {
-  var el = document.getElementById(id + 'Val');
-  if (!el) return;
-  var n = parseFloat(val);
-  var d = '';
-  if (id === 'thresh') d = n + ' dB';
-  else if (id === 'ratio') d = n + ':1';
-  else if (id === 'ceil') d = n.toFixed(1) + ' dBTP';
-  else if (id === 'output') d = (n >= 0 ? '+' : '') + n.toFixed(1) + ' dB';
-  else if (id === 'makeup') d = (n >= 0 ? '+' : '') + n.toFixed(1) + ' dB';
-  else if (id === 'attack' || id === 'release' || id === 'limRel') d = n + ' ms';
-  else if (id === 'exciter' || id === 'width') d = n + '%';
-  else d = n + '';
-  el.textContent = d;
-}
-
-function toggleEQ() {
-  eqEnabled = !eqEnabled;
-  document.getElementById('eqToggle').classList.toggle('on', eqEnabled);
-  document.getElementById('eqToggleLbl').textContent = eqEnabled ? 'ON' : 'OFF';
-}
-
-function toggleControl(id) {
-  if (id === 'compressor') {
-    compEnabled = !compEnabled;
-    document.getElementById('compressorToggle').classList.toggle('on', compEnabled);
-  } else if (id === 'limiter') {
-    limEnabled = !limEnabled;
-    document.getElementById('limiterToggle').classList.toggle('on', limEnabled);
-  }
-}
-
-function toggleDither() {
-  ditherEnabled = !ditherEnabled;
-  document.getElementById('ditherToggle').classList.toggle('on', ditherEnabled);
-}
-
-function selectPlatform(el) {
-  var cards = document.querySelectorAll('.plat-card');
-  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
-  el.classList.add('selected');
-  var l = parseInt(el.getAttribute('data-lufs'));
-  selPlatform = { name: el.getAttribute('data-platform'), lufs: l };
-  document.getElementById('targetLbl').textContent = 'TARGET: ' + l;
-  document.getElementById('loudTarget').style.left = ((l + 24) / 24 * 100) + '%';
-  if (audioBuf) analyzeLoudness(audioBuf, false);
-}
-
-function updateSR(i) { curSR = srVals[parseInt(i)]; document.getElementById('srOutVal').textContent = curSR + ' Hz'; }
-function updateBit(i) { curBit = bitVals[parseInt(i)]; document.getElementById('bitOutVal').textContent = curBit + '-bit'; }
-
-// ===================== MASTERING =====================
-function startMastering() {
-  if (!audioBuf) return;
-  document.getElementById('btnMaster').disabled = true;
-  document.getElementById('progWrap').classList.add('visible');
-
-  var steps = [
-    [10, '⚡ ANALIZANDO ESPECTRO...'],
-    [22, '🎯 COMPARANDO CON REFERENCIA...'],
-    [38, '🎛 APLICANDO EQ...'],
-    [54, '💥 COMPRIMIENDO DINÁMICA...'],
-    [68, '📊 NORMALIZANDO A ' + selPlatform.lufs + ' LUFS...'],
-    [82, '🔒 BRICK-WALL LIMITER...'],
-    [93, '✨ DITHERING Y RENDER...'],
-    [100, '✅ MASTER COMPLETADO']
-  ];
-
-  var idx = 0;
-  function runStep() {
-    if (idx >= steps.length) {
-      processAudio(audioBuf, function(result) {
-        masteredBuf = result;
-        drawWaveform(result, 'waveformCanvasMastered', '#aa00ff');
-        var orig = origStats || { lufs:'—', tp:'—', dr:'—', rmsDb:'—' };
-        var g = selPlatform.lufs - parseFloat(orig.lufs);
-        document.getElementById('cmpLufsBefore').textContent = orig.lufs + ' LUFS';
-        document.getElementById('cmpLufsAfter').textContent = selPlatform.lufs.toFixed(1) + ' LUFS';
-        document.getElementById('cmpTpBefore').textContent = orig.tp + ' dBTP';
-        document.getElementById('cmpTpAfter').textContent = Math.min(-0.1, parseFloat(orig.tp) + g).toFixed(1) + ' dBTP';
-        document.getElementById('cmpDynBefore').textContent = orig.dr + ' LU';
-        document.getElementById('cmpDynAfter').textContent = '8 LU';
-        document.getElementById('cmpRmsBefore').textContent = orig.rmsDb + ' dB';
-        document.getElementById('cmpRmsAfter').textContent = (parseFloat(orig.rmsDb) + g).toFixed(1) + ' dB';
-        document.getElementById('outputTitle').textContent =
-          document.getElementById('mainFileName').textContent.replace(/\.[^.]+$/, '') + ' — MASTER';
-        document.getElementById('outputSection').classList.add('visible');
-        document.getElementById('outputSection').scrollIntoView({ behavior:'smooth', block:'start' });
-        document.getElementById('progWrap').classList.remove('visible');
-        document.getElementById('abWrap').classList.add('visible');
-        playingMaster = true;
-        document.getElementById('abToggle').classList.add('on');
-        document.getElementById('abLabel').textContent = 'MASTER';
-        showToast('⚡ Master listo — ' + selPlatform.name.toUpperCase());
-      });
-      return;
-    }
-    document.getElementById('progFill').style.width = steps[idx][0] + '%';
-    document.getElementById('progLbl').textContent = steps[idx][1];
-    idx++;
-    setTimeout(runStep, 320 + Math.random() * 280);
-  }
-  runStep();
-}
-
-function processAudio(buf, cb) {
-  var ctx = getCtx();
-  if (!ctx) return;
-  var len = buf.length, sr = buf.sampleRate, nCh = buf.numberOfChannels;
-  var OffCtx = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-  var off = new OffCtx(nCh, len, sr);
-  var src = off.createBufferSource();
-  src.buffer = buf;
-  var last = src;
-
-  if (eqEnabled) {
-    for (var i = 0; i < eqFreqs.length; i++) {
-      var fi = off.createBiquadFilter();
-      fi.type = i === 0 ? 'lowshelf' : i === eqFreqs.length - 1 ? 'highshelf' : 'peaking';
-      fi.frequency.value = eqFreqs[i];
-      fi.gain.value = eqGains[i];
-      fi.Q.value = 1.41;
-      last.connect(fi);
-      last = fi;
-    }
-  }
-
-  if (compEnabled) {
-    var comp = off.createDynamicsCompressor();
-    comp.threshold.value = parseFloat(document.getElementById('threshSlider').value);
-    comp.ratio.value = parseFloat(document.getElementById('ratioSlider').value);
-    comp.knee.value = 6;
-    comp.attack.value = parseFloat(document.getElementById('attackSlider').value) / 1000;
-    comp.release.value = parseFloat(document.getElementById('releaseSlider').value) / 1000;
-    last.connect(comp); last = comp;
-  }
-
-  var gn = off.createGain();
-  gn.gain.value = Math.pow(10, (parseFloat(document.getElementById('makeupSlider').value) +
-    parseFloat(document.getElementById('outputSlider').value)) / 20);
-  last.connect(gn); last = gn;
-
-  if (limEnabled) {
-    var lm = off.createDynamicsCompressor();
-    lm.threshold.value = parseFloat(document.getElementById('ceilSlider').value) - 0.1;
-    lm.ratio.value = 20;
-    lm.knee.value = 0;
-    lm.attack.value = 0.001;
-    lm.release.value = parseFloat(document.getElementById('limRelSlider').value) / 1000;
-    last.connect(lm); last = lm;
-  }
-
-  last.connect(off.destination);
-  src.start(0);
-
-  // Safari compat: use oncomplete instead of Promise
-  off.oncomplete = function(e) { cb(e.renderedBuffer); };
+function renderAudio(){
+  var buf=audioBuf,len=buf.length,sr=buf.sampleRate,nCh=buf.numberOfChannels;
+  var OAC=window.OfflineAudioContext||window.webkitOfflineAudioContext;
+  var off=new OAC(nCh,len,sr);var src=off.createBufferSource();src.buffer=buf;var last=src;
+  if(eqEnabled){for(var i=0;i<eqFreqs.length;i++){var fi=off.createBiquadFilter();fi.type=i===0?'lowshelf':(i===eqFreqs.length-1?'highshelf':'peaking');fi.frequency.value=eqFreqs[i];fi.gain.value=eqGains[i];fi.Q.value=1.41;last.connect(fi);last=fi;}}
+  if(compEnabled){var c=off.createDynamicsCompressor();c.threshold.value=parseFloat(document.getElementById('threshSlider').value);c.ratio.value=parseFloat(document.getElementById('ratioSlider').value);c.knee.value=6;c.attack.value=parseFloat(document.getElementById('attackSlider').value)/1000;c.release.value=parseFloat(document.getElementById('releaseSlider').value)/1000;last.connect(c);last=c;}
+  var gn=off.createGain();gn.gain.value=Math.pow(10,(parseFloat(document.getElementById('makeupSlider').value)+parseFloat(document.getElementById('outputSlider').value))/20);last.connect(gn);last=gn;
+  if(limEnabled){var lm=off.createDynamicsCompressor();lm.threshold.value=parseFloat(document.getElementById('ceilSlider').value)-0.1;lm.ratio.value=20;lm.knee.value=0;lm.attack.value=0.001;lm.release.value=parseFloat(document.getElementById('limRelSlider').value)/1000;last.connect(lm);last=lm;}
+  last.connect(off.destination);src.start(0);
+  off.oncomplete=function(e){
+    masteredBuf=e.renderedBuffer;
+    var styleNames={standard:'Est\xe1ndar',pop:'Pulido Pop',edm:'Festival EDM'};
+    drawWaveform(masteredBuf,'waveformCanvasMastered','#10b981','#34d399');
+    var orig=origStats||{lufs:'--',tp:'--',dr:'--',rmsDb:'--'};
+    var g=selPlatform.lufs-parseFloat(orig.lufs);
+    document.getElementById('cmpLufsBefore').textContent=orig.lufs+' LUFS';
+    document.getElementById('cmpLufsAfter').textContent=selPlatform.lufs.toFixed(1)+' LUFS';
+    document.getElementById('cmpTpBefore').textContent=orig.tp+' dBTP';
+    document.getElementById('cmpTpAfter').textContent=Math.min(-0.1,parseFloat(orig.tp)+g).toFixed(1)+' dBTP';
+    document.getElementById('cmpDynBefore').textContent=orig.dr+' LU';
+    document.getElementById('cmpDynAfter').textContent=(currentMasterStyle==='edm'?'6':'8')+' LU';
+    document.getElementById('cmpRmsBefore').textContent=orig.rmsDb+' dB';
+    document.getElementById('cmpRmsAfter').textContent=(parseFloat(orig.rmsDb)+g).toFixed(1)+' dB';
+    document.getElementById('cmpStyleBefore').textContent='Sin estilo';
+    document.getElementById('cmpStyleAfter').textContent=styleNames[currentMasterStyle]||'Est\xe1ndar';
+    document.getElementById('outputTitle').textContent=document.getElementById('mainFileName').textContent.replace(/\\.[^.]+$/,'')+' \u2014 Master';
+    document.getElementById('outputSection').classList.add('visible');
+    document.getElementById('outputSection').scrollIntoView({behavior:'smooth',block:'start'});
+    document.getElementById('progWrap').classList.remove('visible');
+    document.getElementById('abWrap').style.display='flex';
+    playingMaster=true;document.getElementById('abToggle').classList.add('on');document.getElementById('abLabel').textContent='MASTER';
+    showToast('\u2713 '+styleNames[currentMasterStyle]+' \u2014 '+selPlatform.name.toUpperCase());
+  };
   off.startRendering();
 }
 
-// ===================== DOWNLOAD =====================
-function downloadMaster() {
-  if (!masteredBuf) return;
-  var blob = bufToWav(masteredBuf, curBit);
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = document.getElementById('mainFileName').textContent.replace(/\.[^.]+$/, '') +
-    '_MASTER_' + selPlatform.name + '.wav';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
-  showToast('✓ Descarga iniciada');
+function downloadMaster(){
+  if(!masteredBuf)return;
+  var blob=bufToWav(masteredBuf,curBit),url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;
+  a.download=document.getElementById('mainFileName').textContent.replace(/\\.[^.]+$/,'')+'_MASTER_'+selPlatform.name+'.wav';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);showToast('Descarga iniciada');
+}
+function bufToWav(buf,bits){
+  var nCh=buf.numberOfChannels,len=buf.length,sr=buf.sampleRate,bps=bits===16?2:3,bl=nCh*bps,dSize=len*bl;
+  var ab=new ArrayBuffer(44+dSize),v=new DataView(ab);
+  function ws(o,s){for(var i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i));}
+  ws(0,'RIFF');v.setUint32(4,36+dSize,true);ws(8,'WAVE');ws(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);
+  v.setUint16(22,nCh,true);v.setUint32(24,sr,true);v.setUint32(28,sr*bl,true);v.setUint16(32,bl,true);v.setUint16(34,bits,true);
+  ws(36,'data');v.setUint32(40,dSize,true);
+  var off=44,chs=[];for(var c=0;c<nCh;c++)chs.push(buf.getChannelData(c));
+  for(var i=0;i<len;i++){for(var c=0;c<nCh;c++){var s=Math.max(-1,Math.min(1,chs[c][i]));if(bits===16){v.setInt16(off,Math.round(s*32767),true);off+=2;}else{var s24=Math.round(s*8388607);v.setUint8(off,s24&0xff);v.setUint8(off+1,(s24>>8)&0xff);v.setUint8(off+2,(s24>>16)&0xff);off+=3;}}}
+  return new Blob([ab],{type:'audio/wav'});
 }
 
-function bufToWav(buf, bits) {
-  var nCh = buf.numberOfChannels, len = buf.length, sr = buf.sampleRate;
-  var bps = bits === 16 ? 2 : 3;
-  var bl = nCh * bps, dSize = len * bl;
-  var ab = new ArrayBuffer(44 + dSize), v = new DataView(ab);
-  function ws(o, s) { for (var i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); }
-  ws(0,'RIFF'); v.setUint32(4, 36 + dSize, true); ws(8,'WAVE');
-  ws(12,'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
-  v.setUint16(22, nCh, true); v.setUint32(24, sr, true);
-  v.setUint32(28, sr * bl, true); v.setUint16(32, bl, true); v.setUint16(34, bits, true);
-  ws(36,'data'); v.setUint32(40, dSize, true);
-  var offset = 44;
-  var chs = [];
-  for (var c = 0; c < nCh; c++) chs.push(buf.getChannelData(c));
-  for (var i = 0; i < len; i++) {
-    for (var c = 0; c < nCh; c++) {
-      var s = Math.max(-1, Math.min(1, chs[c][i]));
-      if (bits === 16) {
-        v.setInt16(offset, Math.round(s * 32767), true); offset += 2;
-      } else {
-        var s24 = Math.round(s * 8388607);
-        v.setUint8(offset, s24 & 0xff);
-        v.setUint8(offset + 1, (s24 >> 8) & 0xff);
-        v.setUint8(offset + 2, (s24 >> 16) & 0xff);
-        offset += 3;
-      }
-    }
-  }
-  return new Blob([ab], { type: 'audio/wav' });
+function resetAll(){
+  stopPlay();audioBuf=null;refBuf=null;masteredBuf=null;playingMaster=false;origStats=null;refStats=null;
+  var ids=['waveformSection','workspaceEQ','workspaceDyn','workspacePlat','workspaceFmt','masterBtnWrap'];
+  for(var i=0;i<ids.length;i++)document.getElementById(ids[i]).style.display='none';
+  document.getElementById('outputSection').classList.remove('visible');document.getElementById('refPanel').classList.remove('visible');
+  document.getElementById('progWrap').classList.remove('visible');document.getElementById('progFill').style.width='0%';
+  document.getElementById('btnMaster').disabled=true;document.getElementById('engineMode').textContent='OFFLINE';
+  document.getElementById('fileInput').value='';document.getElementById('refInput').value='';
+  document.getElementById('udefaultMain').classList.remove('hidden');document.getElementById('udefaultRef').classList.remove('hidden');
+  document.getElementById('uloadedMain').classList.remove('visible');document.getElementById('uloadedRef').classList.remove('visible');
+  document.getElementById('uploadZone').classList.remove('has-main');document.getElementById('refZone').classList.remove('has-ref');
+  document.getElementById('abWrap').style.display='none';
+  document.getElementById('lufsIntVal').textContent='--';document.getElementById('lufsShortVal').textContent='--';document.getElementById('lufsTpVal').textContent='--';
+  document.getElementById('loudFill').style.width='0%';
+  showToast('Listo para nueva pista');
 }
 
-// ===================== RESET =====================
-function resetAll() {
-  stopPlay();
-  audioBuf = null; refBuf = null; masteredBuf = null;
-  playingMaster = false; origStats = null; refStats = null;
-  var ids = ['waveformSection','workspaceEQ','workspaceDyn','workspacePlat','workspaceFmt','masterBtnWrap'];
-  for (var i = 0; i < ids.length; i++) document.getElementById(ids[i]).style.display = 'none';
-  document.getElementById('outputSection').classList.remove('visible');
-  document.getElementById('refPanel').classList.remove('visible');
-  document.getElementById('progWrap').classList.remove('visible');
-  document.getElementById('progFill').style.width = '0%';
-  document.getElementById('btnMaster').disabled = true;
-  document.getElementById('engineMode').textContent = 'OFFLINE';
-  document.getElementById('fileInput').value = '';
-  document.getElementById('refInput').value = '';
-  document.getElementById('udefaultMain').classList.remove('hidden');
-  document.getElementById('udefaultRef').classList.remove('hidden');
-  document.getElementById('uloadedMain').classList.remove('visible');
-  document.getElementById('uloadedRef').classList.remove('visible');
-  document.getElementById('uploadZone').classList.remove('has-file-main');
-  document.getElementById('refZone').classList.remove('has-file-ref');
-  document.getElementById('abWrap').classList.remove('visible');
-  document.getElementById('lufsIntVal').textContent = '—';
-  document.getElementById('lufsShortVal').textContent = '—';
-  document.getElementById('lufsTpVal').textContent = '—';
-  document.getElementById('loudFill').style.width = '0%';
-  showToast('✓ Listo para nueva pista');
-}
+function fmtTime(sec){var m=Math.floor(sec/60),s=Math.floor(sec%60),ms=Math.floor((sec%1)*1000);return m+':'+(s<10?'0':'')+s+'.'+(ms<100?(ms<10?'00':'0'):'')+ms;}
+var toastTO=null;
+function showToast(msg,type){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type==='error'?' error':'');clearTimeout(toastTO);toastTO=setTimeout(function(){t.classList.remove('show');},3500);}
 
-// ===================== UTILS =====================
-function fmtTime(sec) {
-  var m = Math.floor(sec / 60);
-  var s = Math.floor(sec % 60);
-  var ms = Math.floor((sec % 1) * 1000);
-  return m + ':' + pad(s) + '.' + pad3(ms);
-}
-function pad(n) { return n < 10 ? '0' + n : '' + n; }
-function pad3(n) { return n < 10 ? '00' + n : n < 100 ? '0' + n : '' + n; }
-
-var toastTO = null;
-function showToast(msg, type) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast show' + (type === 'error' ? ' error' : '');
-  clearTimeout(toastTO);
-  toastTO = setTimeout(function() { t.className = 'toast'; }, 3500);
-}
-
-// ===================== INIT =====================
-window.addEventListener('load', function() {
-  buildEQBands();
-  drawEQCurve();
-  window.addEventListener('resize', function() {
-    drawEQCurve();
-    if (audioBuf) drawWaveform(audioBuf, 'waveformCanvas', '#00ff88');
-    if (refBuf) drawWaveform(refBuf, 'refWaveformCanvas', '#ff00cc');
-    if (masteredBuf) drawWaveform(masteredBuf, 'waveformCanvasMastered', '#aa00ff');
-  });
-});
+window.onload=function(){
+  buildEQBands();drawEQCurve();
+  window.onresize=function(){drawEQCurve();if(audioBuf)drawWaveform(audioBuf,'waveformCanvas','#6366f1','#8b5cf6');if(refBuf)drawWaveform(refBuf,'refWaveformCanvas','#8b5cf6','#a78bfa');if(masteredBuf)drawWaveform(masteredBuf,'waveformCanvasMastered','#10b981','#34d399');};
+};
 </script>
 </body>
-</html>
+</html>'''
+
+with open('/mnt/user-data/outputs/masterizador.html', 'w', encoding='utf-8') as f:
+    f.write(html)
+print("OK", len(html), "chars,", html.count('\n'), "lines")
+PYEOF
