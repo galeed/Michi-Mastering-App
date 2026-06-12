@@ -675,14 +675,14 @@ document.getElementById('fileInput').addEventListener('change',function(e){if(e.
 document.getElementById('refInput').addEventListener('change',function(e){if(e.target.files[0])loadRef(e.target.files[0]);});
 
 function loadMain(file){
-  if(!/\\.(wav|aif|aiff|flac|mp3)$/i.test(file.name)){showToast('Formato no soportado','error');return;}
+  if(!/\.(wav|aif|aiff|flac|mp3)$/i.test(file.name)){showToast('Formato no soportado','error');return;}
   showToast('Cargando pista...');document.getElementById('engineMode').textContent='CARGANDO';
   var ctx=getCtx();var r=new FileReader();
   r.onload=function(e){
     ctx.decodeAudioData(e.target.result,function(buf){
       audioBuf=buf;
       document.getElementById('mainFileName').textContent=file.name;
-      document.getElementById('mainFileMeta').textContent=buf.sampleRate+'Hz \xb7 '+fmtTime(buf.duration)+' \xb7 '+(file.size/1048576).toFixed(1)+'MB';
+      document.getElementById('mainFileMeta').textContent=buf.sampleRate+'Hz · '+fmtTime(buf.duration)+' · '+(file.size/1048576).toFixed(1)+'MB';
       document.getElementById('udefaultMain').classList.add('hidden');
       document.getElementById('uloadedMain').classList.add('visible');
       document.getElementById('uploadZone').classList.add('has-main');
@@ -692,20 +692,20 @@ function loadMain(file){
       document.getElementById('engineMode').textContent='LISTO';
       drawWaveform(buf,'waveformCanvas','#6366f1','#8b5cf6');
       analyzeLoudness(buf,false);
-      showToast('\u2713 Pista cargada');
+      showToast('✓ Pista cargada');
     },function(){showToast('Error al decodificar','error');document.getElementById('engineMode').textContent='ERROR';});
   };r.readAsArrayBuffer(file);
 }
 
 function loadRef(file){
-  if(!/\\.(wav|aif|aiff|flac|mp3)$/i.test(file.name)){showToast('Formato no soportado','error');return;}
+  if(!/\.(wav|aif|aiff|flac|mp3)$/i.test(file.name)){showToast('Formato no soportado','error');return;}
   showToast('Analizando referencia...');
   var ctx=getCtx();var r=new FileReader();
   r.onload=function(e){
     ctx.decodeAudioData(e.target.result,function(buf){
       refBuf=buf;
       document.getElementById('refFileName').textContent=file.name;
-      document.getElementById('refFileMeta').textContent=buf.sampleRate+'Hz \xb7 '+fmtTime(buf.duration);
+      document.getElementById('refFileMeta').textContent=buf.sampleRate+'Hz · '+fmtTime(buf.duration);
       document.getElementById('udefaultRef').classList.add('hidden');
       document.getElementById('uloadedRef').classList.add('visible');
       document.getElementById('refZone').classList.add('has-ref');
@@ -713,7 +713,7 @@ function loadRef(file){
       drawWaveform(buf,'refWaveformCanvas','#8b5cf6','#a78bfa');
       document.getElementById('refPanel').classList.add('visible');
       if(autoRefEnabled)applyRefAdjustments();
-      showToast('\u2713 Referencia cargada');
+      showToast('✓ Referencia cargada');
     },function(){showToast('Error al cargar referencia','error');});
   };r.readAsArrayBuffer(file);
 }
@@ -749,8 +749,8 @@ function buildRefSuggestion(){
   var gn=origL!==null?(refStats.lufs-origL).toFixed(1):'?';
   var ceil=Math.max(-6,Math.min(-0.1,refStats.tp-0.3)).toFixed(1);
   var txt='Referencia: '+refStats.lufs+' LUFS | TP: '+refStats.tp+' dBTP | RMS: '+refStats.rmsDb+' dB';
-  if(origL!==null)txt+='\\n\\nTu pista est\xe1 en '+origL+' LUFS. Necesitas '+(gn>0?'+':'')+gn+' dB de ganancia.';
-  txt+='\\n\\nCeiling sugerido: '+ceil+' dBTP.\\nMakeup Gain y Ceiling configurados autom\xe1ticamente.';
+  if(origL!==null)txt+='\n\nTu pista está en '+origL+' LUFS. Necesitas '+(gn>0?'+':'')+gn+' dB de ganancia.';
+  txt+='\n\nCeiling sugerido: '+ceil+' dBTP.\nMakeup Gain y Ceiling configurados automáticamente.';
   document.getElementById('refSugText').textContent=txt;
 }
 
@@ -838,7 +838,7 @@ function stopPlay(){
   document.getElementById('playhead').style.left='0%';document.getElementById('timeDisplay').textContent='0:00.000';document.getElementById('wformTimeOverlay').textContent='0:00.000';
   cancelAnimationFrame(animFr);document.getElementById('meterL').style.height='0%';document.getElementById('meterR').style.height='0%';
   peakHoldL=-60;peakHoldR=-60;peakMaxL=-Infinity;peakMaxR=-Infinity;
-  document.getElementById('peakL').textContent='-\u221e';document.getElementById('peakR').textContent='-\u221e';
+  document.getElementById('peakL').textContent='-∞';document.getElementById('peakR').textContent='-∞';
   var c=document.getElementById('vuMeterCanvas');if(c){var ct=c.getContext('2d');ct.fillStyle='#020204';ct.fillRect(0,0,c.width,c.height);}
 }
 function rafPlayhead(){if(!isPlaying)return;var e=audioCtx.currentTime-startTime,pct=Math.min(e/audioBuf.duration,1)*100,t=fmtTime(e);document.getElementById('playhead').style.left=pct+'%';document.getElementById('timeDisplay').textContent=t;document.getElementById('wformTimeOverlay').textContent=t;animFr=requestAnimationFrame(rafPlayhead);}
@@ -855,8 +855,8 @@ function rafMeters(){
   if(dbL>peakHoldL){peakHoldL=dbL;peakTimerL=70;}else if(peakTimerL>0)peakTimerL--;else peakHoldL-=0.4;
   if(dbR>peakHoldR){peakHoldR=dbR;peakTimerR=70;}else if(peakTimerR>0)peakTimerR--;else peakHoldR-=0.4;
   if(dbL>peakMaxL)peakMaxL=dbL;if(dbR>peakMaxR)peakMaxR=dbR;
-  document.getElementById('peakL').textContent=peakMaxL>-60?peakMaxL.toFixed(1)+' dB':'-\u221e';
-  document.getElementById('peakR').textContent=peakMaxR>-60?peakMaxR.toFixed(1)+' dB':'-\u221e';
+  document.getElementById('peakL').textContent=peakMaxL>-60?peakMaxL.toFixed(1)+' dB':'-∞';
+  document.getElementById('peakR').textContent=peakMaxR>-60?peakMaxR.toFixed(1)+' dB':'-∞';
   drawVU(dbL,dbR,peakHoldL,peakHoldR);requestAnimationFrame(rafMeters);
 }
 
@@ -944,7 +944,7 @@ function renderAudio(){
   last.connect(off.destination);src.start(0);
   off.oncomplete=function(e){
     masteredBuf=e.renderedBuffer;
-    var styleNames={standard:'Est\xe1ndar',pop:'Pulido Pop',edm:'Festival EDM'};
+    var styleNames={standard:'Estándar',pop:'Pulido Pop',edm:'Festival EDM'};
     drawWaveform(masteredBuf,'waveformCanvasMastered','#10b981','#34d399');
     var orig=origStats||{lufs:'--',tp:'--',dr:'--',rmsDb:'--'};
     var g=selPlatform.lufs-parseFloat(orig.lufs);
@@ -957,14 +957,14 @@ function renderAudio(){
     document.getElementById('cmpRmsBefore').textContent=orig.rmsDb+' dB';
     document.getElementById('cmpRmsAfter').textContent=(parseFloat(orig.rmsDb)+g).toFixed(1)+' dB';
     document.getElementById('cmpStyleBefore').textContent='Sin estilo';
-    document.getElementById('cmpStyleAfter').textContent=styleNames[currentMasterStyle]||'Est\xe1ndar';
-    document.getElementById('outputTitle').textContent=document.getElementById('mainFileName').textContent.replace(/\\.[^.]+$/,'')+' \u2014 Master';
+    document.getElementById('cmpStyleAfter').textContent=styleNames[currentMasterStyle]||'Estándar';
+    document.getElementById('outputTitle').textContent=document.getElementById('mainFileName').textContent.replace(/\.[^.]+$/,'')+' — Master';
     document.getElementById('outputSection').classList.add('visible');
     document.getElementById('outputSection').scrollIntoView({behavior:'smooth',block:'start'});
     document.getElementById('progWrap').classList.remove('visible');
     document.getElementById('abWrap').style.display='flex';
     playingMaster=true;document.getElementById('abToggle').classList.add('on');document.getElementById('abLabel').textContent='MASTER';
-    showToast('\u2713 '+styleNames[currentMasterStyle]+' \u2014 '+selPlatform.name.toUpperCase());
+    showToast('✓ '+styleNames[currentMasterStyle]+' — '+selPlatform.name.toUpperCase());
   };
   off.startRendering();
 }
@@ -973,7 +973,7 @@ function downloadMaster(){
   if(!masteredBuf)return;
   var blob=bufToWav(masteredBuf,curBit),url=URL.createObjectURL(blob);
   var a=document.createElement('a');a.href=url;
-  a.download=document.getElementById('mainFileName').textContent.replace(/\\.[^.]+$/,'')+'_MASTER_'+selPlatform.name+'.wav';
+  a.download=document.getElementById('mainFileName').textContent.replace(/\.[^.]+$/,'')+'_MASTER_'+selPlatform.name+'.wav';
   document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);showToast('Descarga iniciada');
 }
 function bufToWav(buf,bits){
