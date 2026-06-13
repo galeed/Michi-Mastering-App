@@ -62,9 +62,10 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
 /* ============================================================
    MASTERING STYLE CARDS
    ============================================================ */
-.style-grid{display:flex;gap:12px;flex-wrap:wrap}
+.style-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:560px){.style-grid{grid-template-columns:repeat(2,1fr);gap:8px}}
+
 .style-card{
-  flex:1 1 calc(33% - 12px);min-width:140px;
   background:rgba(255,255,255,.04);
   border:2px solid rgba(255,255,255,.1);
   border-radius:14px;padding:16px 14px;cursor:pointer;
@@ -72,7 +73,7 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
   transition:all .25s;position:relative;overflow:hidden;
   -webkit-tap-highlight-color:transparent
 }
-@media(max-width:500px){.style-card{flex:1 1 100%}}
+@media(max-width:560px){.style-card{padding:12px 9px;gap:6px}}
 
 .style-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity .25s}
 .style-card:hover{transform:translateY(-2px)}
@@ -98,6 +99,41 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
 .style-card.sc-edm.selected{border-color:#06b6d4;background:rgba(6,182,212,.08);box-shadow:0 0 28px rgba(6,182,212,.25)}
 .style-card.sc-edm.selected::before{opacity:1}
 
+/* Efecto Universal */
+.style-card.sc-universal{border-color:rgba(245,158,11,.3)}
+.style-card.sc-universal::before{background:linear-gradient(90deg,#f59e0b,#fbbf24,#fde047)}
+.style-card.sc-universal:hover{box-shadow:0 4px 24px rgba(245,158,11,.15)}
+.style-card.sc-universal.selected{border-color:#f59e0b;background:rgba(245,158,11,.08);box-shadow:0 0 28px rgba(245,158,11,.25)}
+.style-card.sc-universal.selected::before{opacity:1}
+
+/* Efecto Fuego */
+.style-card.sc-fire{border-color:rgba(249,115,22,.3)}
+.style-card.sc-fire::before{background:linear-gradient(90deg,#dc2626,#f97316,#facc15)}
+.style-card.sc-fire:hover{box-shadow:0 4px 24px rgba(249,115,22,.15)}
+.style-card.sc-fire.selected{border-color:#f97316;background:rgba(249,115,22,.08);box-shadow:0 0 28px rgba(249,115,22,.25)}
+.style-card.sc-fire.selected::before{opacity:1}
+
+/* Efecto Cinta */
+.style-card.sc-cinta{border-color:rgba(180,83,9,.35)}
+.style-card.sc-cinta::before{background:linear-gradient(90deg,#78350f,#b45309,#d97706)}
+.style-card.sc-cinta:hover{box-shadow:0 4px 24px rgba(180,83,9,.15)}
+.style-card.sc-cinta.selected{border-color:#b45309;background:rgba(180,83,9,.08);box-shadow:0 0 28px rgba(180,83,9,.25)}
+.style-card.sc-cinta.selected::before{opacity:1}
+
+/* Efecto Espacial */
+.style-card.sc-espacial{border-color:rgba(59,130,246,.3)}
+.style-card.sc-espacial::before{background:linear-gradient(90deg,#1e3a8a,#3b82f6,#06b6d4,#67e8f9)}
+.style-card.sc-espacial:hover{box-shadow:0 4px 24px rgba(59,130,246,.15)}
+.style-card.sc-espacial.selected{border-color:#3b82f6;background:rgba(59,130,246,.08);box-shadow:0 0 28px rgba(59,130,246,.25)}
+.style-card.sc-espacial.selected::before{opacity:1}
+
+/* Efecto Empuje */
+.style-card.sc-empuje{border-color:rgba(220,38,38,.3)}
+.style-card.sc-empuje::before{background:linear-gradient(90deg,#7f1d1d,#dc2626,#ef4444)}
+.style-card.sc-empuje:hover{box-shadow:0 4px 24px rgba(220,38,38,.15)}
+.style-card.sc-empuje.selected{border-color:#dc2626;background:rgba(220,38,38,.08);box-shadow:0 0 28px rgba(220,38,38,.25)}
+.style-card.sc-empuje.selected::before{opacity:1}
+
 .sc-check{
   position:absolute;top:8px;right:10px;
   width:18px;height:18px;border-radius:50%;
@@ -108,12 +144,22 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
 .style-card.sc-pop.selected .sc-check{background:#ec4899;opacity:1}
 .style-card.sc-edm.selected .sc-check{background:#06b6d4;opacity:1}
 .style-card.sc-standard.selected .sc-check{background:#6366f1;opacity:1}
+.style-card.sc-universal.selected .sc-check{background:#f59e0b;opacity:1}
+.style-card.sc-fire.selected .sc-check{background:#f97316;opacity:1}
+.style-card.sc-cinta.selected .sc-check{background:#b45309;opacity:1}
+.style-card.sc-espacial.selected .sc-check{background:#3b82f6;opacity:1}
+.style-card.sc-empuje.selected .sc-check{background:#dc2626;opacity:1}
 
 .sc-emoji{font-size:26px;line-height:1}
 .sc-name{font-size:15px;font-weight:800;letter-spacing:.5px;color:#e2e8f0}
 .style-card.sc-pop.selected .sc-name{color:#f9a8d4}
 .style-card.sc-edm.selected .sc-name{color:#67e8f9}
 .style-card.sc-standard.selected .sc-name{color:#c4b5fd}
+.style-card.sc-universal.selected .sc-name{color:#fde047}
+.style-card.sc-fire.selected .sc-name{color:#fdba74}
+.style-card.sc-cinta.selected .sc-name{color:#fcd9a8}
+.style-card.sc-espacial.selected .sc-name{color:#93c5fd}
+.style-card.sc-empuje.selected .sc-name{color:#f87171}
 
 .sc-desc{font-size:12px;color:#64748b;line-height:1.5}
 .sc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
@@ -121,6 +167,11 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
 .style-card.sc-pop.selected .sc-tag{background:rgba(236,72,153,.12);color:#f9a8d4;border-color:rgba(236,72,153,.25)}
 .style-card.sc-edm.selected .sc-tag{background:rgba(6,182,212,.12);color:#67e8f9;border-color:rgba(6,182,212,.25)}
 .style-card.sc-standard.selected .sc-tag{background:rgba(99,102,241,.12);color:#c4b5fd;border-color:rgba(99,102,241,.25)}
+.style-card.sc-universal.selected .sc-tag{background:rgba(245,158,11,.12);color:#fde047;border-color:rgba(245,158,11,.25)}
+.style-card.sc-fire.selected .sc-tag{background:rgba(249,115,22,.12);color:#fdba74;border-color:rgba(249,115,22,.25)}
+.style-card.sc-cinta.selected .sc-tag{background:rgba(180,83,9,.12);color:#fcd9a8;border-color:rgba(180,83,9,.25)}
+.style-card.sc-espacial.selected .sc-tag{background:rgba(59,130,246,.12);color:#93c5fd;border-color:rgba(59,130,246,.25)}
+.style-card.sc-empuje.selected .sc-tag{background:rgba(220,38,38,.12);color:#f87171;border-color:rgba(220,38,38,.25)}
 
 .sc-params{
   margin-top:6px;padding:10px;
@@ -134,6 +185,11 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
 .style-card.sc-pop.selected .sc-param-val{color:#f9a8d4}
 .style-card.sc-edm.selected .sc-param-val{color:#67e8f9}
 .style-card.sc-standard.selected .sc-param-val{color:#a5b4fc}
+.style-card.sc-universal.selected .sc-param-val{color:#fde047}
+.style-card.sc-fire.selected .sc-param-val{color:#fdba74}
+.style-card.sc-cinta.selected .sc-param-val{color:#fcd9a8}
+.style-card.sc-espacial.selected .sc-param-val{color:#93c5fd}
+.style-card.sc-empuje.selected .sc-param-val{color:#f87171}
 
 /* REF PANEL */
 .ref-panel{display:none}
@@ -262,6 +318,11 @@ select:focus{border-color:#6366f1}
 .btn-master.style-standard{background:linear-gradient(135deg,#6366f1,#8b5cf6);box-shadow:0 8px 32px rgba(99,102,241,.35)}
 .btn-master.style-pop{background:linear-gradient(135deg,#ec4899,#f43f5e,#fb923c);box-shadow:0 8px 32px rgba(236,72,153,.35)}
 .btn-master.style-edm{background:linear-gradient(135deg,#06b6d4,#6366f1,#8b5cf6);box-shadow:0 8px 32px rgba(6,182,212,.35)}
+.btn-master.style-universal{background:linear-gradient(135deg,#f59e0b,#fbbf24);box-shadow:0 8px 32px rgba(245,158,11,.35)}
+.btn-master.style-fire{background:linear-gradient(135deg,#dc2626,#f97316,#facc15);box-shadow:0 8px 32px rgba(220,38,38,.35)}
+.btn-master.style-cinta{background:linear-gradient(135deg,#78350f,#b45309,#d97706);box-shadow:0 8px 32px rgba(180,83,9,.35)}
+.btn-master.style-espacial{background:linear-gradient(135deg,#1e3a8a,#3b82f6,#06b6d4);box-shadow:0 8px 32px rgba(59,130,246,.35)}
+.btn-master.style-empuje{background:linear-gradient(135deg,#7f1d1d,#dc2626,#ef4444);box-shadow:0 8px 32px rgba(220,38,38,.35)}
 .btn-master:hover{transform:translateY(-2px);filter:brightness(1.1)}
 .btn-master:active{transform:translateY(0)}
 .btn-master:disabled{background:rgba(255,255,255,.06)!important;color:#475569!important;cursor:not-allowed!important;box-shadow:none!important;transform:none!important;filter:none!important}
@@ -327,16 +388,16 @@ input[type="file"]{display:none}
   <div>
     <div class="sec-hd">&#127925; Cargar Pistas <div class="sec-line"></div></div>
     <div class="upload-row">
-      <div class="uzone" id="uploadZone" ondragover="onDragOver(event,'main')" ondragleave="onDragLeave('main')" ondrop="onDrop(event,'main')" onclick="document.getElementById('fileInput').click()">
+      <label class="uzone" id="uploadZone" for="fileInput" ondragover="onDragOver(event,'main')" ondragleave="onDragLeave('main')" ondrop="onDrop(event,'main')">
         <div class="udefault" id="udefaultMain"><span class="u-emoji">&#127925;</span><div class="u-title">Pista a Masterizar</div><div class="u-sub">WAV &middot; FLAC &middot; MP3 &middot; AIFF<br><em>Seleccionar archivo</em></div></div>
         <div class="uloaded" id="uloadedMain"><span class="u-emoji">&#127925;</span><div class="u-fn" id="mainFileName">&mdash;</div><div class="u-meta" id="mainFileMeta">&mdash;</div></div>
-        <input type="file" id="fileInput" accept=".wav,.aif,.aiff,.flac,.mp3">
-      </div>
-      <div class="uzone ref-zone" id="refZone" ondragover="onDragOver(event,'ref')" ondragleave="onDragLeave('ref')" ondrop="onDrop(event,'ref')" onclick="document.getElementById('refInput').click()">
+        <input type="file" id="fileInput" accept="audio/*,.wav,.aif,.aiff,.flac,.mp3,.m4a,.ogg">
+      </label>
+      <label class="uzone ref-zone" id="refZone" for="refInput" ondragover="onDragOver(event,'ref')" ondragleave="onDragLeave('ref')" ondrop="onDrop(event,'ref')">
         <div class="udefault" id="udefaultRef"><span class="u-emoji">&#127919;</span><div class="u-title">Pista de Referencia</div><div class="u-sub">Pista ya masterizada<br>para usarla como gu&iacute;a<br><em>Seleccionar archivo</em></div></div>
         <div class="uloaded" id="uloadedRef"><span class="u-emoji">&#127919;</span><div class="u-fn" id="refFileName">&mdash;</div><div class="u-meta" id="refFileMeta">&mdash;</div><div class="ref-badge">&#10003; Referencia activa</div></div>
-        <input type="file" id="refInput" accept=".wav,.aif,.aiff,.flac,.mp3">
-      </div>
+        <input type="file" id="refInput" accept="audio/*,.wav,.aif,.aiff,.flac,.mp3,.m4a,.ogg">
+      </label>
     </div>
   </div>
 
@@ -387,6 +448,81 @@ input[type="file"]{display:none}
           <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.3 dBTP</span></div>
           <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">162%</span></div>
           <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-9 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- EFECTO UNIVERSAL -->
+      <div class="style-card sc-universal" id="styleUniversal" onclick="selectMasterStyle('universal',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#127760;</div>
+        <div class="sc-name">Universal</div>
+        <div class="sc-desc">Realce tonal organico y dinamica equilibrada. Sonido radio-ready en cualquier altavoz.</div>
+        <div class="sc-tags"><span class="sc-tag">Rock</span><span class="sc-tag">Pop</span><span class="sc-tag">Alternativo</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">2.5:1 &bull; -12dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.0 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">106%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-14 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- EFECTO FUEGO -->
+      <div class="style-card sc-fire" id="styleFire" onclick="selectMasterStyle('fire',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#128293;</div>
+        <div class="sc-name">Fuego</div>
+        <div class="sc-desc">Graves contundentes y claridad en medios sin tapar las voces. Energia para destacar.</div>
+        <div class="sc-tags"><span class="sc-tag">Trap</span><span class="sc-tag">Hip-Hop</span><span class="sc-tag">Reggaet&oacute;n</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">4:1 &bull; -13dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.7 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">108%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-14 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- EFECTO CINTA -->
+      <div class="style-card sc-cinta" id="styleCinta" onclick="selectMasterStyle('cinta',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#128253;</div>
+        <div class="sc-name">Cinta</div>
+        <div class="sc-desc">Saturaci&oacute;n c&aacute;lida de cinta anal&oacute;gica con compresi&oacute;n suave. Textura vintage llena de cuerpo.</div>
+        <div class="sc-tags"><span class="sc-tag">Indie</span><span class="sc-tag">Jazz</span><span class="sc-tag">Rock</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">2.2:1 &bull; -16dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.3 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">95%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-16 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- EFECTO ESPACIAL -->
+      <div class="style-card sc-espacial" id="styleEspacial" onclick="selectMasterStyle('espacial',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#127756;</div>
+        <div class="sc-name">Espacial</div>
+        <div class="sc-desc">Expande la imagen estereo y abre el aire en agudos. Sensaci&oacute;n inmersiva y atmosf&eacute;rica.</div>
+        <div class="sc-tags"><span class="sc-tag">Ambient</span><span class="sc-tag">Cinem&aacute;tico</span><span class="sc-tag">Chill</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">2:1 &bull; -15dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.0 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">178%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-16 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- EFECTO EMPUJE -->
+      <div class="style-card sc-empuje" id="styleEmpuje" onclick="selectMasterStyle('empuje',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#128074;</div>
+        <div class="sc-name">Empuje</div>
+        <div class="sc-desc">Bajos energ&eacute;ticos y agudos brillantes para m&aacute;ximo impacto. Alternativa intensa a Fuego.</div>
+        <div class="sc-tags"><span class="sc-tag">Hip-Hop</span><span class="sc-tag">Rap</span><span class="sc-tag">Drill</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">3.5:1 &bull; -11dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.4 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">112%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-8 LUFS</span></div>
         </div>
       </div>
 
@@ -606,6 +742,46 @@ var masterStyles={
     thresh:-10,ratio:3,attack:5,release:200,makeup:5,
     ceil:-0.3,limRel:25,width:162,output:1.5,
     platform:'soundcloud',steps:['Analizando espectro EDM...','Amplificando sub y graves...','Compresion fast-attack (3:1)...','Normalizando -9 LUFS (club)...','Hard limiter -0.3 dBTP...','Ensanchando estereo 162%...','Festival EDM listo']
+  },
+  universal:{
+    name:'Universal',emoji:'',
+    // EQ: Gentle smile curve - subtle bass + air, balanced for any genre
+    eq:[1.5, 0.5, -0.5, 0, 0.5, 1.5, 1.5, 1.5],
+    thresh:-12,ratio:2.5,attack:15,release:140,makeup:1.5,
+    ceil:-1.0,limRel:60,width:106,output:0.3,
+    platform:'spotify',steps:['Analizando espectro...','Realce tonal organico...','Compresion dinamica suave...','Normalizando a -14 LUFS...','Limiter transparente -1.0 dBTP...','Dithering y render...','Efecto Universal listo']
+  },
+  fire:{
+    name:'Fuego',emoji:'',
+    // EQ: Big sub/bass push, cut mud @250Hz, midrange clarity, controlled highs
+    eq:[4.0, 2.0, -1.0, 0, 1.0, 2.5, 1.5, 0.5],
+    thresh:-13,ratio:4,attack:8,release:110,makeup:3.5,
+    ceil:-0.7,limRel:30,width:108,output:0.5,
+    platform:'spotify',steps:['Analizando espectro...','Empuje de graves Fuego...','Claridad en medios...','Normalizando a -14 LUFS...','Limiter punchy -0.7 dBTP...','Saturando calidez...','Efecto Fuego listo']
+  },
+  cinta:{
+    name:'Cinta',emoji:'',
+    // EQ: Warm low-mid boost, gentle high-frequency rolloff (analog tape character)
+    eq:[1.0, 1.5, 0.5, 0.5, 0, -0.5, -1.5, -3.0],
+    thresh:-16,ratio:2.2,attack:25,release:220,makeup:1.0,
+    ceil:-1.3,limRel:90,width:95,output:0,
+    platform:'apple',steps:['Analizando espectro...','Calentando con saturacion de cinta...','Compresion analogica suave...','Normalizando a -16 LUFS...','Limiter vintage -1.3 dBTP...','Anadiendo calidez armonica...','Efecto Cinta listo']
+  },
+  espacial:{
+    name:'Espacial',emoji:'',
+    // EQ: Slight mid scoop for "space", lifted highs for air, max stereo width
+    eq:[0.5, 0, -0.5, -1.0, -0.5, 0.5, 2.5, 3.5],
+    thresh:-15,ratio:2,attack:22,release:220,makeup:1.0,
+    ceil:-1.0,limRel:75,width:178,output:0,
+    platform:'apple',steps:['Analizando espectro...','Expandiendo imagen estereo...','Creando espacio y aire...','Normalizando a -16 LUFS...','Limiter espacial -1.0 dBTP...','Ensanchando hasta 178%...','Efecto Espacial listo']
+  },
+  empuje:{
+    name:'Empuje',emoji:'',
+    // EQ: V-shape - strong sub push + boosted highs, fast attack for impact
+    eq:[4.5, 1.5, 0, 0, 0.5, 1.5, 3.0, 2.5],
+    thresh:-11,ratio:3.5,attack:5,release:95,makeup:4.0,
+    ceil:-0.4,limRel:20,width:112,output:0.8,
+    platform:'soundcloud',steps:['Analizando espectro...','Bajos energeticos...','Brillo en agudos...','Normalizando a -8 LUFS...','Hard limiter -0.4 dBTP...','Maximo impacto...','Efecto Empuje listo']
   }
 };
 
@@ -674,48 +850,79 @@ function onDrop(e,z){e.preventDefault();document.getElementById(z==='main'?'uplo
 document.getElementById('fileInput').addEventListener('change',function(e){if(e.target.files[0])loadMain(e.target.files[0]);});
 document.getElementById('refInput').addEventListener('change',function(e){if(e.target.files[0])loadRef(e.target.files[0]);});
 
+function readFileAsArrayBuffer(file){
+  // Modern Promise-based path (Safari 14+, Chrome, Firefox)
+  if(file.arrayBuffer)return file.arrayBuffer();
+  // Fallback for older browsers
+  return new Promise(function(resolve,reject){
+    var r=new FileReader();
+    r.onload=function(e){resolve(e.target.result);};
+    r.onerror=function(){reject(r.error||new Error('FileReader error'));};
+    r.readAsArrayBuffer(file);
+  });
+}
+
+function decodeAudio(ctx,arrayBuffer){
+  // Promise-based decodeAudioData (modern browsers). Falls back to
+  // the older callback signature for older Safari/WebKit builds.
+  return new Promise(function(resolve,reject){
+    var p=ctx.decodeAudioData(arrayBuffer,function(buf){resolve(buf);},function(err){reject(err||new Error('decodeAudioData failed'));});
+    if(p&&typeof p.then==='function'){p.then(resolve,reject);}
+  });
+}
+
 function loadMain(file){
-  if(!/\.(wav|aif|aiff|flac|mp3)$/i.test(file.name)){showToast('Formato no soportado','error');return;}
-  showToast('Cargando pista...');document.getElementById('engineMode').textContent='CARGANDO';
-  var ctx=getCtx();var r=new FileReader();
-  r.onload=function(e){
-    ctx.decodeAudioData(e.target.result,function(buf){
-      audioBuf=buf;
-      document.getElementById('mainFileName').textContent=file.name;
-      document.getElementById('mainFileMeta').textContent=buf.sampleRate+'Hz · '+fmtTime(buf.duration)+' · '+(file.size/1048576).toFixed(1)+'MB';
-      document.getElementById('udefaultMain').classList.add('hidden');
-      document.getElementById('uloadedMain').classList.add('visible');
-      document.getElementById('uploadZone').classList.add('has-main');
-      var ids=['waveformSection','workspaceEQ','workspaceDyn','workspacePlat','workspaceFmt','masterBtnWrap'];
-      for(var i=0;i<ids.length;i++)document.getElementById(ids[i]).style.display='block';
-      document.getElementById('btnMaster').disabled=false;
-      document.getElementById('engineMode').textContent='LISTO';
-      drawWaveform(buf,'waveformCanvas','#6366f1','#8b5cf6');
-      analyzeLoudness(buf,false);
-      showToast('✓ Pista cargada');
-    },function(){showToast('Error al decodificar','error');document.getElementById('engineMode').textContent='ERROR';});
-  };r.readAsArrayBuffer(file);
+  if(!file){return;}
+  showToast('Cargando pista...');
+  document.getElementById('engineMode').textContent='CARGANDO';
+  var ctx=getCtx();
+  if(ctx.state==='suspended'){ctx.resume();}
+  readFileAsArrayBuffer(file).then(function(arrayBuffer){
+    return decodeAudio(ctx,arrayBuffer);
+  }).then(function(buf){
+    audioBuf=buf;
+    document.getElementById('mainFileName').textContent=file.name;
+    document.getElementById('mainFileMeta').textContent=buf.sampleRate+'Hz \xb7 '+fmtTime(buf.duration)+' \xb7 '+(file.size/1048576).toFixed(1)+'MB';
+    document.getElementById('udefaultMain').classList.add('hidden');
+    document.getElementById('uloadedMain').classList.add('visible');
+    document.getElementById('uploadZone').classList.add('has-main');
+    var ids=['waveformSection','workspaceEQ','workspaceDyn','workspacePlat','workspaceFmt','masterBtnWrap'];
+    for(var i=0;i<ids.length;i++)document.getElementById(ids[i]).style.display='block';
+    document.getElementById('btnMaster').disabled=false;
+    document.getElementById('engineMode').textContent='LISTO';
+    drawWaveform(buf,'waveformCanvas','#6366f1','#8b5cf6');
+    analyzeLoudness(buf,false);
+    showToast('\u2713 Pista cargada');
+  }).catch(function(err){
+    console.error('loadMain error:',err);
+    showToast('No se pudo leer el audio: formato no soportado por el navegador','error');
+    document.getElementById('engineMode').textContent='ERROR';
+  });
 }
 
 function loadRef(file){
-  if(!/\.(wav|aif|aiff|flac|mp3)$/i.test(file.name)){showToast('Formato no soportado','error');return;}
+  if(!file){return;}
   showToast('Analizando referencia...');
-  var ctx=getCtx();var r=new FileReader();
-  r.onload=function(e){
-    ctx.decodeAudioData(e.target.result,function(buf){
-      refBuf=buf;
-      document.getElementById('refFileName').textContent=file.name;
-      document.getElementById('refFileMeta').textContent=buf.sampleRate+'Hz · '+fmtTime(buf.duration);
-      document.getElementById('udefaultRef').classList.add('hidden');
-      document.getElementById('uloadedRef').classList.add('visible');
-      document.getElementById('refZone').classList.add('has-ref');
-      analyzeLoudness(buf,true);
-      drawWaveform(buf,'refWaveformCanvas','#8b5cf6','#a78bfa');
-      document.getElementById('refPanel').classList.add('visible');
-      if(autoRefEnabled)applyRefAdjustments();
-      showToast('✓ Referencia cargada');
-    },function(){showToast('Error al cargar referencia','error');});
-  };r.readAsArrayBuffer(file);
+  var ctx=getCtx();
+  if(ctx.state==='suspended'){ctx.resume();}
+  readFileAsArrayBuffer(file).then(function(arrayBuffer){
+    return decodeAudio(ctx,arrayBuffer);
+  }).then(function(buf){
+    refBuf=buf;
+    document.getElementById('refFileName').textContent=file.name;
+    document.getElementById('refFileMeta').textContent=buf.sampleRate+'Hz \xb7 '+fmtTime(buf.duration);
+    document.getElementById('udefaultRef').classList.add('hidden');
+    document.getElementById('uloadedRef').classList.add('visible');
+    document.getElementById('refZone').classList.add('has-ref');
+    analyzeLoudness(buf,true);
+    drawWaveform(buf,'refWaveformCanvas','#8b5cf6','#a78bfa');
+    document.getElementById('refPanel').classList.add('visible');
+    if(autoRefEnabled)applyRefAdjustments();
+    showToast('\u2713 Referencia cargada');
+  }).catch(function(err){
+    console.error('loadRef error:',err);
+    showToast('No se pudo leer el audio: formato no soportado por el navegador','error');
+  });
 }
 
 function analyzeLoudness(buf,isRef){
@@ -821,6 +1028,8 @@ function togglePlay(){if(!audioBuf)return;isPlaying?pausePlay():play();}
 function play(){
   var ctx=getCtx();if(ctx.state==='suspended')ctx.resume();
   var buf=(playingMaster&&masteredBuf)?masteredBuf:audioBuf;
+  if(pauseOffset>=buf.duration){stopPlay();return;}
+  if(pauseOffset<0)pauseOffset=0;
   srcNode=ctx.createBufferSource();srcNode.buffer=buf;
   analL=ctx.createAnalyser();analR=ctx.createAnalyser();analL.fftSize=2048;analR.fftSize=2048;
   var sp=ctx.createChannelSplitter(2);srcNode.connect(sp);sp.connect(analL,0);sp.connect(analR,buf.numberOfChannels>1?1:0);
@@ -977,14 +1186,28 @@ function downloadMaster(){
   document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);showToast('Descarga iniciada');
 }
 function bufToWav(buf,bits){
-  var nCh=buf.numberOfChannels,len=buf.length,sr=buf.sampleRate,bps=bits===16?2:3,bl=nCh*bps,dSize=len*bl;
+  var nCh=buf.numberOfChannels,len=buf.length,sr=buf.sampleRate;
+  var bps=bits===16?2:(bits===32?4:3);
+  var bl=nCh*bps,dSize=len*bl;
   var ab=new ArrayBuffer(44+dSize),v=new DataView(ab);
   function ws(o,s){for(var i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i));}
   ws(0,'RIFF');v.setUint32(4,36+dSize,true);ws(8,'WAVE');ws(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);
   v.setUint16(22,nCh,true);v.setUint32(24,sr,true);v.setUint32(28,sr*bl,true);v.setUint16(32,bl,true);v.setUint16(34,bits,true);
   ws(36,'data');v.setUint32(40,dSize,true);
   var off=44,chs=[];for(var c=0;c<nCh;c++)chs.push(buf.getChannelData(c));
-  for(var i=0;i<len;i++){for(var c=0;c<nCh;c++){var s=Math.max(-1,Math.min(1,chs[c][i]));if(bits===16){v.setInt16(off,Math.round(s*32767),true);off+=2;}else{var s24=Math.round(s*8388607);v.setUint8(off,s24&0xff);v.setUint8(off+1,(s24>>8)&0xff);v.setUint8(off+2,(s24>>16)&0xff);off+=3;}}}
+  for(var i=0;i<len;i++){
+    for(var c=0;c<nCh;c++){
+      var s=Math.max(-1,Math.min(1,chs[c][i]));
+      if(bits===16){
+        v.setInt16(off,Math.round(s*32767),true);off+=2;
+      }else if(bits===32){
+        v.setInt32(off,Math.round(s*2147483647),true);off+=4;
+      }else{
+        var s24=Math.round(s*8388607);
+        v.setUint8(off,s24&0xff);v.setUint8(off+1,(s24>>8)&0xff);v.setUint8(off+2,(s24>>16)&0xff);off+=3;
+      }
+    }
+  }
   return new Blob([ab],{type:'audio/wav'});
 }
 
