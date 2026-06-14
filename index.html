@@ -62,8 +62,9 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
 /* ============================================================
    MASTERING STYLE CARDS
    ============================================================ */
-.style-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(max-width:560px){.style-grid{grid-template-columns:repeat(2,1fr);gap:8px}}
+.style-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:700px){.style-grid{grid-template-columns:repeat(3,1fr);gap:8px}}
+@media(max-width:480px){.style-grid{grid-template-columns:repeat(2,1fr);gap:8px}}
 
 .style-card{
   background:rgba(255,255,255,.04);
@@ -134,6 +135,41 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
 .style-card.sc-empuje.selected{border-color:#dc2626;background:rgba(220,38,38,.08);box-shadow:0 0 28px rgba(220,38,38,.25)}
 .style-card.sc-empuje.selected::before{opacity:1}
 
+/* Extreme Punch */
+.style-card.sc-extreme{border-color:rgba(249,115,22,.4)}
+.style-card.sc-extreme::before{background:linear-gradient(90deg,#f97316,#facc15,#fb923c)}
+.style-card.sc-extreme:hover{box-shadow:0 4px 24px rgba(249,115,22,.2)}
+.style-card.sc-extreme.selected{border-color:#f97316;background:rgba(249,115,22,.1);box-shadow:0 0 30px rgba(249,115,22,.3)}
+.style-card.sc-extreme.selected::before{opacity:1}
+
+/* Cinematic Mix */
+.style-card.sc-cinematic{border-color:rgba(14,165,233,.3)}
+.style-card.sc-cinematic::before{background:linear-gradient(90deg,#1e40af,#0284c7,#06b6d4,#67e8f9)}
+.style-card.sc-cinematic:hover{box-shadow:0 4px 24px rgba(14,165,233,.15)}
+.style-card.sc-cinematic.selected{border-color:#0284c7;background:rgba(14,165,233,.08);box-shadow:0 0 28px rgba(14,165,233,.25)}
+.style-card.sc-cinematic.selected::before{opacity:1}
+
+/* Max Loudness */
+.style-card.sc-maxloud{border-color:rgba(34,197,94,.35)}
+.style-card.sc-maxloud::before{background:linear-gradient(90deg,#15803d,#22c55e,#84cc16,#a3e635)}
+.style-card.sc-maxloud:hover{box-shadow:0 4px 24px rgba(34,197,94,.2)}
+.style-card.sc-maxloud.selected{border-color:#22c55e;background:rgba(34,197,94,.08);box-shadow:0 0 28px rgba(34,197,94,.3)}
+.style-card.sc-maxloud.selected::before{opacity:1}
+
+/* Trippy Bass */
+.style-card.sc-trippy{border-color:rgba(168,85,247,.35)}
+.style-card.sc-trippy::before{background:linear-gradient(90deg,#7c3aed,#a855f7,#e879f9,#f0abfc)}
+.style-card.sc-trippy:hover{box-shadow:0 4px 24px rgba(168,85,247,.2)}
+.style-card.sc-trippy.selected{border-color:#a855f7;background:rgba(168,85,247,.08);box-shadow:0 0 28px rgba(168,85,247,.3)}
+.style-card.sc-trippy.selected::before{opacity:1}
+
+/* Studio Presence */
+.style-card.sc-studio{border-color:rgba(234,179,8,.3)}
+.style-card.sc-studio::before{background:linear-gradient(90deg,#a16207,#d97706,#f59e0b,#fde047)}
+.style-card.sc-studio:hover{box-shadow:0 4px 24px rgba(234,179,8,.15)}
+.style-card.sc-studio.selected{border-color:#d97706;background:rgba(234,179,8,.08);box-shadow:0 0 28px rgba(234,179,8,.25)}
+.style-card.sc-studio.selected::before{opacity:1}
+
 .sc-check{
   position:absolute;top:8px;right:10px;
   width:18px;height:18px;border-radius:50%;
@@ -150,8 +186,14 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
 .style-card.sc-espacial.selected .sc-check{background:#3b82f6;opacity:1}
 .style-card.sc-empuje.selected .sc-check{background:#dc2626;opacity:1}
 
-.sc-emoji{font-size:26px;line-height:1}
-.sc-name{font-size:15px;font-weight:800;letter-spacing:.5px;color:#e2e8f0}
+.style-card.sc-extreme.selected .sc-check{background:#f97316;opacity:1}
+.style-card.sc-cinematic.selected .sc-check{background:#0284c7;opacity:1}
+.style-card.sc-maxloud.selected .sc-check{background:#22c55e;opacity:1}
+.style-card.sc-trippy.selected .sc-check{background:#a855f7;opacity:1}
+.style-card.sc-studio.selected .sc-check{background:#d97706;opacity:1}
+
+.sc-emoji{font-size:22px;line-height:1}
+.sc-name{font-size:13px;font-weight:800;letter-spacing:.3px;color:#e2e8f0}
 .style-card.sc-pop.selected .sc-name{color:#f9a8d4}
 .style-card.sc-edm.selected .sc-name{color:#67e8f9}
 .style-card.sc-standard.selected .sc-name{color:#c4b5fd}
@@ -160,6 +202,11 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
 .style-card.sc-cinta.selected .sc-name{color:#fcd9a8}
 .style-card.sc-espacial.selected .sc-name{color:#93c5fd}
 .style-card.sc-empuje.selected .sc-name{color:#f87171}
+.style-card.sc-extreme.selected .sc-name{color:#fdba74}
+.style-card.sc-cinematic.selected .sc-name{color:#7dd3fc}
+.style-card.sc-maxloud.selected .sc-name{color:#86efac}
+.style-card.sc-trippy.selected .sc-name{color:#d8b4fe}
+.style-card.sc-studio.selected .sc-name{color:#fde68a}
 
 .sc-desc{font-size:12px;color:#64748b;line-height:1.5}
 .sc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
@@ -172,6 +219,11 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
 .style-card.sc-cinta.selected .sc-tag{background:rgba(180,83,9,.12);color:#fcd9a8;border-color:rgba(180,83,9,.25)}
 .style-card.sc-espacial.selected .sc-tag{background:rgba(59,130,246,.12);color:#93c5fd;border-color:rgba(59,130,246,.25)}
 .style-card.sc-empuje.selected .sc-tag{background:rgba(220,38,38,.12);color:#f87171;border-color:rgba(220,38,38,.25)}
+.style-card.sc-extreme.selected .sc-tag{background:rgba(249,115,22,.12);color:#fdba74;border-color:rgba(249,115,22,.25)}
+.style-card.sc-cinematic.selected .sc-tag{background:rgba(14,165,233,.12);color:#7dd3fc;border-color:rgba(14,165,233,.25)}
+.style-card.sc-maxloud.selected .sc-tag{background:rgba(34,197,94,.12);color:#86efac;border-color:rgba(34,197,94,.25)}
+.style-card.sc-trippy.selected .sc-tag{background:rgba(168,85,247,.12);color:#d8b4fe;border-color:rgba(168,85,247,.25)}
+.style-card.sc-studio.selected .sc-tag{background:rgba(234,179,8,.12);color:#fde68a;border-color:rgba(234,179,8,.25)}
 
 .sc-params{
   margin-top:6px;padding:10px;
@@ -190,6 +242,11 @@ main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0
 .style-card.sc-cinta.selected .sc-param-val{color:#fcd9a8}
 .style-card.sc-espacial.selected .sc-param-val{color:#93c5fd}
 .style-card.sc-empuje.selected .sc-param-val{color:#f87171}
+.style-card.sc-extreme.selected .sc-param-val{color:#fdba74}
+.style-card.sc-cinematic.selected .sc-param-val{color:#7dd3fc}
+.style-card.sc-maxloud.selected .sc-param-val{color:#86efac}
+.style-card.sc-trippy.selected .sc-param-val{color:#d8b4fe}
+.style-card.sc-studio.selected .sc-param-val{color:#fde68a}
 
 /* REF PANEL */
 .ref-panel{display:none}
@@ -323,6 +380,11 @@ select:focus{border-color:#6366f1}
 .btn-master.style-cinta{background:linear-gradient(135deg,#78350f,#b45309,#d97706);box-shadow:0 8px 32px rgba(180,83,9,.35)}
 .btn-master.style-espacial{background:linear-gradient(135deg,#1e3a8a,#3b82f6,#06b6d4);box-shadow:0 8px 32px rgba(59,130,246,.35)}
 .btn-master.style-empuje{background:linear-gradient(135deg,#7f1d1d,#dc2626,#ef4444);box-shadow:0 8px 32px rgba(220,38,38,.35)}
+.btn-master.style-extreme{background:linear-gradient(135deg,#f97316,#facc15);box-shadow:0 8px 32px rgba(249,115,22,.4)}
+.btn-master.style-cinematic{background:linear-gradient(135deg,#1e40af,#0284c7,#06b6d4);box-shadow:0 8px 32px rgba(14,165,233,.4)}
+.btn-master.style-maxloud{background:linear-gradient(135deg,#15803d,#22c55e,#84cc16);box-shadow:0 8px 32px rgba(34,197,94,.4)}
+.btn-master.style-trippy{background:linear-gradient(135deg,#7c3aed,#a855f7,#e879f9);box-shadow:0 8px 32px rgba(168,85,247,.4)}
+.btn-master.style-studio{background:linear-gradient(135deg,#a16207,#d97706,#fbbf24);box-shadow:0 8px 32px rgba(234,179,8,.4)}
 .btn-master:hover{transform:translateY(-2px);filter:brightness(1.1)}
 .btn-master:active{transform:translateY(0)}
 .btn-master:disabled{background:rgba(255,255,255,.06)!important;color:#475569!important;cursor:not-allowed!important;box-shadow:none!important;transform:none!important;filter:none!important}
@@ -523,6 +585,81 @@ input[type="file"]{display:none}
           <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.4 dBTP</span></div>
           <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">112%</span></div>
           <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-8 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- EXTREME PUNCH -->
+      <div class="style-card sc-extreme" id="styleExtreme" onclick="selectMasterStyle('extreme',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#128293;&#9889;</div>
+        <div class="sc-name">Extreme Punch</div>
+        <div class="sc-desc">Compresi&oacute;n m&aacute;xima, transientes aplastados y bajos que golpean fuerte. Para quien quiere el sonido m&aacute;s agresivo.</div>
+        <div class="sc-tags"><span class="sc-tag">Drill</span><span class="sc-tag">Trap</span><span class="sc-tag">Metal</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">6:1 &bull; -10dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.3 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">105%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-8 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- CINEMATIC MIX -->
+      <div class="style-card sc-cinematic" id="styleCinematic" onclick="selectMasterStyle('cinematic',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#127916;</div>
+        <div class="sc-name">Cinematic Mix</div>
+        <div class="sc-desc">Din&aacute;mica amplia, graves potentes y aire cinematogr&aacute;fico. Perfecto para bandas sonoras y m&uacute;sica orquestal.</div>
+        <div class="sc-tags"><span class="sc-tag">Cine</span><span class="sc-tag">Orquestal</span><span class="sc-tag">Film</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">2:1 &bull; -18dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.5 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">140%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-18 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- MAX LOUDNESS -->
+      <div class="style-card sc-maxloud" id="styleMaxloud" onclick="selectMasterStyle('maxloud',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#128266;&#9889;</div>
+        <div class="sc-name">Max Loudness</div>
+        <div class="sc-desc">Volumumen m&aacute;ximo optimizado para streaming. Limiter ultra agresivo con percepci&oacute;n de loudness m&aacute;xima.</div>
+        <div class="sc-tags"><span class="sc-tag">Streaming</span><span class="sc-tag">Radio</span><span class="sc-tag">Club</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">4:1 &bull; -9dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.2 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">110%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-9 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- TRIPPY BASS -->
+      <div class="style-card sc-trippy" id="styleTrippy" onclick="selectMasterStyle('trippy',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#127774;&#127941;</div>
+        <div class="sc-name">Trippy Bass</div>
+        <div class="sc-desc">Sub-frecuencias masivas y estereo ultra amplio. Car&aacute;cter psicodelic y graves que se sienten f&iacute;sicamente.</div>
+        <div class="sc-tags"><span class="sc-tag">Psytrance</span><span class="sc-tag">Lo-Fi</span><span class="sc-tag">Bass</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">3:1 &bull; -12dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.5 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">145%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-10 LUFS</span></div>
+        </div>
+      </div>
+
+      <!-- STUDIO PRESENCE -->
+      <div class="style-card sc-studio" id="styleStudio" onclick="selectMasterStyle('studio',this)">
+        <span class="sc-check">&#10003;</span>
+        <div class="sc-emoji">&#127911;&#127775;</div>
+        <div class="sc-name">Studio Presence</div>
+        <div class="sc-desc">Claridad profesional, vocales en primer plano y detalle de estudio. Para m&uacute;sica donde la voz es protagonista.</div>
+        <div class="sc-tags"><span class="sc-tag">R&amp;B</span><span class="sc-tag">Soul</span><span class="sc-tag">Vocal</span></div>
+        <div class="sc-params">
+          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">3:1 &bull; -14dB</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.0 dBTP</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">100%</span></div>
+          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-14 LUFS</span></div>
         </div>
       </div>
 
@@ -777,11 +914,50 @@ var masterStyles={
   },
   empuje:{
     name:'Empuje',emoji:'',
-    // EQ: V-shape - strong sub push + boosted highs, fast attack for impact
     eq:[4.5, 1.5, 0, 0, 0.5, 1.5, 3.0, 2.5],
     thresh:-11,ratio:3.5,attack:5,release:95,makeup:4.0,
     ceil:-0.4,limRel:20,width:112,output:0.8,
     platform:'soundcloud',steps:['Analizando espectro...','Bajos energeticos...','Brillo en agudos...','Normalizando a -8 LUFS...','Hard limiter -0.4 dBTP...','Maximo impacto...','Efecto Empuje listo']
+  },
+  extreme:{
+    name:'Extreme Punch',emoji:'',
+    // EQ: Massive sub + upper bass punch, presence spike, bright top
+    eq:[5.5, 3.0, -0.5, 0.5, 1.5, 2.5, 1.5, 1.0],
+    thresh:-10,ratio:6,attack:3,release:60,makeup:5.5,
+    ceil:-0.3,limRel:15,width:105,output:1.5,
+    platform:'soundcloud',steps:['Analizando espectro...','Compresion extrema 6:1...','Sub frecuencias al maximo...','Transientes aplastados...','Normalizando a -8 LUFS...','Hard limiter -0.3 dBTP...','Extreme Punch listo']
+  },
+  cinematic:{
+    name:'Cinematic Mix',emoji:'',
+    // EQ: Rich low-end, gentle mid scoop (space), soaring highs for epic feel
+    eq:[2.0, 1.0, -0.5, -1.0, 0, 1.0, 2.0, 3.5],
+    thresh:-18,ratio:2,attack:30,release:300,makeup:0.5,
+    ceil:-1.5,limRel:120,width:140,output:0,
+    platform:'apple',steps:['Analizando espectro...','Graves epicos y potentes...','Preservando dinamica orquestal...','Aire cinematografico...','Normalizando a -18 LUFS...','Estereo cinematografico 140%...','Cinematic Mix listo']
+  },
+  maxloud:{
+    name:'Max Loudness (Streaming)',emoji:'',
+    // EQ: Loudness curve - boosted lows + highs (Fletcher-Munson), slight V-shape
+    eq:[2.0, 0.5, -0.5, 0, 0.5, 2.0, 2.5, 2.0],
+    thresh:-9,ratio:4,attack:8,release:80,makeup:5,
+    ceil:-0.2,limRel:12,width:110,output:2.0,
+    platform:'soundcloud',steps:['Analizando espectro...','Curva de loudness optimizada...','Compresion de pegamento 4:1...','Normalizando a -9 LUFS...','Ultra hard limiter -0.2 dBTP...','Streaming: maximo volumen...','Max Loudness listo']
+  },
+  trippy:{
+    name:'Trippy Bass',emoji:'',
+    // EQ: Massive sub and mid-bass, gentle upper mid scoop, extreme high air
+    eq:[6.0, 3.0, 0, -1.5, -0.5, 0.5, 2.0, 3.0],
+    thresh:-12,ratio:3,attack:12,release:180,makeup:3.5,
+    ceil:-0.5,limRel:40,width:145,output:0.8,
+    platform:'soundcloud',steps:['Analizando espectro...','Sub-frecuencias masivas...','Caracter psicodelico...','Estereo ultra amplio 145%...','Normalizando a -10 LUFS...','Limiter -0.5 dBTP...','Trippy Bass listo']
+  },
+  studio:{
+    name:'Studio Presence',emoji:'',
+    // EQ: Gentle low shelf, forward mids for vocals, presence spike, crisp air
+    eq:[-0.5, 0, 0.5, 0.5, 2.5, 3.5, 2.0, 2.0],
+    thresh:-14,ratio:3,attack:18,release:160,makeup:2.0,
+    ceil:-1.0,limRel:55,width:100,output:0.3,
+    platform:'spotify',steps:['Analizando espectro...','Claridad profesional de estudio...','Presencia vocal al frente...','Compresion de estudio 3:1...','Normalizando a -14 LUFS...','Limiter transparente -1.0 dBTP...','Studio Presence listo']
   }
 };
 
@@ -1153,7 +1329,7 @@ function renderAudio(){
   last.connect(off.destination);src.start(0);
   off.oncomplete=function(e){
     masteredBuf=e.renderedBuffer;
-    var styleNames={standard:'Estándar',pop:'Pulido Pop',edm:'Festival EDM'};
+    var styleNames={standard:'Estandar',pop:'Pulido Pop',edm:'Festival EDM',universal:'Universal',fire:'Fuego',cinta:'Cinta',espacial:'Espacial',empuje:'Empuje',extreme:'Extreme Punch',cinematic:'Cinematic Mix',maxloud:'Max Loudness',trippy:'Trippy Bass',studio:'Studio Presence'};
     drawWaveform(masteredBuf,'waveformCanvasMastered','#10b981','#34d399');
     var orig=origStats||{lufs:'--',tp:'--',dr:'--',rmsDb:'--'};
     var g=selPlatform.lufs-parseFloat(orig.lufs);
