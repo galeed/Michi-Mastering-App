@@ -1,1417 +1,258 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<title>Michi Mastering App</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
-body{background:linear-gradient(135deg,#0a0a0f 0%,#0d0f1a 40%,#0a0d16 100%);min-height:100vh;color:#e8eaf0;font-family:"Inter",system-ui,sans-serif;font-size:16px;overflow-x:hidden}
-body::before{content:"";position:fixed;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(99,102,241,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michi Mastering App 🐾</title>
+    <style>
+        :root {
+            --bg-color: #0f0f13;
+            --card-bg: rgba(25, 25, 30, 0.6);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --neon-blue: #00e5ff;
+            --text-main: #eaeaea;
+        }
 
-/* HEADER */
-header{position:-webkit-sticky;position:sticky;top:0;z-index:100;background:rgba(10,10,20,.95);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,.25);padding:0 20px;height:70px;display:flex;align-items:center;justify-content:space-between}
-.logo-wrap{display:flex;align-items:center;gap:12px}
-.logo-cat{font-size:28px;line-height:1}
-.logo-text{font-size:20px;font-weight:900;letter-spacing:-.5px;background:linear-gradient(135deg,#a78bfa,#60a5fa,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.logo-sub{font-size:11px;font-weight:600;letter-spacing:2px;color:#6366f1;text-transform:uppercase;margin-top:1px}
-.hdr-status{display:flex;align-items:center;gap:8px}
-.status-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-family:"JetBrains Mono",monospace;font-size:12px;color:#94a3b8;letter-spacing:1px}
-.sdot{width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 6px #10b981;animation:sdot 2s ease-in-out infinite;flex-shrink:0}
-@keyframes sdot{0%,100%{opacity:1}50%{opacity:.3}}
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 50% 0%, #1a1a24 0%, var(--bg-color) 70%);
+            min-height: 100vh;
+        }
 
-/* MAIN */
-main{position:relative;z-index:1;padding:24px 16px 40px;max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-/* SECTION HEADING */
-.sec-hd{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:2px;color:#6366f1;text-transform:uppercase;margin-bottom:14px}
-.sec-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(99,102,241,.4),transparent)}
+        .header h1 {
+            color: #ffffff;
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+            margin-bottom: 5px;
+        }
 
-/* CARD */
-.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.card-accent{height:3px;background:linear-gradient(90deg,#6366f1,#8b5cf6,#06b6d4,#10b981)}
-.card-hdr{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(255,255,255,.02)}
-.card-title{font-size:14px;font-weight:700;letter-spacing:1px;color:#c4b5fd;text-transform:uppercase}
-.card-body{padding:18px}
+        .glass-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
 
-/* UPLOAD */
-.upload-row{display:flex;gap:14px}
-@media(max-width:560px){.upload-row{flex-direction:column}}
-.uzone{flex:1;border:2px dashed rgba(255,255,255,.12);border-radius:14px;padding:24px 14px;text-align:center;cursor:pointer;background:rgba(255,255,255,.02);transition:all .25s;-webkit-tap-highlight-color:transparent}
-.uzone:hover,.uzone.drag-over{border-color:#6366f1;background:rgba(99,102,241,.06);box-shadow:0 0 24px rgba(99,102,241,.15)}
-.uzone.ref-zone:hover,.uzone.ref-zone.drag-over{border-color:#8b5cf6;background:rgba(139,92,246,.06);box-shadow:0 0 24px rgba(139,92,246,.15)}
-.uzone.has-main{border-style:solid;border-color:#10b981;background:rgba(16,185,129,.05)}
-.uzone.has-ref{border-style:solid;border-color:#8b5cf6;background:rgba(139,92,246,.05)}
-.u-emoji{font-size:30px;margin-bottom:10px;display:block}
-.u-title{font-size:14px;font-weight:700;letter-spacing:1px;color:#a78bfa;text-transform:uppercase;margin-bottom:6px}
-.ref-zone .u-title{color:#c4b5fd}
-.u-sub{font-size:13px;color:#64748b;line-height:1.5}
-.u-sub em{color:#6366f1;font-style:normal;font-weight:600}
-.ref-zone .u-sub em{color:#8b5cf6}
-.udefault.hidden{display:none}
-.uloaded{display:none;flex-direction:column;align-items:center;gap:6px}
-.uloaded.visible{display:flex}
-.u-fn{font-family:"JetBrains Mono",monospace;font-size:12px;color:#10b981;word-break:break-all;text-align:center}
-.ref-zone .u-fn{color:#a78bfa}
-.u-meta{font-size:12px;color:#64748b;text-align:center}
-.ref-badge{font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:20px;border:1px solid #8b5cf6;color:#c4b5fd;background:rgba(139,92,246,.1);margin-top:4px}
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
 
-/* ============================================================
-   MASTERING STYLE CARDS
-   ============================================================ */
-.style-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-@media(max-width:700px){.style-grid{grid-template-columns:repeat(3,1fr);gap:8px}}
-@media(max-width:480px){.style-grid{grid-template-columns:repeat(2,1fr);gap:8px}}
+        audio {
+            width: 100%;
+            border-radius: 8px;
+            outline: none;
+        }
 
-.style-card{
-  background:rgba(255,255,255,.04);
-  border:2px solid rgba(255,255,255,.1);
-  border-radius:14px;padding:16px 14px;cursor:pointer;
-  display:flex;flex-direction:column;gap:8px;
-  transition:all .25s;position:relative;overflow:hidden;
-  -webkit-tap-highlight-color:transparent
-}
-@media(max-width:560px){.style-card{padding:12px 9px;gap:6px}}
+        .presets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
 
-.style-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity .25s}
-.style-card:hover{transform:translateY(-2px)}
-.style-card.selected{border-width:2px}
+        .preset-card {
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-/* Standard */
-.style-card.sc-standard{border-color:rgba(99,102,241,.3)}
-.style-card.sc-standard::before{background:linear-gradient(90deg,#6366f1,#8b5cf6);opacity:.5}
-.style-card.sc-standard.selected{border-color:#6366f1;background:rgba(99,102,241,.1);box-shadow:0 0 24px rgba(99,102,241,.2)}
-.style-card.sc-standard.selected::before{opacity:1}
+        .preset-card:hover, .preset-card.active {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+            transform: translateY(-2px);
+        }
 
-/* Pulido Pop */
-.style-card.sc-pop{border-color:rgba(236,72,153,.3)}
-.style-card.sc-pop::before{background:linear-gradient(90deg,#ec4899,#f43f5e,#fb923c)}
-.style-card.sc-pop:hover{box-shadow:0 4px 24px rgba(236,72,153,.15)}
-.style-card.sc-pop.selected{border-color:#ec4899;background:rgba(236,72,153,.08);box-shadow:0 0 28px rgba(236,72,153,.25)}
-.style-card.sc-pop.selected::before{opacity:1}
+        .preset-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
 
-/* Festival EDM */
-.style-card.sc-edm{border-color:rgba(6,182,212,.3)}
-.style-card.sc-edm::before{background:linear-gradient(90deg,#06b6d4,#6366f1,#8b5cf6,#ec4899)}
-.style-card.sc-edm:hover{box-shadow:0 4px 24px rgba(6,182,212,.15)}
-.style-card.sc-edm.selected{border-color:#06b6d4;background:rgba(6,182,212,.08);box-shadow:0 0 28px rgba(6,182,212,.25)}
-.style-card.sc-edm.selected::before{opacity:1}
+        .preset-tags {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-/* Efecto Universal */
-.style-card.sc-universal{border-color:rgba(245,158,11,.3)}
-.style-card.sc-universal::before{background:linear-gradient(90deg,#f59e0b,#fbbf24,#fde047)}
-.style-card.sc-universal:hover{box-shadow:0 4px 24px rgba(245,158,11,.15)}
-.style-card.sc-universal.selected{border-color:#f59e0b;background:rgba(245,158,11,.08);box-shadow:0 0 28px rgba(245,158,11,.25)}
-.style-card.sc-universal.selected::before{opacity:1}
+        .preset-desc {
+            font-size: 0.95em;
+            line-height: 1.5;
+            color: #ccc;
+        }
 
-/* Efecto Fuego */
-.style-card.sc-fire{border-color:rgba(249,115,22,.3)}
-.style-card.sc-fire::before{background:linear-gradient(90deg,#dc2626,#f97316,#facc15)}
-.style-card.sc-fire:hover{box-shadow:0 4px 24px rgba(249,115,22,.15)}
-.style-card.sc-fire.selected{border-color:#f97316;background:rgba(249,115,22,.08);box-shadow:0 0 28px rgba(249,115,22,.25)}
-.style-card.sc-fire.selected::before{opacity:1}
-
-/* Efecto Cinta */
-.style-card.sc-cinta{border-color:rgba(180,83,9,.35)}
-.style-card.sc-cinta::before{background:linear-gradient(90deg,#78350f,#b45309,#d97706)}
-.style-card.sc-cinta:hover{box-shadow:0 4px 24px rgba(180,83,9,.15)}
-.style-card.sc-cinta.selected{border-color:#b45309;background:rgba(180,83,9,.08);box-shadow:0 0 28px rgba(180,83,9,.25)}
-.style-card.sc-cinta.selected::before{opacity:1}
-
-/* Efecto Espacial */
-.style-card.sc-espacial{border-color:rgba(59,130,246,.3)}
-.style-card.sc-espacial::before{background:linear-gradient(90deg,#1e3a8a,#3b82f6,#06b6d4,#67e8f9)}
-.style-card.sc-espacial:hover{box-shadow:0 4px 24px rgba(59,130,246,.15)}
-.style-card.sc-espacial.selected{border-color:#3b82f6;background:rgba(59,130,246,.08);box-shadow:0 0 28px rgba(59,130,246,.25)}
-.style-card.sc-espacial.selected::before{opacity:1}
-
-/* Efecto Empuje */
-.style-card.sc-empuje{border-color:rgba(220,38,38,.3)}
-.style-card.sc-empuje::before{background:linear-gradient(90deg,#7f1d1d,#dc2626,#ef4444)}
-.style-card.sc-empuje:hover{box-shadow:0 4px 24px rgba(220,38,38,.15)}
-.style-card.sc-empuje.selected{border-color:#dc2626;background:rgba(220,38,38,.08);box-shadow:0 0 28px rgba(220,38,38,.25)}
-.style-card.sc-empuje.selected::before{opacity:1}
-
-/* Extreme Punch */
-.style-card.sc-extreme{border-color:rgba(249,115,22,.4)}
-.style-card.sc-extreme::before{background:linear-gradient(90deg,#f97316,#facc15,#fb923c)}
-.style-card.sc-extreme:hover{box-shadow:0 4px 24px rgba(249,115,22,.2)}
-.style-card.sc-extreme.selected{border-color:#f97316;background:rgba(249,115,22,.1);box-shadow:0 0 30px rgba(249,115,22,.3)}
-.style-card.sc-extreme.selected::before{opacity:1}
-
-/* Cinematic Mix */
-.style-card.sc-cinematic{border-color:rgba(14,165,233,.3)}
-.style-card.sc-cinematic::before{background:linear-gradient(90deg,#1e40af,#0284c7,#06b6d4,#67e8f9)}
-.style-card.sc-cinematic:hover{box-shadow:0 4px 24px rgba(14,165,233,.15)}
-.style-card.sc-cinematic.selected{border-color:#0284c7;background:rgba(14,165,233,.08);box-shadow:0 0 28px rgba(14,165,233,.25)}
-.style-card.sc-cinematic.selected::before{opacity:1}
-
-/* Max Loudness */
-.style-card.sc-maxloud{border-color:rgba(34,197,94,.35)}
-.style-card.sc-maxloud::before{background:linear-gradient(90deg,#15803d,#22c55e,#84cc16,#a3e635)}
-.style-card.sc-maxloud:hover{box-shadow:0 4px 24px rgba(34,197,94,.2)}
-.style-card.sc-maxloud.selected{border-color:#22c55e;background:rgba(34,197,94,.08);box-shadow:0 0 28px rgba(34,197,94,.3)}
-.style-card.sc-maxloud.selected::before{opacity:1}
-
-/* Trippy Bass */
-.style-card.sc-trippy{border-color:rgba(168,85,247,.35)}
-.style-card.sc-trippy::before{background:linear-gradient(90deg,#7c3aed,#a855f7,#e879f9,#f0abfc)}
-.style-card.sc-trippy:hover{box-shadow:0 4px 24px rgba(168,85,247,.2)}
-.style-card.sc-trippy.selected{border-color:#a855f7;background:rgba(168,85,247,.08);box-shadow:0 0 28px rgba(168,85,247,.3)}
-.style-card.sc-trippy.selected::before{opacity:1}
-
-/* Studio Presence */
-.style-card.sc-studio{border-color:rgba(234,179,8,.3)}
-.style-card.sc-studio::before{background:linear-gradient(90deg,#a16207,#d97706,#f59e0b,#fde047)}
-.style-card.sc-studio:hover{box-shadow:0 4px 24px rgba(234,179,8,.15)}
-.style-card.sc-studio.selected{border-color:#d97706;background:rgba(234,179,8,.08);box-shadow:0 0 28px rgba(234,179,8,.25)}
-.style-card.sc-studio.selected::before{opacity:1}
-
-.sc-check{
-  position:absolute;top:8px;right:10px;
-  width:18px;height:18px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:700;background:#6366f1;color:#fff;
-  opacity:0;transition:opacity .2s;
-}
-.style-card.sc-pop.selected .sc-check{background:#ec4899;opacity:1}
-.style-card.sc-edm.selected .sc-check{background:#06b6d4;opacity:1}
-.style-card.sc-standard.selected .sc-check{background:#6366f1;opacity:1}
-.style-card.sc-universal.selected .sc-check{background:#f59e0b;opacity:1}
-.style-card.sc-fire.selected .sc-check{background:#f97316;opacity:1}
-.style-card.sc-cinta.selected .sc-check{background:#b45309;opacity:1}
-.style-card.sc-espacial.selected .sc-check{background:#3b82f6;opacity:1}
-.style-card.sc-empuje.selected .sc-check{background:#dc2626;opacity:1}
-
-.style-card.sc-extreme.selected .sc-check{background:#f97316;opacity:1}
-.style-card.sc-cinematic.selected .sc-check{background:#0284c7;opacity:1}
-.style-card.sc-maxloud.selected .sc-check{background:#22c55e;opacity:1}
-.style-card.sc-trippy.selected .sc-check{background:#a855f7;opacity:1}
-.style-card.sc-studio.selected .sc-check{background:#d97706;opacity:1}
-
-.sc-emoji{font-size:22px;line-height:1}
-.sc-name{font-size:13px;font-weight:800;letter-spacing:.3px;color:#e2e8f0}
-.style-card.sc-pop.selected .sc-name{color:#f9a8d4}
-.style-card.sc-edm.selected .sc-name{color:#67e8f9}
-.style-card.sc-standard.selected .sc-name{color:#c4b5fd}
-.style-card.sc-universal.selected .sc-name{color:#fde047}
-.style-card.sc-fire.selected .sc-name{color:#fdba74}
-.style-card.sc-cinta.selected .sc-name{color:#fcd9a8}
-.style-card.sc-espacial.selected .sc-name{color:#93c5fd}
-.style-card.sc-empuje.selected .sc-name{color:#f87171}
-.style-card.sc-extreme.selected .sc-name{color:#fdba74}
-.style-card.sc-cinematic.selected .sc-name{color:#7dd3fc}
-.style-card.sc-maxloud.selected .sc-name{color:#86efac}
-.style-card.sc-trippy.selected .sc-name{color:#d8b4fe}
-.style-card.sc-studio.selected .sc-name{color:#fde68a}
-
-.sc-desc{font-size:12px;color:#64748b;line-height:1.5}
-.sc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
-.sc-tag{font-size:10px;font-weight:600;letter-spacing:.5px;padding:2px 7px;border-radius:20px;background:rgba(255,255,255,.06);color:#475569;border:1px solid rgba(255,255,255,.08)}
-.style-card.sc-pop.selected .sc-tag{background:rgba(236,72,153,.12);color:#f9a8d4;border-color:rgba(236,72,153,.25)}
-.style-card.sc-edm.selected .sc-tag{background:rgba(6,182,212,.12);color:#67e8f9;border-color:rgba(6,182,212,.25)}
-.style-card.sc-standard.selected .sc-tag{background:rgba(99,102,241,.12);color:#c4b5fd;border-color:rgba(99,102,241,.25)}
-.style-card.sc-universal.selected .sc-tag{background:rgba(245,158,11,.12);color:#fde047;border-color:rgba(245,158,11,.25)}
-.style-card.sc-fire.selected .sc-tag{background:rgba(249,115,22,.12);color:#fdba74;border-color:rgba(249,115,22,.25)}
-.style-card.sc-cinta.selected .sc-tag{background:rgba(180,83,9,.12);color:#fcd9a8;border-color:rgba(180,83,9,.25)}
-.style-card.sc-espacial.selected .sc-tag{background:rgba(59,130,246,.12);color:#93c5fd;border-color:rgba(59,130,246,.25)}
-.style-card.sc-empuje.selected .sc-tag{background:rgba(220,38,38,.12);color:#f87171;border-color:rgba(220,38,38,.25)}
-.style-card.sc-extreme.selected .sc-tag{background:rgba(249,115,22,.12);color:#fdba74;border-color:rgba(249,115,22,.25)}
-.style-card.sc-cinematic.selected .sc-tag{background:rgba(14,165,233,.12);color:#7dd3fc;border-color:rgba(14,165,233,.25)}
-.style-card.sc-maxloud.selected .sc-tag{background:rgba(34,197,94,.12);color:#86efac;border-color:rgba(34,197,94,.25)}
-.style-card.sc-trippy.selected .sc-tag{background:rgba(168,85,247,.12);color:#d8b4fe;border-color:rgba(168,85,247,.25)}
-.style-card.sc-studio.selected .sc-tag{background:rgba(234,179,8,.12);color:#fde68a;border-color:rgba(234,179,8,.25)}
-
-.sc-params{
-  margin-top:6px;padding:10px;
-  background:rgba(0,0,0,.2);border-radius:8px;
-  display:none;flex-direction:column;gap:5px;
-}
-.style-card.selected .sc-params{display:flex}
-.sc-param-row{display:flex;justify-content:space-between;align-items:center;font-size:11px}
-.sc-param-lbl{color:#475569;letter-spacing:.5px}
-.sc-param-val{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700}
-.style-card.sc-pop.selected .sc-param-val{color:#f9a8d4}
-.style-card.sc-edm.selected .sc-param-val{color:#67e8f9}
-.style-card.sc-standard.selected .sc-param-val{color:#a5b4fc}
-.style-card.sc-universal.selected .sc-param-val{color:#fde047}
-.style-card.sc-fire.selected .sc-param-val{color:#fdba74}
-.style-card.sc-cinta.selected .sc-param-val{color:#fcd9a8}
-.style-card.sc-espacial.selected .sc-param-val{color:#93c5fd}
-.style-card.sc-empuje.selected .sc-param-val{color:#f87171}
-.style-card.sc-extreme.selected .sc-param-val{color:#fdba74}
-.style-card.sc-cinematic.selected .sc-param-val{color:#7dd3fc}
-.style-card.sc-maxloud.selected .sc-param-val{color:#86efac}
-.style-card.sc-trippy.selected .sc-param-val{color:#d8b4fe}
-.style-card.sc-studio.selected .sc-param-val{color:#fde68a}
-
-/* REF PANEL */
-.ref-panel{display:none}
-.ref-panel.visible{display:block}
-.ref-stats-row{display:flex;gap:10px;margin-bottom:14px}
-.ref-stat{flex:1;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);border-radius:10px;padding:12px 8px;text-align:center}
-.ref-sv{font-family:"JetBrains Mono",monospace;font-size:22px;font-weight:700;color:#a78bfa;line-height:1}
-.ref-sl{font-size:11px;color:#64748b;letter-spacing:1px;margin-top:4px;text-transform:uppercase}
-.ref-wform{height:50px;background:#030303;border-radius:8px;overflow:hidden;border:1px solid rgba(139,92,246,.15);margin-bottom:12px;position:relative}
-.ref-wform canvas{display:block;width:100%;height:100%}
-.ref-sug{background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.15);border-radius:10px;padding:12px 14px}
-.ref-sug-t{font-size:12px;font-weight:700;color:#a78bfa;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase}
-.ref-sug-txt{font-size:13px;color:#94a3b8;line-height:1.6;white-space:pre-line}
-.ref-auto-row{display:flex;align-items:center;gap:10px;margin-top:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
-.ref-auto-lbl{font-size:13px;color:#94a3b8}
-
-/* TOGGLE */
-.toggle-wrap{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#64748b;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
-.toggle{width:42px;height:24px;background:#1e293b;border-radius:12px;position:relative;transition:background .2s;flex-shrink:0;border:1px solid rgba(255,255,255,.1)}
-.toggle.on{background:#6366f1;border-color:#6366f1;box-shadow:0 0 12px rgba(99,102,241,.4)}
-.toggle-k{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.4);transition:transform .2s}
-.toggle.on .toggle-k{transform:translateX(18px)}
-
-/* WAVEFORM */
-.wform-outer{background:#040408;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.07);margin-bottom:14px;position:relative;cursor:pointer;user-select:none;-webkit-user-select:none}
-.wform-outer canvas{display:block;width:100%;height:100%}
-.playhead{position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#f59e0b,#ef4444);box-shadow:0 0 8px rgba(245,158,11,.8);pointer-events:none;left:0}
-.wform-time-overlay{position:absolute;top:4px;right:8px;font-family:"JetBrains Mono",monospace;font-size:11px;color:rgba(255,255,255,.5);pointer-events:none;background:rgba(0,0,0,.4);padding:2px 6px;border-radius:4px}
-.wform-hover-line{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.2);pointer-events:none;display:none}
-
-/* VU */
-.vu-wrap{background:#020204;border-radius:8px;border:1px solid rgba(255,255,255,.06);padding:10px 10px 6px;margin-bottom:14px}
-#vuMeterCanvas{display:block;width:100%;height:90px;border-radius:4px}
-.vu-footer{display:flex;justify-content:space-between;align-items:center;margin-top:5px}
-.vu-peaks{display:flex;gap:14px;font-family:"JetBrains Mono",monospace;font-size:12px}
-.vu-L{color:#10b981}.vu-R{color:#a78bfa}
-.vu-scale{font-family:"JetBrains Mono",monospace;font-size:10px;color:#334155;letter-spacing:1px}
-
-/* SPECTRUM */
-.spec-wrap{background:#020204;border-radius:8px;border:1px solid rgba(255,255,255,.06);padding:8px;margin-bottom:14px}
-#spectrumCanvas{display:block;width:100%;height:50px;border-radius:4px}
-
-/* TRANSPORT */
-.transport{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.btn-t{height:48px;min-width:48px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#e2e8f0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;gap:4px;-webkit-tap-highlight-color:transparent;-webkit-appearance:none}
-.btn-t:hover{background:rgba(99,102,241,.15);border-color:#6366f1;color:#a78bfa}
-.btn-t.active{background:#6366f1;border-color:#6366f1;color:#fff;box-shadow:0 0 16px rgba(99,102,241,.4)}
-.btn-t .btn-lbl{font-size:11px;font-weight:700;letter-spacing:1px}
-.time-disp{font-family:"JetBrains Mono",monospace;font-size:15px;color:#10b981;letter-spacing:2px;min-width:100px;font-weight:700;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:8px;padding:6px 10px}
-.ab-wrap{margin-left:auto;display:flex;align-items:center;gap:8px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.ab-lbl{font-size:12px;color:#64748b;font-weight:600;letter-spacing:1px}
-
-/* EQ */
-.eq-canvas-wrap{background:#020204;border-radius:8px;border:1px solid rgba(255,255,255,.06);margin-bottom:12px}
-#eqCanvas{display:block;width:100%}
-.eq-bands{display:flex;gap:4px}
-.eq-band{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-.eq-v{font-family:"JetBrains Mono",monospace;font-size:10px;color:#10b981;text-align:center;min-width:26px;font-weight:700}
-.eq-slider-wrap{height:85px;display:flex;align-items:center;justify-content:center}
-input.vslider{-webkit-appearance:slider-vertical;appearance:slider-vertical;writing-mode:vertical-lr;direction:rtl;width:20px;height:75px;cursor:pointer;accent-color:#6366f1;background:transparent;padding:0;margin:0}
-.eq-freq{font-size:10px;color:#475569;text-align:center;font-weight:600}
-
-/* PRESETS */
-.presets-row{display:flex;gap:7px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.07)}
-.preset-btn{font-size:12px;font-weight:700;letter-spacing:1px;padding:7px 12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#64748b;cursor:pointer;border-radius:8px;transition:all .2s;-webkit-tap-highlight-color:transparent;-webkit-appearance:none}
-.preset-btn:hover{border-color:#6366f1;color:#a78bfa;background:rgba(99,102,241,.08)}
-.preset-btn.active{border-color:#6366f1;color:#a78bfa;background:rgba(99,102,241,.15)}
-
-/* CTRL */
-.ctrl-grid{display:flex;gap:12px}
-@media(max-width:500px){.ctrl-grid{flex-direction:column}}
-.ctrl-panel{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px}
-.ctrl-title{font-size:12px;font-weight:800;letter-spacing:2px;color:#8b5cf6;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.ctrl-row{margin-bottom:11px}
-.ctrl-lbl{font-size:12px;color:#64748b;font-weight:600;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;letter-spacing:.5px}
-.ctrl-val{font-family:"JetBrains Mono",monospace;font-size:12px;color:#f59e0b;font-weight:700}
-
-/* RANGE */
-input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:#1e293b;border-radius:2px;outline:none;cursor:pointer;padding:0;margin:0;border:none}
-input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:#6366f1;border:2px solid #0f172a;box-shadow:0 0 8px rgba(99,102,241,.4);cursor:pointer}
-input[type="range"]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#6366f1;border:2px solid #0f172a;cursor:pointer}
-input[type="range"]::-webkit-slider-runnable-track{background:#1e293b;border-radius:2px;height:4px}
-input[type="range"]::-moz-range-track{background:#1e293b;border-radius:2px;height:4px}
-
-/* PLATFORMS */
-.plat-grid{display:flex;flex-wrap:wrap;gap:8px}
-.plat-card{flex:1 1 calc(33% - 8px);min-width:80px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;text-align:center;transition:all .2s;-webkit-tap-highlight-color:transparent}
-.plat-card:active{transform:scale(.96)}
-.plat-card.selected{border-color:#6366f1;background:rgba(99,102,241,.1);box-shadow:0 0 16px rgba(99,102,241,.2)}
-.plat-check{display:none;position:absolute;top:5px;right:7px;font-size:12px;color:#a78bfa}
-.plat-card.selected .plat-check{display:block}
-.plat-icon{font-size:24px}
-.plat-name{font-size:11px;font-weight:700;color:#64748b;letter-spacing:.5px}
-.plat-card.selected .plat-name{color:#a78bfa}
-.plat-lufs{font-family:"JetBrains Mono",monospace;font-size:12px;color:#f59e0b;font-weight:700}
-
-/* LUFS */
-.lufs-boxes{display:flex;gap:8px;margin-bottom:10px;margin-top:14px}
-.lufs-box{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 6px;text-align:center}
-.lufs-val{font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:900;color:#e2e8f0;line-height:1}
-.lufs-val.ok{color:#10b981;text-shadow:0 0 12px rgba(16,185,129,.4)}
-.lufs-val.warn{color:#f59e0b;text-shadow:0 0 12px rgba(245,158,11,.4)}
-.lufs-val.bad{color:#ef4444;text-shadow:0 0 12px rgba(239,68,68,.4)}
-.lufs-lbl{font-size:10px;color:#475569;letter-spacing:1px;margin-top:4px;text-transform:uppercase;font-weight:600}
-.loud-bar-wrap{background:#0f172a;border:1px solid rgba(255,255,255,.07);border-radius:6px;height:20px;position:relative;overflow:hidden;margin-bottom:6px}
-.loud-fill{height:100%;background:linear-gradient(90deg,#6366f1,#8b5cf6,#06b6d4,#10b981);border-radius:6px;transition:width .5s ease;width:0%}
-.loud-target{position:absolute;top:0;bottom:0;width:2px;background:#f59e0b;box-shadow:0 0 6px #f59e0b}
-.loud-labels{display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:11px;color:#334155}
-.loud-target-lbl{color:#f59e0b;font-weight:700}
-
-/* SELECT */
-select{width:100%;background:#0f172a;border:1px solid rgba(255,255,255,.1);color:#e2e8f0;padding:11px 12px;border-radius:8px;font-family:"Inter",sans-serif;font-size:14px;-webkit-appearance:none;appearance:none;cursor:pointer;outline:none;font-weight:500}
-select:focus{border-color:#6366f1}
-.fmt-grid{display:flex;flex-wrap:wrap;gap:12px}
-.fmt-item{flex:1 1 calc(50% - 12px);min-width:140px}
-
-/* MINI METERS */
-.meters-inline{display:flex;align-items:flex-end;height:46px;margin-left:8px;gap:5px}
-.mbar-wrap{display:flex;flex-direction:column;align-items:center;gap:2px}
-.mbar{width:10px;height:36px;background:#0f172a;border:1px solid #1e293b;border-radius:2px;overflow:hidden;position:relative}
-.mfill{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,#10b981 70%,#f59e0b 85%,#ef4444 100%);transition:height .08s}
-.mlbl{font-family:"JetBrains Mono",monospace;font-size:10px;color:#475569;margin-top:2px}
-
-/* MASTER BTN */
-.btn-master{display:block;width:100%;padding:20px;border:none;border-radius:14px;color:#fff;font-family:"Inter",sans-serif;font-size:18px;font-weight:900;letter-spacing:2px;cursor:pointer;text-align:center;transition:all .3s;text-transform:uppercase;-webkit-tap-highlight-color:transparent;-webkit-appearance:none}
-.btn-master.style-standard{background:linear-gradient(135deg,#6366f1,#8b5cf6);box-shadow:0 8px 32px rgba(99,102,241,.35)}
-.btn-master.style-pop{background:linear-gradient(135deg,#ec4899,#f43f5e,#fb923c);box-shadow:0 8px 32px rgba(236,72,153,.35)}
-.btn-master.style-edm{background:linear-gradient(135deg,#06b6d4,#6366f1,#8b5cf6);box-shadow:0 8px 32px rgba(6,182,212,.35)}
-.btn-master.style-universal{background:linear-gradient(135deg,#f59e0b,#fbbf24);box-shadow:0 8px 32px rgba(245,158,11,.35)}
-.btn-master.style-fire{background:linear-gradient(135deg,#dc2626,#f97316,#facc15);box-shadow:0 8px 32px rgba(220,38,38,.35)}
-.btn-master.style-cinta{background:linear-gradient(135deg,#78350f,#b45309,#d97706);box-shadow:0 8px 32px rgba(180,83,9,.35)}
-.btn-master.style-espacial{background:linear-gradient(135deg,#1e3a8a,#3b82f6,#06b6d4);box-shadow:0 8px 32px rgba(59,130,246,.35)}
-.btn-master.style-empuje{background:linear-gradient(135deg,#7f1d1d,#dc2626,#ef4444);box-shadow:0 8px 32px rgba(220,38,38,.35)}
-.btn-master.style-extreme{background:linear-gradient(135deg,#f97316,#facc15);box-shadow:0 8px 32px rgba(249,115,22,.4)}
-.btn-master.style-cinematic{background:linear-gradient(135deg,#1e40af,#0284c7,#06b6d4);box-shadow:0 8px 32px rgba(14,165,233,.4)}
-.btn-master.style-maxloud{background:linear-gradient(135deg,#15803d,#22c55e,#84cc16);box-shadow:0 8px 32px rgba(34,197,94,.4)}
-.btn-master.style-trippy{background:linear-gradient(135deg,#7c3aed,#a855f7,#e879f9);box-shadow:0 8px 32px rgba(168,85,247,.4)}
-.btn-master.style-studio{background:linear-gradient(135deg,#a16207,#d97706,#fbbf24);box-shadow:0 8px 32px rgba(234,179,8,.4)}
-.btn-master:hover{transform:translateY(-2px);filter:brightness(1.1)}
-.btn-master:active{transform:translateY(0)}
-.btn-master:disabled{background:rgba(255,255,255,.06)!important;color:#475569!important;cursor:not-allowed!important;box-shadow:none!important;transform:none!important;filter:none!important}
-
-/* PROGRESS */
-.prog-wrap{display:none;margin-top:14px}
-.prog-wrap.visible{display:block}
-.prog-bar{background:#0f172a;border:1px solid rgba(255,255,255,.07);border-radius:6px;height:8px;overflow:hidden;margin-bottom:8px}
-.prog-fill{height:100%;background:linear-gradient(90deg,#6366f1,#8b5cf6,#06b6d4);border-radius:6px;transition:width .3s ease;width:0%}
-.prog-lbl{font-family:"JetBrains Mono",monospace;font-size:13px;color:#8b5cf6;text-align:center;letter-spacing:1px;font-weight:600}
-
-/* OUTPUT */
-.out-section{display:none}
-.out-section.visible{display:block}
-.out-hdr{padding:14px 18px;background:rgba(16,185,129,.06);border-bottom:1px solid rgba(16,185,129,.15);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.out-badge{font-size:12px;font-weight:800;letter-spacing:2px;color:#10b981;padding:5px 12px;border:1px solid rgba(16,185,129,.4);border-radius:20px;background:rgba(16,185,129,.1);text-transform:uppercase}
-.out-title{font-size:15px;font-weight:700;color:#e2e8f0;letter-spacing:.5px}
-.cmp-table{border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-bottom:14px}
-.cmp-row{display:flex;border-bottom:1px solid rgba(255,255,255,.07)}
-.cmp-row:last-child{border-bottom:none}
-.cmp-cell{flex:1;padding:10px 12px;font-size:14px;border-right:1px solid rgba(255,255,255,.07)}
-.cmp-cell:last-child{border-right:none}
-.cmp-hdr{background:rgba(255,255,255,.03);font-size:11px;font-weight:700;color:#475569;letter-spacing:1px;text-transform:uppercase}
-.cmp-lbl{color:#64748b;font-weight:600}
-.cmp-before{color:#94a3b8;font-family:"JetBrains Mono",monospace;font-size:13px}
-.cmp-after{color:#10b981;font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700}
-.dl-row{display:flex;gap:10px}
-.btn-dl{flex:1;padding:15px;background:linear-gradient(135deg,#059669,#10b981);border:none;border-radius:10px;color:#fff;font-family:"Inter",sans-serif;font-size:15px;font-weight:800;letter-spacing:1px;cursor:pointer;text-align:center;box-shadow:0 4px 16px rgba(16,185,129,.3);transition:all .2s;-webkit-tap-highlight-color:transparent;-webkit-appearance:none}
-.btn-dl:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(16,185,129,.4)}
-.btn-reset{flex:1;padding:15px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#94a3b8;font-family:"Inter",sans-serif;font-size:15px;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;-webkit-tap-highlight-color:transparent;-webkit-appearance:none}
-.btn-reset:hover{border-color:#8b5cf6;color:#c4b5fd}
-
-/* TOAST */
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120px);background:rgba(15,23,42,.95);border:1px solid rgba(99,102,241,.4);border-radius:30px;padding:12px 24px;font-size:14px;font-weight:600;color:#a78bfa;box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:9000;transition:transform .3s ease;white-space:nowrap;pointer-events:none;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
-.toast.show{transform:translateX(-50%) translateY(0)}
-.toast.error{border-color:rgba(239,68,68,.4);color:#fca5a5}
-
-input[type="file"]{display:none}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:#0a0a0f}
-::-webkit-scrollbar-thumb{background:#1e293b;border-radius:2px}
-</style>
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #555;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="logo-wrap">
-    <span class="logo-cat">&#128049;</span>
-    <div>
-      <div class="logo-text">Michi Mastering</div>
-      <div class="logo-sub">// Audio Mastering App //</div>
+    <div class="header">
+        <h1>🐾 Michi Mastering App</h1>
+        <p>Motor de Audio Web - Procesamiento en Tiempo Real</p>
     </div>
-  </div>
-  <div class="hdr-status">
-    <div class="status-pill"><div class="sdot"></div><span id="engineMode">OFFLINE</span></div>
-  </div>
-</header>
 
-<main>
+    <div class="glass-container">
+        <div class="controls">
+            <input type="file" id="audioUpload" accept="audio/*" style="color: #fff;">
+            <audio id="audioPlayer" controls></audio>
+        </div>
 
-  <!-- CARGAR PISTAS -->
-  <div>
-    <div class="sec-hd">&#127925; Cargar Pistas <div class="sec-line"></div></div>
-    <div class="upload-row">
-      <label class="uzone" id="uploadZone" for="fileInput" ondragover="onDragOver(event,'main')" ondragleave="onDragLeave('main')" ondrop="onDrop(event,'main')">
-        <div class="udefault" id="udefaultMain"><span class="u-emoji">&#127925;</span><div class="u-title">Pista a Masterizar</div><div class="u-sub">WAV &middot; FLAC &middot; MP3 &middot; AIFF<br><em>Seleccionar archivo</em></div></div>
-        <div class="uloaded" id="uloadedMain"><span class="u-emoji">&#127925;</span><div class="u-fn" id="mainFileName">&mdash;</div><div class="u-meta" id="mainFileMeta">&mdash;</div></div>
-        <input type="file" id="fileInput" accept="audio/*,.wav,.aif,.aiff,.flac,.mp3,.m4a,.ogg">
-      </label>
-      <label class="uzone ref-zone" id="refZone" for="refInput" ondragover="onDragOver(event,'ref')" ondragleave="onDragLeave('ref')" ondrop="onDrop(event,'ref')">
-        <div class="udefault" id="udefaultRef"><span class="u-emoji">&#127919;</span><div class="u-title">Pista de Referencia</div><div class="u-sub">Pista ya masterizada<br>para usarla como gu&iacute;a<br><em>Seleccionar archivo</em></div></div>
-        <div class="uloaded" id="uloadedRef"><span class="u-emoji">&#127919;</span><div class="u-fn" id="refFileName">&mdash;</div><div class="u-meta" id="refFileMeta">&mdash;</div><div class="ref-badge">&#10003; Referencia activa</div></div>
-        <input type="file" id="refInput" accept="audio/*,.wav,.aif,.aiff,.flac,.mp3,.m4a,.ogg">
-      </label>
+        <h2 style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 20px;">Estilos de Masterización</h2>
+        <div class="presets-grid" id="presetsContainer">
+            <!-- Las tarjetas se inyectarán aquí con JavaScript -->
+        </div>
     </div>
-  </div>
 
-  <!-- ESTILO DE MASTERIZACI&#211;N -->
-  <div>
-    <div class="sec-hd">&#127911; Estilo de Masterizaci&oacute;n <div class="sec-line"></div></div>
-    <div class="style-grid">
+    <footer>
+        © 2026 Moustache de Chat Lab
+    </footer>
 
-      <!-- STANDARD -->
-      <div class="style-card sc-standard selected" id="styleStandard" onclick="selectMasterStyle('standard',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#9878;&#65039;</div>
-        <div class="sc-name">Est&aacute;ndar</div>
-        <div class="sc-desc">Balance tonal y din&aacute;mico natural. Ideal para cualquier g&eacute;nero.</div>
-        <div class="sc-tags"><span class="sc-tag">Todo g&eacute;nero</span><span class="sc-tag">Neutral</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">3:1 &bull; -12dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.0 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">100%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-14 LUFS</span></div>
-        </div>
-      </div>
+    <script>
+        // 1. Configuración de Presets (Los 5 actualizados)
+        const PRESETS = {
+            universal: {
+                id: 'universal',
+                name: 'Universal',
+                emoji: '🌐',
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #00e5ff, 0 0 15px #00e5ff; font-style: italic; font-weight: 500;">Dinámica natural y balance tonal. Perfecto para unificar elementos de trance y arreglos orquestales con una claridad impecable.</em>',
+                tags: 'Trance • Orquestal • All Genres',
+                compThreshold: -14, compRatio: 2.2
+            },
+            fuego: {
+                id: 'fuego',
+                name: 'Fuego',
+                emoji: '🔥',
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #ff0055, 0 0 15px #ff0055; font-style: italic; font-weight: 500;">Graves contundentes y medios definidos. Ideal para hacer que los kicks y bajos del rawstyle y hardstyle destaquen con máxima agresión.</em>',
+                tags: 'Rawstyle • Hardstyle • Bass',
+                compThreshold: -18, compRatio: 3.5
+            },
+            cinta: {
+                id: 'cinta',
+                name: 'Cinta',
+                emoji: '📼',
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #ffaa00, 0 0 15px #ffaa00; font-style: italic; font-weight: 500;">Saturación cálida y dinámica analógica. Excelente para darle textura, saturación y cohesión a pistas de corte industrial.</em>',
+                tags: 'Industrial • Vintage • Raw',
+                compThreshold: -12, compRatio: 2.0
+            },
+            espacial: {
+                id: 'espacial',
+                name: 'Espacial',
+                emoji: '🌌',
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #b700ff, 0 0 15px #b700ff; font-style: italic; font-weight: 500;">Agudos nítidos y una imagen estéreo expandida. Resalta las atmósferas envolventes y los sintetizadores melódicos del trance.</em>',
+                tags: 'Trance • Atmosférico • Melodic',
+                compThreshold: -13, compRatio: 2.0
+            },
+            empuje: {
+                id: 'empuje',
+                name: 'Empuje',
+                emoji: '💥',
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #00ffaa, 0 0 15px #00ffaa; font-style: italic; font-weight: 500;">Máximo impacto rítmico y densidad. Diseñado para potenciar los drops y controlar los transitorios más extremos del hardstyle.</em>',
+                tags: 'Hardstyle • Extreme • Punch',
+                compThreshold: -16, compRatio: 4.0
+            }
+            // NOTA: Los otros 8 presets (Estándar, Pulido Pop, Festival EDM, etc.) deben ir aquí.
+        };
 
-      <!-- PULIDO POP -->
-      <div class="style-card sc-pop" id="stylePop" onclick="selectMasterStyle('pop',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#10024;</div>
-        <div class="sc-name">Pulido Pop</div>
-        <div class="sc-desc">Bajos contundentes y claridad en el rango medio. Sonido comercial brillante.</div>
-        <div class="sc-tags"><span class="sc-tag">Pop</span><span class="sc-tag">Reggaet&oacute;n</span><span class="sc-tag">Trap</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">4:1 &bull; -14dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.8 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">118%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-14 LUFS</span></div>
-        </div>
-      </div>
+        // 2. Renderizado de Tarjetas usando innerHTML para leer el estilo
+        const container = document.getElementById('presetsContainer');
+        
+        Object.values(PRESETS).forEach(preset => {
+            const card = document.createElement('div');
+            card.className = 'preset-card';
+            card.id = `card-${preset.id}`;
+            
+            // Usamos innerHTML para asegurar que las etiquetas <em> brillen
+            card.innerHTML = `
+                <div class="preset-header">
+                    <span>${preset.emoji}</span>
+                    <span>${preset.name}</span>
+                </div>
+                <div class="preset-tags">${preset.tags}</div>
+                <div class="preset-desc">${preset.desc}</div>
+            `;
+            
+            card.addEventListener('click', () => applyPreset(preset.id));
+            container.appendChild(card);
+        });
 
-      <!-- FESTIVAL EDM -->
-      <div class="style-card sc-edm" id="styleEdm" onclick="selectMasterStyle('edm',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#127963;&#65039;</div>
-        <div class="sc-name">Festival EDM</div>
-        <div class="sc-desc">Ancho est&eacute;reo mejorado y graves energ&eacute;ticos. M&aacute;xima potencia para el dancefloor.</div>
-        <div class="sc-tags"><span class="sc-tag">EDM</span><span class="sc-tag">House</span><span class="sc-tag">Electr&oacute;nica</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">3:1 &bull; -10dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.3 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">162%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-9 LUFS</span></div>
-        </div>
-      </div>
+        // 3. Lógica de Web Audio API
+        let audioContext, mediaElementSource, compressor, limiter;
+        const audioElement = document.getElementById('audioPlayer');
+        const uploadInput = document.getElementById('audioUpload');
 
-      <!-- EFECTO UNIVERSAL -->
-      <div class="style-card sc-universal" id="styleUniversal" onclick="selectMasterStyle('universal',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#127760;</div>
-        <div class="sc-name">Universal</div>
-        <div class="sc-desc">Realce tonal organico y dinamica equilibrada. Sonido radio-ready en cualquier altavoz.</div>
-        <div class="sc-tags"><span class="sc-tag">Rock</span><span class="sc-tag">Pop</span><span class="sc-tag">Alternativo</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">2.5:1 &bull; -12dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.0 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">106%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-14 LUFS</span></div>
-        </div>
-      </div>
+        uploadInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                audioElement.src = url;
+                initAudio();
+            }
+        });
 
-      <!-- EFECTO FUEGO -->
-      <div class="style-card sc-fire" id="styleFire" onclick="selectMasterStyle('fire',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#128293;</div>
-        <div class="sc-name">Fuego</div>
-        <div class="sc-desc">Graves contundentes y claridad en medios sin tapar las voces. Energia para destacar.</div>
-        <div class="sc-tags"><span class="sc-tag">Trap</span><span class="sc-tag">Hip-Hop</span><span class="sc-tag">Reggaet&oacute;n</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">4:1 &bull; -13dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.7 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">108%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-14 LUFS</span></div>
-        </div>
-      </div>
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                mediaElementSource = audioContext.createMediaElementSource(audioElement);
+                
+                compressor = audioContext.createDynamicsCompressor();
+                limiter = audioContext.createDynamicsCompressor(); // Actúa como hard limiter
+                
+                // Limiter básico fijo (Brickwall)
+                limiter.threshold.value = -0.1;
+                limiter.ratio.value = 20.0;
+                limiter.attack.value = 0.001;
+                limiter.release.value = 0.05;
 
-      <!-- EFECTO CINTA -->
-      <div class="style-card sc-cinta" id="styleCinta" onclick="selectMasterStyle('cinta',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#128253;</div>
-        <div class="sc-name">Cinta</div>
-        <div class="sc-desc">Saturaci&oacute;n c&aacute;lida de cinta anal&oacute;gica con compresi&oacute;n suave. Textura vintage llena de cuerpo.</div>
-        <div class="sc-tags"><span class="sc-tag">Indie</span><span class="sc-tag">Jazz</span><span class="sc-tag">Rock</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">2.2:1 &bull; -16dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.3 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">95%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-16 LUFS</span></div>
-        </div>
-      </div>
+                mediaElementSource.connect(compressor);
+                compressor.connect(limiter);
+                limiter.connect(audioContext.destination);
+            }
+            audioContext.resume();
+        }
 
-      <!-- EFECTO ESPACIAL -->
-      <div class="style-card sc-espacial" id="styleEspacial" onclick="selectMasterStyle('espacial',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#127756;</div>
-        <div class="sc-name">Espacial</div>
-        <div class="sc-desc">Expande la imagen estereo y abre el aire en agudos. Sensaci&oacute;n inmersiva y atmosf&eacute;rica.</div>
-        <div class="sc-tags"><span class="sc-tag">Ambient</span><span class="sc-tag">Cinem&aacute;tico</span><span class="sc-tag">Chill</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">2:1 &bull; -15dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.0 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">178%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-16 LUFS</span></div>
-        </div>
-      </div>
+        function applyPreset(presetId) {
+            if (!audioContext) initAudio();
+            
+            // UI Update
+            document.querySelectorAll('.preset-card').forEach(c => c.classList.remove('active'));
+            document.getElementById(`card-${presetId}`).classList.add('active');
 
-      <!-- EFECTO EMPUJE -->
-      <div class="style-card sc-empuje" id="styleEmpuje" onclick="selectMasterStyle('empuje',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#128074;</div>
-        <div class="sc-name">Empuje</div>
-        <div class="sc-desc">Bajos energ&eacute;ticos y agudos brillantes para m&aacute;ximo impacto. Alternativa intensa a Fuego.</div>
-        <div class="sc-tags"><span class="sc-tag">Hip-Hop</span><span class="sc-tag">Rap</span><span class="sc-tag">Drill</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">3.5:1 &bull; -11dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.4 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">112%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-8 LUFS</span></div>
-        </div>
-      </div>
-
-      <!-- EXTREME PUNCH -->
-      <div class="style-card sc-extreme" id="styleExtreme" onclick="selectMasterStyle('extreme',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#128293;&#9889;</div>
-        <div class="sc-name">Extreme Punch</div>
-        <div class="sc-desc">Compresi&oacute;n m&aacute;xima, transientes aplastados y bajos que golpean fuerte. Para quien quiere el sonido m&aacute;s agresivo.</div>
-        <div class="sc-tags"><span class="sc-tag">Drill</span><span class="sc-tag">Trap</span><span class="sc-tag">Metal</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">6:1 &bull; -10dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.3 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">105%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-8 LUFS</span></div>
-        </div>
-      </div>
-
-      <!-- CINEMATIC MIX -->
-      <div class="style-card sc-cinematic" id="styleCinematic" onclick="selectMasterStyle('cinematic',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#127916;</div>
-        <div class="sc-name">Cinematic Mix</div>
-        <div class="sc-desc">Din&aacute;mica amplia, graves potentes y aire cinematogr&aacute;fico. Perfecto para bandas sonoras y m&uacute;sica orquestal.</div>
-        <div class="sc-tags"><span class="sc-tag">Cine</span><span class="sc-tag">Orquestal</span><span class="sc-tag">Film</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">2:1 &bull; -18dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.5 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">140%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-18 LUFS</span></div>
-        </div>
-      </div>
-
-      <!-- MAX LOUDNESS -->
-      <div class="style-card sc-maxloud" id="styleMaxloud" onclick="selectMasterStyle('maxloud',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#128266;&#9889;</div>
-        <div class="sc-name">Max Loudness</div>
-        <div class="sc-desc">Volumumen m&aacute;ximo optimizado para streaming. Limiter ultra agresivo con percepci&oacute;n de loudness m&aacute;xima.</div>
-        <div class="sc-tags"><span class="sc-tag">Streaming</span><span class="sc-tag">Radio</span><span class="sc-tag">Club</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">4:1 &bull; -9dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.2 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">110%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-9 LUFS</span></div>
-        </div>
-      </div>
-
-      <!-- TRIPPY BASS -->
-      <div class="style-card sc-trippy" id="styleTrippy" onclick="selectMasterStyle('trippy',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#127774;&#127941;</div>
-        <div class="sc-name">Trippy Bass</div>
-        <div class="sc-desc">Sub-frecuencias masivas y estereo ultra amplio. Car&aacute;cter psicodelic y graves que se sienten f&iacute;sicamente.</div>
-        <div class="sc-tags"><span class="sc-tag">Psytrance</span><span class="sc-tag">Lo-Fi</span><span class="sc-tag">Bass</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">3:1 &bull; -12dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-0.5 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">145%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-10 LUFS</span></div>
-        </div>
-      </div>
-
-      <!-- STUDIO PRESENCE -->
-      <div class="style-card sc-studio" id="styleStudio" onclick="selectMasterStyle('studio',this)">
-        <span class="sc-check">&#10003;</span>
-        <div class="sc-emoji">&#127911;&#127775;</div>
-        <div class="sc-name">Studio Presence</div>
-        <div class="sc-desc">Claridad profesional, vocales en primer plano y detalle de estudio. Para m&uacute;sica donde la voz es protagonista.</div>
-        <div class="sc-tags"><span class="sc-tag">R&amp;B</span><span class="sc-tag">Soul</span><span class="sc-tag">Vocal</span></div>
-        <div class="sc-params">
-          <div class="sc-param-row"><span class="sc-param-lbl">Compresor</span><span class="sc-param-val">3:1 &bull; -14dB</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Ceiling</span><span class="sc-param-val">-1.0 dBTP</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">St. Width</span><span class="sc-param-val">100%</span></div>
-          <div class="sc-param-row"><span class="sc-param-lbl">Target</span><span class="sc-param-val">-14 LUFS</span></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- AN&Aacute;LISIS REFERENCIA -->
-  <div class="card ref-panel" id="refPanel">
-    <div class="card-accent" style="background:linear-gradient(90deg,#8b5cf6,#a78bfa,#8b5cf6)"></div>
-    <div class="card-hdr"><span class="card-title">&#127919; An&aacute;lisis de Referencia</span></div>
-    <div class="card-body">
-      <div class="ref-stats-row">
-        <div class="ref-stat"><div class="ref-sv" id="refLufsVal">&mdash;</div><div class="ref-sl">LUFS</div></div>
-        <div class="ref-stat"><div class="ref-sv" id="refTpVal">&mdash;</div><div class="ref-sl">True Peak</div></div>
-        <div class="ref-stat"><div class="ref-sv" id="refRmsVal">&mdash;</div><div class="ref-sl">RMS</div></div>
-      </div>
-      <div class="ref-wform"><canvas id="refWaveformCanvas"></canvas></div>
-      <div class="ref-sug"><div class="ref-sug-t">&#128161; Sugerencias autom&aacute;ticas</div><div class="ref-sug-txt" id="refSugText">Carga una referencia para ver sugerencias.</div></div>
-      <div class="ref-auto-row" onclick="toggleAutoRef()">
-        <div class="toggle on" id="autoRefToggle"><div class="toggle-k"></div></div>
-        <span class="ref-auto-lbl">Aplicar ajustes autom&aacute;ticos basados en referencia</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- WAVEFORM -->
-  <div class="card" id="waveformSection" style="display:none">
-    <div class="card-accent"></div>
-    <div class="card-hdr">
-      <span class="card-title">&#128202; Forma de Onda</span>
-      <div class="meters-inline">
-        <div class="mbar-wrap"><div class="mbar"><div class="mfill" id="meterL" style="height:0%"></div></div><div class="mlbl">L</div></div>
-        <div class="mbar-wrap"><div class="mbar"><div class="mfill" id="meterR" style="height:0%"></div></div><div class="mlbl">R</div></div>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="wform-outer" id="wformOuter" style="height:80px" onclick="seekFromClick(event)" onmousemove="onWformHover(event)" onmouseleave="onWformLeave()">
-        <canvas id="waveformCanvas"></canvas>
-        <div class="playhead" id="playhead"></div>
-        <div class="wform-time-overlay" id="wformTimeOverlay">0:00.000</div>
-        <div class="wform-hover-line" id="wformHoverLine"></div>
-      </div>
-      <div class="vu-wrap"><canvas id="vuMeterCanvas"></canvas>
-        <div class="vu-footer">
-          <div class="vu-peaks"><span>L: <span class="vu-L" id="peakL">-&#8734;</span></span><span>R: <span class="vu-R" id="peakR">-&#8734;</span></span></div>
-          <div class="vu-scale">-60 &nbsp; -40 &nbsp; -20 &nbsp; -12 &nbsp; -6 &nbsp; 0</div>
-        </div>
-      </div>
-      <div class="spec-wrap"><canvas id="spectrumCanvas"></canvas></div>
-      <div class="transport">
-        <button class="btn-t" type="button" onclick="seekRel(-5)">&#9664;&#9664; <span class="btn-lbl">5s</span></button>
-        <button class="btn-t" id="btnPlay" type="button" onclick="togglePlay()">&#9654;</button>
-        <button class="btn-t" type="button" onclick="stopPlay()">&#9632;</button>
-        <button class="btn-t" type="button" onclick="seekRel(5)"><span class="btn-lbl">5s</span> &#9654;&#9654;</button>
-        <span class="time-disp" id="timeDisplay">0:00.000</span>
-        <div class="ab-wrap" id="abWrap" style="display:none" onclick="toggleAB()">
-          <div class="toggle" id="abToggle"><div class="toggle-k"></div></div>
-          <span class="ab-lbl" id="abLabel">ORIGINAL</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- EQ -->
-  <div class="card" id="workspaceEQ" style="display:none">
-    <div class="card-accent"></div>
-    <div class="card-hdr">
-      <span class="card-title">&#127897;&#65039; EQ Param&eacute;trico &mdash; 8 Bandas</span>
-      <div class="toggle-wrap" onclick="toggleEQ()"><div class="toggle on" id="eqToggle"><div class="toggle-k"></div></div><span id="eqToggleLbl">ON</span></div>
-    </div>
-    <div class="presets-row">
-      <button class="preset-btn active" type="button" onclick="applyEQPreset('flat',this)">Flat</button>
-      <button class="preset-btn" type="button" onclick="applyEQPreset('warm',this)">Warm</button>
-      <button class="preset-btn" type="button" onclick="applyEQPreset('bright',this)">Bright</button>
-      <button class="preset-btn" type="button" onclick="applyEQPreset('punchy',this)">Punchy</button>
-      <button class="preset-btn" type="button" onclick="applyEQPreset('vocal',this)">Vocal</button>
-      <button class="preset-btn" type="button" onclick="applyEQPreset('hifi',this)">Hi-Fi</button>
-    </div>
-    <div class="card-body"><div class="eq-canvas-wrap"><canvas id="eqCanvas" height="100"></canvas></div><div class="eq-bands" id="eqBands"></div></div>
-  </div>
-
-  <!-- DIN&Aacute;MICA -->
-  <div class="card" id="workspaceDyn" style="display:none">
-    <div class="card-accent"></div>
-    <div class="card-hdr"><span class="card-title">&#9889; Din&aacute;mica &amp; Efectos</span></div>
-    <div class="card-body">
-      <div class="ctrl-grid">
-        <div class="ctrl-panel">
-          <div class="ctrl-title">Compresor <div class="toggle-wrap" onclick="toggleComp()"><div class="toggle on" id="compToggle"><div class="toggle-k"></div></div></div></div>
-          <div class="ctrl-row"><div class="ctrl-lbl">Threshold <span class="ctrl-val" id="threshVal">-12 dB</span></div><input type="range" min="-40" max="0" value="-12" id="threshSlider" oninput="updCtrl('thresh',this.value)"></div>
-          <div class="ctrl-row"><div class="ctrl-lbl">Ratio <span class="ctrl-val" id="ratioVal">3:1</span></div><input type="range" min="1" max="20" value="3" step="0.5" id="ratioSlider" oninput="updCtrl('ratio',this.value)"></div>
-          <div class="ctrl-row"><div class="ctrl-lbl">Attack <span class="ctrl-val" id="attackVal">10 ms</span></div><input type="range" min="0" max="200" value="10" id="attackSlider" oninput="updCtrl('attack',this.value)"></div>
-          <div class="ctrl-row"><div class="ctrl-lbl">Release <span class="ctrl-val" id="releaseVal">150 ms</span></div><input type="range" min="10" max="1000" value="150" id="releaseSlider" oninput="updCtrl('release',this.value)"></div>
-          <div class="ctrl-row"><div class="ctrl-lbl">Makeup Gain <span class="ctrl-val" id="makeupVal">+0 dB</span></div><input type="range" min="-12" max="12" value="0" id="makeupSlider" oninput="updCtrl('makeup',this.value)"></div>
-        </div>
-        <div class="ctrl-panel">
-          <div class="ctrl-title">Limiter <div class="toggle-wrap" onclick="toggleLim()"><div class="toggle on" id="limToggle"><div class="toggle-k"></div></div></div></div>
-          <div class="ctrl-row"><div class="ctrl-lbl">Ceiling <span class="ctrl-val" id="ceilVal">-1.0 dBTP</span></div><input type="range" min="-6" max="0" value="-1" step="0.1" id="ceilSlider" oninput="updCtrl('ceil',this.value)"></div>
-          <div class="ctrl-row"><div class="ctrl-lbl">Lim Release <span class="ctrl-val" id="limRelVal">50 ms</span></div><input type="range" min="1" max="500" value="50" id="limRelSlider" oninput="updCtrl('limRel',this.value)"></div>
-          <div class="ctrl-title" style="margin-top:12px">Realce</div>
-          <div class="ctrl-row"><div class="ctrl-lbl">Exciter <span class="ctrl-val" id="exciterVal">20%</span></div><input type="range" min="0" max="100" value="20" id="exciterSlider" oninput="updCtrl('exciter',this.value)"></div>
-          <div class="ctrl-row"><div class="ctrl-lbl">Stereo Width <span class="ctrl-val" id="widthVal">100%</span></div><input type="range" min="0" max="200" value="100" id="widthSlider" oninput="updCtrl('width',this.value)"></div>
-          <div class="ctrl-row"><div class="ctrl-lbl">Output Gain <span class="ctrl-val" id="outputVal">+0.0 dB</span></div><input type="range" min="-12" max="6" value="0" step="0.1" id="outputSlider" oninput="updCtrl('output',this.value)"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PLATAFORMA -->
-  <div class="card" id="workspacePlat" style="display:none">
-    <div class="card-accent"></div>
-    <div class="card-hdr"><span class="card-title">&#128640; Plataforma &amp; Loudness</span></div>
-    <div class="card-body">
-      <div class="plat-grid" id="platformGrid">
-        <div class="plat-card selected" data-lufs="-14" data-platform="spotify" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#127911;</div><div class="plat-name">Spotify</div><div class="plat-lufs">-14 LUFS</div></div>
-        <div class="plat-card" data-lufs="-16" data-platform="apple" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#127822;</div><div class="plat-name">Apple Music</div><div class="plat-lufs">-16 LUFS</div></div>
-        <div class="plat-card" data-lufs="-14" data-platform="youtube" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#9654;</div><div class="plat-name">YouTube</div><div class="plat-lufs">-14 LUFS</div></div>
-        <div class="plat-card" data-lufs="-14" data-platform="tidal" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#127754;</div><div class="plat-name">Tidal</div><div class="plat-lufs">-14 LUFS</div></div>
-        <div class="plat-card" data-lufs="-14" data-platform="amazon" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#128230;</div><div class="plat-name">Amazon</div><div class="plat-lufs">-14 LUFS</div></div>
-        <div class="plat-card" data-lufs="-8" data-platform="soundcloud" onclick="selectPlatform(this)"><span class="plat-check">&#10003;</span><div class="plat-icon">&#9729;</div><div class="plat-name">SoundCloud</div><div class="plat-lufs">-8 LUFS</div></div>
-      </div>
-      <div class="lufs-boxes">
-        <div class="lufs-box"><div class="lufs-val" id="lufsIntVal">&mdash;</div><div class="lufs-lbl">Integrado</div></div>
-        <div class="lufs-box"><div class="lufs-val" id="lufsShortVal">&mdash;</div><div class="lufs-lbl">Short Term</div></div>
-        <div class="lufs-box"><div class="lufs-val" id="lufsTpVal">&mdash;</div><div class="lufs-lbl">True Peak</div></div>
-      </div>
-      <div class="loud-bar-wrap"><div class="loud-fill" id="loudFill"></div><div class="loud-target" id="loudTarget" style="left:70%"></div></div>
-      <div class="loud-labels"><span>-24 LUFS</span><span class="loud-target-lbl" id="targetLbl">Target: -14</span><span>0 LUFS</span></div>
-    </div>
-  </div>
-
-  <!-- EXPORTACI&Oacute;N -->
-  <div class="card" id="workspaceFmt" style="display:none">
-    <div class="card-accent"></div>
-    <div class="card-hdr"><span class="card-title">&#128190; Formato de Exportaci&oacute;n</span></div>
-    <div class="card-body">
-      <div class="fmt-grid">
-        <div class="fmt-item"><div class="ctrl-lbl" style="margin-bottom:8px">Formato</div><select id="exportFormat"><option value="wav">WAV (sin p&eacute;rdida)</option><option value="flac">FLAC</option><option value="mp3">MP3 320kbps</option><option value="aac">AAC 256kbps</option></select></div>
-        <div class="fmt-item"><div class="ctrl-lbl" style="margin-bottom:8px">Sample Rate <span class="ctrl-val" id="srOutVal">44100 Hz</span></div><input type="range" min="0" max="3" value="0" step="1" id="srSlider" oninput="updateSR(this.value)"></div>
-        <div class="fmt-item"><div class="ctrl-lbl" style="margin-bottom:8px">Bit Depth <span class="ctrl-val" id="bitOutVal">24-bit</span></div><input type="range" min="0" max="2" value="1" step="1" id="bitSlider" oninput="updateBit(this.value)"></div>
-        <div class="fmt-item" style="display:flex;align-items:center;padding-top:8px"><div class="toggle-wrap" onclick="toggleDither()"><div class="toggle on" id="ditherToggle"><div class="toggle-k"></div></div><span>Dithering (TPDF)</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MASTERIZAR -->
-  <div id="masterBtnWrap" style="display:none">
-    <button class="btn-master style-standard" id="btnMaster" type="button" disabled onclick="startMastering()">&#128049; Masterizar</button>
-    <div class="prog-wrap" id="progWrap"><div class="prog-bar"><div class="prog-fill" id="progFill"></div></div><div class="prog-lbl" id="progLbl">Iniciando...</div></div>
-  </div>
-
-  <!-- OUTPUT -->
-  <div class="card out-section" id="outputSection">
-    <div class="card-accent"></div>
-    <div class="out-hdr"><div class="out-badge">&#10003; Master listo</div><div class="out-title" id="outputTitle">Track masterizado</div></div>
-    <div class="card-body">
-      <div style="margin-bottom:12px"><div style="font-size:12px;font-weight:700;color:#475569;letter-spacing:1px;margin-bottom:7px;text-transform:uppercase">Waveform &mdash; Master</div><div class="wform-outer" style="height:56px;cursor:default"><canvas id="waveformCanvasMastered"></canvas></div></div>
-      <div class="cmp-table">
-        <div class="cmp-row"><div class="cmp-cell cmp-hdr"></div><div class="cmp-cell cmp-hdr">Original</div><div class="cmp-cell cmp-hdr">Master</div></div>
-        <div class="cmp-row"><div class="cmp-cell cmp-lbl">LUFS Int.</div><div class="cmp-cell cmp-before" id="cmpLufsBefore">&mdash;</div><div class="cmp-cell cmp-after" id="cmpLufsAfter">&mdash;</div></div>
-        <div class="cmp-row"><div class="cmp-cell cmp-lbl">True Peak</div><div class="cmp-cell cmp-before" id="cmpTpBefore">&mdash;</div><div class="cmp-cell cmp-after" id="cmpTpAfter">&mdash;</div></div>
-        <div class="cmp-row"><div class="cmp-cell cmp-lbl">Dyn. Range</div><div class="cmp-cell cmp-before" id="cmpDynBefore">&mdash;</div><div class="cmp-cell cmp-after" id="cmpDynAfter">&mdash;</div></div>
-        <div class="cmp-row"><div class="cmp-cell cmp-lbl">RMS</div><div class="cmp-cell cmp-before" id="cmpRmsBefore">&mdash;</div><div class="cmp-cell cmp-after" id="cmpRmsAfter">&mdash;</div></div>
-        <div class="cmp-row"><div class="cmp-cell cmp-lbl">Estilo</div><div class="cmp-cell cmp-before" id="cmpStyleBefore">&mdash;</div><div class="cmp-cell cmp-after" id="cmpStyleAfter">&mdash;</div></div>
-      </div>
-      <div class="dl-row">
-        <button class="btn-dl" type="button" onclick="downloadMaster()">&#8595; Descargar Master</button>
-        <button class="btn-reset" type="button" onclick="resetAll()">&#8629; Nueva pista</button>
-      </div>
-    </div>
-  </div>
-
-</main>
-<div class="toast" id="toast"></div>
-
-<script>
-// ===== STATE =====
-var audioCtx=null,audioBuf=null,refBuf=null,masteredBuf=null;
-var srcNode=null,analL=null,analR=null;
-var isPlaying=false,playingMaster=false;
-var startTime=0,pauseOffset=0;
-var animFr=null;
-var eqEnabled=true,compEnabled=true,limEnabled=true,ditherEnabled=true,autoRefEnabled=true;
-var selPlatform={name:'spotify',lufs:-14};
-var origStats=null,refStats=null;
-var curSR=44100,curBit=24;
-var srVals=[44100,48000,88200,96000];
-var bitVals=[16,24,32];
-var eqFreqs=[60,120,250,500,1000,3000,8000,16000];
-var eqLabels=['60','120','250','500','1k','3k','8k','16k'];
-var eqGains=[0,0,0,0,0,0,0,0];
-var eqPresets={flat:[0,0,0,0,0,0,0,0],warm:[2,1.5,1,0,-1,-1,-2,-3],bright:[-1,-1,0,0,1,2,3,4],punchy:[3,2,0,-1,-2,0,1,1],vocal:[-1,-1,0,0,2,3,1,-1],hifi:[1,1,0,0,0,1,2,3]};
-var peakHoldL=-60,peakHoldR=-60,peakTimerL=0,peakTimerR=0,peakMaxL=-Infinity,peakMaxR=-Infinity;
-var currentMasterStyle='standard';
-
-// ===== MASTERING STYLE PRESETS =====
-var masterStyles={
-  standard:{
-    name:'Estandar',emoji:'',
-    eq:[0,0,0,0,0,0,0,0],
-    thresh:-12,ratio:3,attack:10,release:150,makeup:0,
-    ceil:-1.0,limRel:50,width:100,output:0,
-    platform:'spotify',steps:['Analizando espectro...','Aplicando EQ neutro...','Compresion balanceada...','Normalizando a -14 LUFS...','Limiter transparente...','Dithering y render...','Master listo']
-  },
-  pop:{
-    name:'Pulido Pop',emoji:'',
-    // EQ: Sub boost, cut mud @250Hz, boost presence @3k, air @8k+16k
-    eq:[3.0, 1.5, -1.5, -0.5, 1.0, 3.0, 2.0, 2.5],
-    thresh:-14,ratio:4,attack:15,release:80,makeup:3,
-    ceil:-0.8,limRel:35,width:118,output:0.5,
-    platform:'spotify',steps:['Analizando espectro...','Realzando graves y presencia...','Compresion pop (4:1)...','Normalizando a -14 LUFS...','Limiter brillante -0.8 dBTP...','Puliendo estereo 118%...','Pulido Pop listo']
-  },
-  edm:{
-    name:'Festival EDM',emoji:'',
-    // EQ: Big sub @60Hz, punch @120Hz, cut mud, open air, wide stereo
-    eq:[5.0, 2.0, -1.0, -1.5, 0.5, 2.0, 3.0, 4.0],
-    thresh:-10,ratio:3,attack:5,release:200,makeup:5,
-    ceil:-0.3,limRel:25,width:162,output:1.5,
-    platform:'soundcloud',steps:['Analizando espectro EDM...','Amplificando sub y graves...','Compresion fast-attack (3:1)...','Normalizando -9 LUFS (club)...','Hard limiter -0.3 dBTP...','Ensanchando estereo 162%...','Festival EDM listo']
-  },
-  universal:{
-    name:'Universal',emoji:'',
-    // EQ: Gentle smile curve - subtle bass + air, balanced for any genre
-    eq:[1.5, 0.5, -0.5, 0, 0.5, 1.5, 1.5, 1.5],
-    thresh:-12,ratio:2.5,attack:15,release:140,makeup:1.5,
-    ceil:-1.0,limRel:60,width:106,output:0.3,
-    platform:'spotify',steps:['Analizando espectro...','Realce tonal organico...','Compresion dinamica suave...','Normalizando a -14 LUFS...','Limiter transparente -1.0 dBTP...','Dithering y render...','Efecto Universal listo']
-  },
-  fire:{
-    name:'Fuego',emoji:'',
-    // EQ: Big sub/bass push, cut mud @250Hz, midrange clarity, controlled highs
-    eq:[4.0, 2.0, -1.0, 0, 1.0, 2.5, 1.5, 0.5],
-    thresh:-13,ratio:4,attack:8,release:110,makeup:3.5,
-    ceil:-0.7,limRel:30,width:108,output:0.5,
-    platform:'spotify',steps:['Analizando espectro...','Empuje de graves Fuego...','Claridad en medios...','Normalizando a -14 LUFS...','Limiter punchy -0.7 dBTP...','Saturando calidez...','Efecto Fuego listo']
-  },
-  cinta:{
-    name:'Cinta',emoji:'',
-    // EQ: Warm low-mid boost, gentle high-frequency rolloff (analog tape character)
-    eq:[1.0, 1.5, 0.5, 0.5, 0, -0.5, -1.5, -3.0],
-    thresh:-16,ratio:2.2,attack:25,release:220,makeup:1.0,
-    ceil:-1.3,limRel:90,width:95,output:0,
-    platform:'apple',steps:['Analizando espectro...','Calentando con saturacion de cinta...','Compresion analogica suave...','Normalizando a -16 LUFS...','Limiter vintage -1.3 dBTP...','Anadiendo calidez armonica...','Efecto Cinta listo']
-  },
-  espacial:{
-    name:'Espacial',emoji:'',
-    // EQ: Slight mid scoop for "space", lifted highs for air, max stereo width
-    eq:[0.5, 0, -0.5, -1.0, -0.5, 0.5, 2.5, 3.5],
-    thresh:-15,ratio:2,attack:22,release:220,makeup:1.0,
-    ceil:-1.0,limRel:75,width:178,output:0,
-    platform:'apple',steps:['Analizando espectro...','Expandiendo imagen estereo...','Creando espacio y aire...','Normalizando a -16 LUFS...','Limiter espacial -1.0 dBTP...','Ensanchando hasta 178%...','Efecto Espacial listo']
-  },
-  empuje:{
-    name:'Empuje',emoji:'',
-    eq:[4.5, 1.5, 0, 0, 0.5, 1.5, 3.0, 2.5],
-    thresh:-11,ratio:3.5,attack:5,release:95,makeup:4.0,
-    ceil:-0.4,limRel:20,width:112,output:0.8,
-    platform:'soundcloud',steps:['Analizando espectro...','Bajos energeticos...','Brillo en agudos...','Normalizando a -8 LUFS...','Hard limiter -0.4 dBTP...','Maximo impacto...','Efecto Empuje listo']
-  },
-  extreme:{
-    name:'Extreme Punch',emoji:'',
-    // EQ: Massive sub + upper bass punch, presence spike, bright top
-    eq:[5.5, 3.0, -0.5, 0.5, 1.5, 2.5, 1.5, 1.0],
-    thresh:-10,ratio:6,attack:3,release:60,makeup:5.5,
-    ceil:-0.3,limRel:15,width:105,output:1.5,
-    platform:'soundcloud',steps:['Analizando espectro...','Compresion extrema 6:1...','Sub frecuencias al maximo...','Transientes aplastados...','Normalizando a -8 LUFS...','Hard limiter -0.3 dBTP...','Extreme Punch listo']
-  },
-  cinematic:{
-    name:'Cinematic Mix',emoji:'',
-    // EQ: Rich low-end, gentle mid scoop (space), soaring highs for epic feel
-    eq:[2.0, 1.0, -0.5, -1.0, 0, 1.0, 2.0, 3.5],
-    thresh:-18,ratio:2,attack:30,release:300,makeup:0.5,
-    ceil:-1.5,limRel:120,width:140,output:0,
-    platform:'apple',steps:['Analizando espectro...','Graves epicos y potentes...','Preservando dinamica orquestal...','Aire cinematografico...','Normalizando a -18 LUFS...','Estereo cinematografico 140%...','Cinematic Mix listo']
-  },
-  maxloud:{
-    name:'Max Loudness (Streaming)',emoji:'',
-    // EQ: Loudness curve - boosted lows + highs (Fletcher-Munson), slight V-shape
-    eq:[2.0, 0.5, -0.5, 0, 0.5, 2.0, 2.5, 2.0],
-    thresh:-9,ratio:4,attack:8,release:80,makeup:5,
-    ceil:-0.2,limRel:12,width:110,output:2.0,
-    platform:'soundcloud',steps:['Analizando espectro...','Curva de loudness optimizada...','Compresion de pegamento 4:1...','Normalizando a -9 LUFS...','Ultra hard limiter -0.2 dBTP...','Streaming: maximo volumen...','Max Loudness listo']
-  },
-  trippy:{
-    name:'Trippy Bass',emoji:'',
-    // EQ: Massive sub and mid-bass, gentle upper mid scoop, extreme high air
-    eq:[6.0, 3.0, 0, -1.5, -0.5, 0.5, 2.0, 3.0],
-    thresh:-12,ratio:3,attack:12,release:180,makeup:3.5,
-    ceil:-0.5,limRel:40,width:145,output:0.8,
-    platform:'soundcloud',steps:['Analizando espectro...','Sub-frecuencias masivas...','Caracter psicodelico...','Estereo ultra amplio 145%...','Normalizando a -10 LUFS...','Limiter -0.5 dBTP...','Trippy Bass listo']
-  },
-  studio:{
-    name:'Studio Presence',emoji:'',
-    // EQ: Gentle low shelf, forward mids for vocals, presence spike, crisp air
-    eq:[-0.5, 0, 0.5, 0.5, 2.5, 3.5, 2.0, 2.0],
-    thresh:-14,ratio:3,attack:18,release:160,makeup:2.0,
-    ceil:-1.0,limRel:55,width:100,output:0.3,
-    platform:'spotify',steps:['Analizando espectro...','Claridad profesional de estudio...','Presencia vocal al frente...','Compresion de estudio 3:1...','Normalizando a -14 LUFS...','Limiter transparente -1.0 dBTP...','Studio Presence listo']
-  }
-};
-
-function getCtx(){
-  if(!audioCtx){var AC=window.AudioContext||window.webkitAudioContext;audioCtx=new AC();}
-  return audioCtx;
-}
-
-// ===== SELECT MASTER STYLE =====
-function selectMasterStyle(style,el){
-  currentMasterStyle=style;
-  // Update card UI
-  var cards=document.querySelectorAll('.style-card');
-  for(var i=0;i<cards.length;i++)cards[i].classList.remove('selected');
-  el.classList.add('selected');
-  var s=masterStyles[style];
-  // Apply EQ
-  for(var i=0;i<eqGains.length;i++){
-    eqGains[i]=s.eq[i];
-    var sl=document.getElementById('eqS'+i);
-    if(sl){sl.value=s.eq[i];document.getElementById('eqV'+i).textContent=(s.eq[i]>0?'+':'')+parseFloat(s.eq[i]).toFixed(1);}
-  }
-  drawEQCurve();
-  // Apply dynamics
-  document.getElementById('threshSlider').value=s.thresh;updCtrl('thresh',s.thresh);
-  document.getElementById('ratioSlider').value=s.ratio;updCtrl('ratio',s.ratio);
-  document.getElementById('attackSlider').value=s.attack;updCtrl('attack',s.attack);
-  document.getElementById('releaseSlider').value=s.release;updCtrl('release',s.release);
-  document.getElementById('makeupSlider').value=s.makeup;updCtrl('makeup',s.makeup);
-  document.getElementById('ceilSlider').value=s.ceil;updCtrl('ceil',s.ceil);
-  document.getElementById('limRelSlider').value=s.limRel;updCtrl('limRel',s.limRel);
-  document.getElementById('widthSlider').value=s.width;updCtrl('width',s.width);
-  document.getElementById('outputSlider').value=s.output;updCtrl('output',s.output);
-  // Select platform
-  var platCards=document.querySelectorAll('.plat-card');
-  for(var i=0;i<platCards.length;i++){
-    if(platCards[i].getAttribute('data-platform')===s.platform){selectPlatform(platCards[i]);break;}
-  }
-  // Update master button color
-  var btn=document.getElementById('btnMaster');
-  btn.className='btn-master style-'+style;
-  // Mark EQ preset as custom
-  var presetBtns=document.querySelectorAll('.preset-btn');
-  for(var i=0;i<presetBtns.length;i++)presetBtns[i].classList.remove('active');
-  var names={standard:'Flat',pop:'Bright',edm:'Punchy'};
-  showToast('Estilo: '+s.name+' aplicado');
-}
-
-// ===== BUILD EQ BANDS =====
-function buildEQBands(){
-  var w=document.getElementById('eqBands');w.innerHTML='';
-  for(var i=0;i<eqFreqs.length;i++){
-    (function(idx){
-      var d=document.createElement('div');d.className='eq-band';
-      d.innerHTML='<div class="eq-v" id="eqV'+idx+'">0.0</div><div class="eq-slider-wrap"><input class="vslider" type="range" min="-12" max="12" value="0" step="0.5" id="eqS'+idx+'" oninput="updateEQ('+idx+',this.value)"></div><div class="eq-freq">'+eqLabels[idx]+'</div>';
-      w.appendChild(d);
-    })(i);
-  }
-  drawEQCurve();
-}
-
-// ===== DRAG & DROP =====
-function onDragOver(e,z){e.preventDefault();document.getElementById(z==='main'?'uploadZone':'refZone').classList.add('drag-over');}
-function onDragLeave(z){document.getElementById(z==='main'?'uploadZone':'refZone').classList.remove('drag-over');}
-function onDrop(e,z){e.preventDefault();document.getElementById(z==='main'?'uploadZone':'refZone').classList.remove('drag-over');var f=e.dataTransfer.files[0];if(f){z==='main'?loadMain(f):loadRef(f);}}
-document.getElementById('fileInput').addEventListener('change',function(e){if(e.target.files[0])loadMain(e.target.files[0]);});
-document.getElementById('refInput').addEventListener('change',function(e){if(e.target.files[0])loadRef(e.target.files[0]);});
-
-function readFileAsArrayBuffer(file){
-  // Modern Promise-based path (Safari 14+, Chrome, Firefox)
-  if(file.arrayBuffer)return file.arrayBuffer();
-  // Fallback for older browsers
-  return new Promise(function(resolve,reject){
-    var r=new FileReader();
-    r.onload=function(e){resolve(e.target.result);};
-    r.onerror=function(){reject(r.error||new Error('FileReader error'));};
-    r.readAsArrayBuffer(file);
-  });
-}
-
-function decodeAudio(ctx,arrayBuffer){
-  // Promise-based decodeAudioData (modern browsers). Falls back to
-  // the older callback signature for older Safari/WebKit builds.
-  return new Promise(function(resolve,reject){
-    var p=ctx.decodeAudioData(arrayBuffer,function(buf){resolve(buf);},function(err){reject(err||new Error('decodeAudioData failed'));});
-    if(p&&typeof p.then==='function'){p.then(resolve,reject);}
-  });
-}
-
-function loadMain(file){
-  if(!file){return;}
-  showToast('Cargando pista...');
-  document.getElementById('engineMode').textContent='CARGANDO';
-  var ctx=getCtx();
-  if(ctx.state==='suspended'){ctx.resume();}
-  readFileAsArrayBuffer(file).then(function(arrayBuffer){
-    return decodeAudio(ctx,arrayBuffer);
-  }).then(function(buf){
-    audioBuf=buf;
-    document.getElementById('mainFileName').textContent=file.name;
-    document.getElementById('mainFileMeta').textContent=buf.sampleRate+'Hz \xb7 '+fmtTime(buf.duration)+' \xb7 '+(file.size/1048576).toFixed(1)+'MB';
-    document.getElementById('udefaultMain').classList.add('hidden');
-    document.getElementById('uloadedMain').classList.add('visible');
-    document.getElementById('uploadZone').classList.add('has-main');
-    var ids=['waveformSection','workspaceEQ','workspaceDyn','workspacePlat','workspaceFmt','masterBtnWrap'];
-    for(var i=0;i<ids.length;i++)document.getElementById(ids[i]).style.display='block';
-    document.getElementById('btnMaster').disabled=false;
-    document.getElementById('engineMode').textContent='LISTO';
-    drawWaveform(buf,'waveformCanvas','#6366f1','#8b5cf6');
-    analyzeLoudness(buf,false);
-    showToast('\u2713 Pista cargada');
-  }).catch(function(err){
-    console.error('loadMain error:',err);
-    showToast('No se pudo leer el audio: formato no soportado por el navegador','error');
-    document.getElementById('engineMode').textContent='ERROR';
-  });
-}
-
-function loadRef(file){
-  if(!file){return;}
-  showToast('Analizando referencia...');
-  var ctx=getCtx();
-  if(ctx.state==='suspended'){ctx.resume();}
-  readFileAsArrayBuffer(file).then(function(arrayBuffer){
-    return decodeAudio(ctx,arrayBuffer);
-  }).then(function(buf){
-    refBuf=buf;
-    document.getElementById('refFileName').textContent=file.name;
-    document.getElementById('refFileMeta').textContent=buf.sampleRate+'Hz \xb7 '+fmtTime(buf.duration);
-    document.getElementById('udefaultRef').classList.add('hidden');
-    document.getElementById('uloadedRef').classList.add('visible');
-    document.getElementById('refZone').classList.add('has-ref');
-    analyzeLoudness(buf,true);
-    drawWaveform(buf,'refWaveformCanvas','#8b5cf6','#a78bfa');
-    document.getElementById('refPanel').classList.add('visible');
-    if(autoRefEnabled)applyRefAdjustments();
-    showToast('\u2713 Referencia cargada');
-  }).catch(function(err){
-    console.error('loadRef error:',err);
-    showToast('No se pudo leer el audio: formato no soportado por el navegador','error');
-  });
-}
-
-function analyzeLoudness(buf,isRef){
-  var data=buf.getChannelData(0),sq=0,peak=0;
-  for(var i=0;i<data.length;i++){sq+=data[i]*data[i];if(Math.abs(data[i])>peak)peak=Math.abs(data[i]);}
-  var rms=Math.sqrt(sq/data.length);
-  var lufs=parseFloat((20*Math.log(rms+1e-10)/Math.LN10-0.691).toFixed(1));
-  var tp=parseFloat((20*Math.log(peak+1e-10)/Math.LN10).toFixed(1));
-  var rmsDb=parseFloat((20*Math.log(rms+1e-10)/Math.LN10).toFixed(1));
-  if(isRef){
-    refStats={lufs:lufs,tp:tp,rmsDb:rmsDb};
-    document.getElementById('refLufsVal').textContent=lufs;
-    document.getElementById('refTpVal').textContent=tp+'dB';
-    document.getElementById('refRmsVal').textContent=rmsDb+'dB';
-    buildRefSuggestion();
-  }else{
-    origStats={lufs:lufs,tp:tp,rmsDb:rmsDb,dr:parseFloat((tp-rmsDb).toFixed(1))};
-    document.getElementById('lufsIntVal').textContent=lufs;
-    document.getElementById('lufsShortVal').textContent=(lufs+1.5).toFixed(1);
-    document.getElementById('lufsTpVal').textContent=tp;
-    var el=document.getElementById('lufsIntVal');
-    el.className='lufs-val'+(lufs>-8?' bad':lufs>-14?' warn':' ok');
-    document.getElementById('loudFill').style.width=Math.max(0,Math.min(100,((lufs+24)/24)*100))+'%';
-    if(refStats)buildRefSuggestion();
-  }
-}
-
-function buildRefSuggestion(){
-  if(!refStats)return;
-  var origL=origStats?origStats.lufs:null;
-  var gn=origL!==null?(refStats.lufs-origL).toFixed(1):'?';
-  var ceil=Math.max(-6,Math.min(-0.1,refStats.tp-0.3)).toFixed(1);
-  var txt='Referencia: '+refStats.lufs+' LUFS | TP: '+refStats.tp+' dBTP | RMS: '+refStats.rmsDb+' dB';
-  if(origL!==null)txt+='\n\nTu pista está en '+origL+' LUFS. Necesitas '+(gn>0?'+':'')+gn+' dB de ganancia.';
-  txt+='\n\nCeiling sugerido: '+ceil+' dBTP.\nMakeup Gain y Ceiling configurados automáticamente.';
-  document.getElementById('refSugText').textContent=txt;
-}
-
-function applyRefAdjustments(){
-  if(!refStats)return;
-  var ceil=Math.max(-6,Math.min(-0.1,refStats.tp-0.3));
-  document.getElementById('ceilSlider').value=ceil;updCtrl('ceil',ceil);
-  if(origStats){var gn=Math.max(-12,Math.min(12,refStats.lufs-origStats.lufs));document.getElementById('makeupSlider').value=gn;updCtrl('makeup',gn);}
-  var cards=document.querySelectorAll('.plat-card'),best=null,bestD=Infinity;
-  for(var i=0;i<cards.length;i++){var d=Math.abs(parseInt(cards[i].getAttribute('data-lufs'))-refStats.lufs);if(d<bestD){bestD=d;best=cards[i];}}
-  if(best)selectPlatform(best);
-}
-function toggleAutoRef(){autoRefEnabled=!autoRefEnabled;document.getElementById('autoRefToggle').classList.toggle('on',autoRefEnabled);if(autoRefEnabled&&refStats)applyRefAdjustments();}
-
-function drawWaveform(buf,canvasId,c1,c2){
-  var canvas=document.getElementById(canvasId);if(!canvas)return;
-  var par=canvas.parentElement,W=par.offsetWidth||300,H=par.offsetHeight||80;
-  var dpr=window.devicePixelRatio||1;
-  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
-  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
-  var data=buf.getChannelData(0),step=Math.ceil(data.length/W),mid=H/2;
-  ctx.clearRect(0,0,W,H);
-  ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,mid);ctx.lineTo(W,mid);ctx.stroke();
-  var g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,(c1||'#6366f1')+'55');g.addColorStop(.5,(c2||'#8b5cf6')+'cc');g.addColorStop(1,(c1||'#6366f1')+'55');
-  ctx.fillStyle=g;ctx.shadowColor=c2||'#8b5cf6';ctx.shadowBlur=4;
-  for(var i=0;i<W;i++){var mn=1,mx=-1;for(var j=0;j<step;j++){var v=data[i*step+j]||0;if(v<mn)mn=v;if(v>mx)mx=v;}var h=Math.max(1,(mx-mn)*mid*.9);ctx.fillRect(i,mid-h/2,1,h);}
-}
-
-function onWformHover(e){var el=document.getElementById('wformHoverLine');if(!el)return;var rect=document.getElementById('wformOuter').getBoundingClientRect();el.style.left=(e.clientX-rect.left)+'px';el.style.display='block';}
-function onWformLeave(){var el=document.getElementById('wformHoverLine');if(el)el.style.display='none';}
-function seekFromClick(e){
-  if(!audioBuf)return;
-  var rect=document.getElementById('wformOuter').getBoundingClientRect();
-  var pct=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
-  var newOff=pct*audioBuf.duration;
-  if(isPlaying){if(srcNode){try{srcNode.stop();}catch(err){}}pauseOffset=newOff;play();}
-  else{pauseOffset=newOff;document.getElementById('playhead').style.left=(pct*100)+'%';document.getElementById('timeDisplay').textContent=fmtTime(newOff);document.getElementById('wformTimeOverlay').textContent=fmtTime(newOff);}
-}
-function seekRel(sec){
-  if(!audioBuf)return;
-  var cur=isPlaying?(audioCtx.currentTime-startTime):pauseOffset;
-  var newOff=Math.max(0,Math.min(audioBuf.duration,cur+sec));
-  if(isPlaying){if(srcNode){try{srcNode.stop();}catch(err){}}pauseOffset=newOff;play();}
-  else{pauseOffset=newOff;document.getElementById('playhead').style.left=(newOff/audioBuf.duration*100)+'%';document.getElementById('timeDisplay').textContent=fmtTime(newOff);document.getElementById('wformTimeOverlay').textContent=fmtTime(newOff);}
-}
-
-function updateEQ(i,val){eqGains[i]=parseFloat(val);document.getElementById('eqV'+i).textContent=(val>0?'+':'')+parseFloat(val).toFixed(1);drawEQCurve();}
-function applyEQPreset(name,btn){
-  var btns=document.querySelectorAll('.preset-btn');for(var i=0;i<btns.length;i++)btns[i].classList.remove('active');btn.classList.add('active');
-  var presets={flat:[0,0,0,0,0,0,0,0],warm:[2,1.5,1,0,-1,-1,-2,-3],bright:[-1,-1,0,0,1,2,3,4],punchy:[3,2,0,-1,-2,0,1,1],vocal:[-1,-1,0,0,2,3,1,-1],hifi:[1,1,0,0,0,1,2,3]};
-  eqGains=presets[name].slice();
-  for(var i=0;i<eqGains.length;i++){var s=document.getElementById('eqS'+i);if(s){s.value=eqGains[i];document.getElementById('eqV'+i).textContent=(eqGains[i]>0?'+':'')+parseFloat(eqGains[i]).toFixed(1);}}
-  drawEQCurve();
-}
-function drawEQCurve(){
-  var canvas=document.getElementById('eqCanvas'),W=canvas.parentElement.offsetWidth||300;canvas.width=W;
-  var H=canvas.height,ctx=canvas.getContext('2d');ctx.clearRect(0,0,W,H);
-  ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;for(var i=1;i<4;i++){ctx.beginPath();ctx.moveTo(0,H*i/4);ctx.lineTo(W,H*i/4);ctx.stroke();}
-  ctx.strokeStyle='rgba(255,255,255,.07)';ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
-  var logMin=Math.log(20)/Math.LN10,logMax=Math.log(20000)/Math.LN10,pts=[];
-  for(var x=0;x<W;x++){var freq=Math.pow(10,logMin+(x/W)*(logMax-logMin)),gain=0;for(var k=0;k<eqFreqs.length;k++){var q=1.4,lf=Math.log(freq/eqFreqs[k])/Math.LN10;gain+=eqGains[k]*Math.exp(-lf*lf*q*q);}pts.push({x:x,y:H/2-(gain/12)*(H/2-4)});}
-  ctx.beginPath();ctx.moveTo(0,H/2);for(var i=0;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);ctx.lineTo(W,H/2);ctx.closePath();ctx.fillStyle='rgba(99,102,241,.1)';ctx.fill();
-  ctx.beginPath();for(var i=0;i<pts.length;i++){if(i===0)ctx.moveTo(pts[i].x,pts[i].y);else ctx.lineTo(pts[i].x,pts[i].y);}
-  ctx.strokeStyle='#6366f1';ctx.lineWidth=2;ctx.shadowColor='#6366f1';ctx.shadowBlur=8;ctx.stroke();
-}
-
-function togglePlay(){if(!audioBuf)return;isPlaying?pausePlay():play();}
-function play(){
-  var ctx=getCtx();if(ctx.state==='suspended')ctx.resume();
-  var buf=(playingMaster&&masteredBuf)?masteredBuf:audioBuf;
-  if(pauseOffset>=buf.duration){stopPlay();return;}
-  if(pauseOffset<0)pauseOffset=0;
-  srcNode=ctx.createBufferSource();srcNode.buffer=buf;
-  analL=ctx.createAnalyser();analR=ctx.createAnalyser();analL.fftSize=2048;analR.fftSize=2048;
-  var sp=ctx.createChannelSplitter(2);srcNode.connect(sp);sp.connect(analL,0);sp.connect(analR,buf.numberOfChannels>1?1:0);
-  analL.connect(ctx.destination);analR.connect(ctx.destination);
-  srcNode.start(0,pauseOffset);startTime=ctx.currentTime-pauseOffset;isPlaying=true;
-  document.getElementById('btnPlay').innerHTML='&#9646;&#9646;';document.getElementById('btnPlay').classList.add('active');
-  srcNode.onended=function(){if(isPlaying)stopPlay();};
-  rafPlayhead();rafMeters();rafSpectrum();
-}
-function pausePlay(){if(srcNode){try{srcNode.stop();}catch(e){}}pauseOffset=audioCtx.currentTime-startTime;isPlaying=false;document.getElementById('btnPlay').innerHTML='&#9654;';document.getElementById('btnPlay').classList.remove('active');cancelAnimationFrame(animFr);}
-function stopPlay(){
-  if(srcNode){try{srcNode.stop();}catch(e){}}
-  pauseOffset=0;isPlaying=false;
-  document.getElementById('btnPlay').innerHTML='&#9654;';document.getElementById('btnPlay').classList.remove('active');
-  document.getElementById('playhead').style.left='0%';document.getElementById('timeDisplay').textContent='0:00.000';document.getElementById('wformTimeOverlay').textContent='0:00.000';
-  cancelAnimationFrame(animFr);document.getElementById('meterL').style.height='0%';document.getElementById('meterR').style.height='0%';
-  peakHoldL=-60;peakHoldR=-60;peakMaxL=-Infinity;peakMaxR=-Infinity;
-  document.getElementById('peakL').textContent='-∞';document.getElementById('peakR').textContent='-∞';
-  var c=document.getElementById('vuMeterCanvas');if(c){var ct=c.getContext('2d');ct.fillStyle='#020204';ct.fillRect(0,0,c.width,c.height);}
-}
-function rafPlayhead(){if(!isPlaying)return;var e=audioCtx.currentTime-startTime,pct=Math.min(e/audioBuf.duration,1)*100,t=fmtTime(e);document.getElementById('playhead').style.left=pct+'%';document.getElementById('timeDisplay').textContent=t;document.getElementById('wformTimeOverlay').textContent=t;animFr=requestAnimationFrame(rafPlayhead);}
-
-function rafMeters(){
-  if(!isPlaying||!analL)return;
-  var dL=new Float32Array(analL.fftSize),dR=new Float32Array(analR.fftSize);
-  analL.getFloatTimeDomainData(dL);analR.getFloatTimeDomainData(dR);
-  var rL=0,rR=0;for(var i=0;i<dL.length;i++){rL+=dL[i]*dL[i];rR+=dR[i]*dR[i];}
-  rL=Math.sqrt(rL/dL.length);rR=Math.sqrt(rR/dR.length);
-  var dbL=20*Math.log(rL+1e-10)/Math.LN10,dbR=20*Math.log(rR+1e-10)/Math.LN10;
-  document.getElementById('meterL').style.height=Math.max(0,Math.min(100,(1+dbL/60)*100))+'%';
-  document.getElementById('meterR').style.height=Math.max(0,Math.min(100,(1+dbR/60)*100))+'%';
-  if(dbL>peakHoldL){peakHoldL=dbL;peakTimerL=70;}else if(peakTimerL>0)peakTimerL--;else peakHoldL-=0.4;
-  if(dbR>peakHoldR){peakHoldR=dbR;peakTimerR=70;}else if(peakTimerR>0)peakTimerR--;else peakHoldR-=0.4;
-  if(dbL>peakMaxL)peakMaxL=dbL;if(dbR>peakMaxR)peakMaxR=dbR;
-  document.getElementById('peakL').textContent=peakMaxL>-60?peakMaxL.toFixed(1)+' dB':'-∞';
-  document.getElementById('peakR').textContent=peakMaxR>-60?peakMaxR.toFixed(1)+' dB':'-∞';
-  drawVU(dbL,dbR,peakHoldL,peakHoldR);requestAnimationFrame(rafMeters);
-}
-
-function drawVU(dbL,dbR,phL,phR){
-  var canvas=document.getElementById('vuMeterCanvas'),W=canvas.offsetWidth||300,H=canvas.offsetHeight||90;
-  if(canvas.width!==W)canvas.width=W;if(canvas.height!==H)canvas.height=H;
-  var ctx=canvas.getContext('2d');ctx.fillStyle='#020204';ctx.fillRect(0,0,W,H);
-  var DB_MIN=-60,RANGE=60,PL=32,PR=10,PT=8,ROW=(H-PT-14)/2,BH=ROW-12,BW=W-PL-PR;
-  function dbX(db){return PL+((db-DB_MIN)/RANGE)*BW;}
-  var grids=[-60,-48,-36,-24,-18,-12,-9,-6,-3,0];
-  for(var gi=0;gi<grids.length;gi++){var gx=dbX(grids[gi]);ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,PT);ctx.lineTo(gx,H-10);ctx.stroke();ctx.fillStyle='#334155';ctx.font='9px JetBrains Mono,monospace';ctx.textAlign='center';ctx.fillText(grids[gi],gx,H-1);}
-  function drawCh(db,ph,rowY,label,lc){
-    var fw=Math.max(0,dbX(Math.min(0,db))-PL);
-    ctx.fillStyle='#0d0d14';ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1;ctx.beginPath();rr(ctx,PL,rowY,BW,BH,3);ctx.fill();ctx.stroke();
-    if(fw>0){
-      var g=ctx.createLinearGradient(PL,0,PL+BW,0);
-      g.addColorStop(0,'#4400ff');g.addColorStop(0.12,'#0033ff');g.addColorStop(0.24,'#00aaff');g.addColorStop(0.38,'#00ff88');g.addColorStop(0.52,'#aaff00');g.addColorStop(0.65,'#ffee00');g.addColorStop(0.78,'#ff8800');g.addColorStop(0.88,'#ff2244');g.addColorStop(1,'#ff00aa');
-      ctx.fillStyle=g;ctx.beginPath();rr(ctx,PL,rowY,fw,BH,3);ctx.fill();
-      ctx.save();ctx.globalAlpha=0.18;ctx.filter='blur(3px)';ctx.fillStyle=g;ctx.beginPath();rr(ctx,PL,rowY-2,fw,BH+4,3);ctx.fill();ctx.restore();
-      ctx.fillStyle='rgba(2,2,4,.55)';var seg=BW/50;for(var si=1;si<50;si++)ctx.fillRect(PL+si*seg,rowY,1,BH);
-    }
-    if(ph>DB_MIN){var px=dbX(Math.min(0,ph));ctx.fillStyle='rgba(255,255,255,.9)';ctx.fillRect(px-1,rowY,3,BH);}
-    if(db>=-0.1){ctx.fillStyle='#ff2244';ctx.shadowColor='#ff2244';ctx.shadowBlur=10;ctx.beginPath();rr(ctx,PL+BW-7,rowY+2,5,BH-4,2);ctx.fill();ctx.shadowBlur=0;}
-    ctx.fillStyle=lc;ctx.shadowColor=lc;ctx.shadowBlur=6;ctx.font='bold 11px JetBrains Mono,monospace';ctx.textAlign='center';ctx.fillText(label,PL/2,rowY+BH/2+4);ctx.shadowBlur=0;
-  }
-  drawCh(dbL,phL,PT,'L','#10b981');drawCh(dbR,phR,PT+ROW+2,'R','#a78bfa');
-}
-function rr(ctx,x,y,w,h,r){if(w<2*r)r=w/2;if(h<2*r)r=h/2;ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();}
-
-function rafSpectrum(){
-  if(!isPlaying||!analL)return;
-  var canvas=document.getElementById('spectrumCanvas'),W=canvas.offsetWidth||300,H=canvas.offsetHeight||50;
-  canvas.width=W;canvas.height=H;var ctx=canvas.getContext('2d');
-  var bl=analL.frequencyBinCount,data=new Uint8Array(bl);analL.getByteFrequencyData(data);
-  ctx.fillStyle='#020204';ctx.fillRect(0,0,W,H);
-  var bw=W/bl*2.5,g=ctx.createLinearGradient(0,H,0,0);
-  g.addColorStop(0,'#6366f1');g.addColorStop(0.5,'#8b5cf6');g.addColorStop(1,'#06b6d4');
-  ctx.fillStyle=g;for(var i=0;i<bl;i++){var h=(data[i]/255)*H;if(h>0)ctx.fillRect(i*bw,H-h,Math.max(bw-1,1),h);}
-  requestAnimationFrame(rafSpectrum);
-}
-
-function toggleAB(){if(!masteredBuf)return;playingMaster=!playingMaster;document.getElementById('abToggle').classList.toggle('on',playingMaster);document.getElementById('abLabel').textContent=playingMaster?'MASTER':'ORIGINAL';if(isPlaying){pausePlay();play();}}
-
-function updCtrl(id,val){
-  var el=document.getElementById(id+'Val');if(!el)return;
-  var n=parseFloat(val),d='';
-  if(id==='thresh')d=n+' dB';else if(id==='ratio')d=n+':1';else if(id==='ceil')d=n.toFixed(1)+' dBTP';
-  else if(id==='output'||id==='makeup')d=(n>=0?'+':'')+n.toFixed(1)+' dB';
-  else if(id==='attack'||id==='release'||id==='limRel')d=n+' ms';
-  else if(id==='exciter'||id==='width')d=n+'%';
-  else d=n+'';
-  el.textContent=d;
-}
-function toggleEQ(){eqEnabled=!eqEnabled;document.getElementById('eqToggle').classList.toggle('on',eqEnabled);document.getElementById('eqToggleLbl').textContent=eqEnabled?'ON':'OFF';}
-function toggleComp(){compEnabled=!compEnabled;document.getElementById('compToggle').classList.toggle('on',compEnabled);}
-function toggleLim(){limEnabled=!limEnabled;document.getElementById('limToggle').classList.toggle('on',limEnabled);}
-function toggleDither(){ditherEnabled=!ditherEnabled;document.getElementById('ditherToggle').classList.toggle('on',ditherEnabled);}
-function selectPlatform(el){
-  var cards=document.querySelectorAll('.plat-card');for(var i=0;i<cards.length;i++)cards[i].classList.remove('selected');el.classList.add('selected');
-  var l=parseInt(el.getAttribute('data-lufs'));selPlatform={name:el.getAttribute('data-platform'),lufs:l};
-  document.getElementById('targetLbl').textContent='Target: '+l;
-  document.getElementById('loudTarget').style.left=((l+24)/24*100)+'%';
-  if(audioBuf)analyzeLoudness(audioBuf,false);
-}
-function updateSR(i){curSR=srVals[parseInt(i)];document.getElementById('srOutVal').textContent=curSR+' Hz';}
-function updateBit(i){curBit=bitVals[parseInt(i)];document.getElementById('bitOutVal').textContent=curBit+'-bit';}
-
-function startMastering(){
-  if(!audioBuf)return;
-  document.getElementById('btnMaster').disabled=true;document.getElementById('progWrap').classList.add('visible');
-  var s=masterStyles[currentMasterStyle];
-  var steps=s.steps;var idx=0;
-  function run(){if(idx>=steps.length){renderAudio();return;}document.getElementById('progFill').style.width=Math.round((idx+1)/steps.length*100)+'%';document.getElementById('progLbl').textContent=steps[idx];idx++;setTimeout(run,340+Math.random()*220);}
-  run();
-}
-
-function renderAudio(){
-  var buf=audioBuf,len=buf.length,sr=buf.sampleRate,nCh=buf.numberOfChannels;
-  var OAC=window.OfflineAudioContext||window.webkitOfflineAudioContext;
-  var off=new OAC(nCh,len,sr);var src=off.createBufferSource();src.buffer=buf;var last=src;
-  if(eqEnabled){for(var i=0;i<eqFreqs.length;i++){var fi=off.createBiquadFilter();fi.type=i===0?'lowshelf':(i===eqFreqs.length-1?'highshelf':'peaking');fi.frequency.value=eqFreqs[i];fi.gain.value=eqGains[i];fi.Q.value=1.41;last.connect(fi);last=fi;}}
-  if(compEnabled){var c=off.createDynamicsCompressor();c.threshold.value=parseFloat(document.getElementById('threshSlider').value);c.ratio.value=parseFloat(document.getElementById('ratioSlider').value);c.knee.value=6;c.attack.value=parseFloat(document.getElementById('attackSlider').value)/1000;c.release.value=parseFloat(document.getElementById('releaseSlider').value)/1000;last.connect(c);last=c;}
-  var gn=off.createGain();gn.gain.value=Math.pow(10,(parseFloat(document.getElementById('makeupSlider').value)+parseFloat(document.getElementById('outputSlider').value))/20);last.connect(gn);last=gn;
-  if(limEnabled){var lm=off.createDynamicsCompressor();lm.threshold.value=parseFloat(document.getElementById('ceilSlider').value)-0.1;lm.ratio.value=20;lm.knee.value=0;lm.attack.value=0.001;lm.release.value=parseFloat(document.getElementById('limRelSlider').value)/1000;last.connect(lm);last=lm;}
-  last.connect(off.destination);src.start(0);
-  off.oncomplete=function(e){
-    masteredBuf=e.renderedBuffer;
-    var styleNames={standard:'Estandar',pop:'Pulido Pop',edm:'Festival EDM',universal:'Universal',fire:'Fuego',cinta:'Cinta',espacial:'Espacial',empuje:'Empuje',extreme:'Extreme Punch',cinematic:'Cinematic Mix',maxloud:'Max Loudness',trippy:'Trippy Bass',studio:'Studio Presence'};
-    drawWaveform(masteredBuf,'waveformCanvasMastered','#10b981','#34d399');
-    var orig=origStats||{lufs:'--',tp:'--',dr:'--',rmsDb:'--'};
-    var g=selPlatform.lufs-parseFloat(orig.lufs);
-    document.getElementById('cmpLufsBefore').textContent=orig.lufs+' LUFS';
-    document.getElementById('cmpLufsAfter').textContent=selPlatform.lufs.toFixed(1)+' LUFS';
-    document.getElementById('cmpTpBefore').textContent=orig.tp+' dBTP';
-    document.getElementById('cmpTpAfter').textContent=Math.min(-0.1,parseFloat(orig.tp)+g).toFixed(1)+' dBTP';
-    document.getElementById('cmpDynBefore').textContent=orig.dr+' LU';
-    document.getElementById('cmpDynAfter').textContent=(currentMasterStyle==='edm'?'6':'8')+' LU';
-    document.getElementById('cmpRmsBefore').textContent=orig.rmsDb+' dB';
-    document.getElementById('cmpRmsAfter').textContent=(parseFloat(orig.rmsDb)+g).toFixed(1)+' dB';
-    document.getElementById('cmpStyleBefore').textContent='Sin estilo';
-    document.getElementById('cmpStyleAfter').textContent=styleNames[currentMasterStyle]||'Estándar';
-    document.getElementById('outputTitle').textContent=document.getElementById('mainFileName').textContent.replace(/\.[^.]+$/,'')+' — Master';
-    document.getElementById('outputSection').classList.add('visible');
-    document.getElementById('outputSection').scrollIntoView({behavior:'smooth',block:'start'});
-    document.getElementById('progWrap').classList.remove('visible');
-    document.getElementById('abWrap').style.display='flex';
-    playingMaster=true;document.getElementById('abToggle').classList.add('on');document.getElementById('abLabel').textContent='MASTER';
-    showToast('✓ '+styleNames[currentMasterStyle]+' — '+selPlatform.name.toUpperCase());
-  };
-  off.startRendering();
-}
-
-function downloadMaster(){
-  if(!masteredBuf)return;
-  var blob=bufToWav(masteredBuf,curBit),url=URL.createObjectURL(blob);
-  var a=document.createElement('a');a.href=url;
-  a.download=document.getElementById('mainFileName').textContent.replace(/\.[^.]+$/,'')+'_MASTER_'+selPlatform.name+'.wav';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);showToast('Descarga iniciada');
-}
-function bufToWav(buf,bits){
-  var nCh=buf.numberOfChannels,len=buf.length,sr=buf.sampleRate;
-  var bps=bits===16?2:(bits===32?4:3);
-  var bl=nCh*bps,dSize=len*bl;
-  var ab=new ArrayBuffer(44+dSize),v=new DataView(ab);
-  function ws(o,s){for(var i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i));}
-  ws(0,'RIFF');v.setUint32(4,36+dSize,true);ws(8,'WAVE');ws(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);
-  v.setUint16(22,nCh,true);v.setUint32(24,sr,true);v.setUint32(28,sr*bl,true);v.setUint16(32,bl,true);v.setUint16(34,bits,true);
-  ws(36,'data');v.setUint32(40,dSize,true);
-  var off=44,chs=[];for(var c=0;c<nCh;c++)chs.push(buf.getChannelData(c));
-  for(var i=0;i<len;i++){
-    for(var c=0;c<nCh;c++){
-      var s=Math.max(-1,Math.min(1,chs[c][i]));
-      if(bits===16){
-        v.setInt16(off,Math.round(s*32767),true);off+=2;
-      }else if(bits===32){
-        v.setInt32(off,Math.round(s*2147483647),true);off+=4;
-      }else{
-        var s24=Math.round(s*8388607);
-        v.setUint8(off,s24&0xff);v.setUint8(off+1,(s24>>8)&0xff);v.setUint8(off+2,(s24>>16)&0xff);off+=3;
-      }
-    }
-  }
-  return new Blob([ab],{type:'audio/wav'});
-}
-
-function resetAll(){
-  stopPlay();audioBuf=null;refBuf=null;masteredBuf=null;playingMaster=false;origStats=null;refStats=null;
-  var ids=['waveformSection','workspaceEQ','workspaceDyn','workspacePlat','workspaceFmt','masterBtnWrap'];
-  for(var i=0;i<ids.length;i++)document.getElementById(ids[i]).style.display='none';
-  document.getElementById('outputSection').classList.remove('visible');document.getElementById('refPanel').classList.remove('visible');
-  document.getElementById('progWrap').classList.remove('visible');document.getElementById('progFill').style.width='0%';
-  document.getElementById('btnMaster').disabled=true;document.getElementById('engineMode').textContent='OFFLINE';
-  document.getElementById('fileInput').value='';document.getElementById('refInput').value='';
-  document.getElementById('udefaultMain').classList.remove('hidden');document.getElementById('udefaultRef').classList.remove('hidden');
-  document.getElementById('uloadedMain').classList.remove('visible');document.getElementById('uloadedRef').classList.remove('visible');
-  document.getElementById('uploadZone').classList.remove('has-main');document.getElementById('refZone').classList.remove('has-ref');
-  document.getElementById('abWrap').style.display='none';
-  document.getElementById('lufsIntVal').textContent='--';document.getElementById('lufsShortVal').textContent='--';document.getElementById('lufsTpVal').textContent='--';
-  document.getElementById('loudFill').style.width='0%';
-  showToast('Listo para nueva pista');
-}
-
-function fmtTime(sec){var m=Math.floor(sec/60),s=Math.floor(sec%60),ms=Math.floor((sec%1)*1000);return m+':'+(s<10?'0':'')+s+'.'+(ms<100?(ms<10?'00':'0'):'')+ms;}
-var toastTO=null;
-function showToast(msg,type){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type==='error'?' error':'');clearTimeout(toastTO);toastTO=setTimeout(function(){t.classList.remove('show');},3500);}
-
-window.onload=function(){
-  buildEQBands();drawEQCurve();
-  window.onresize=function(){drawEQCurve();if(audioBuf)drawWaveform(audioBuf,'waveformCanvas','#6366f1','#8b5cf6');if(refBuf)drawWaveform(refBuf,'refWaveformCanvas','#8b5cf6','#a78bfa');if(masteredBuf)drawWaveform(masteredBuf,'waveformCanvasMastered','#10b981','#34d399');};
-};
-</script>
+            // Audio Update
+            const p = PRESETS[presetId];
+            if(compressor) {
+                compressor.threshold.setTargetAtTime(p.compThreshold, audioContext.currentTime, 0.1);
+                compressor.ratio.setTargetAtTime(p.compRatio, audioContext.currentTime, 0.1);
+                console.log(`Aplicado preset: ${p.name}`);
+            }
+        }
+    </script>
 </body>
 </html>
