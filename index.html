@@ -35,7 +35,7 @@
         }
 
         .glass-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             background: var(--card-bg);
             backdrop-filter: blur(15px);
@@ -72,6 +72,9 @@
             padding: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
 
         .preset-card:hover, .preset-card.active {
@@ -102,6 +105,7 @@
             font-size: 0.95em;
             line-height: 1.5;
             color: #ccc;
+            flex-grow: 1;
         }
 
         footer {
@@ -116,7 +120,7 @@
 
     <div class="header">
         <h1>🐾 Michi Mastering App</h1>
-        <p>Motor de Audio Web - Procesamiento en Tiempo Real</p>
+        <p>Procesamiento Web Audio - Moustache de Chat Lab</p>
     </div>
 
     <div class="glass-container">
@@ -127,7 +131,7 @@
 
         <h2 style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 20px;">Estilos de Masterización</h2>
         <div class="presets-grid" id="presetsContainer">
-            <!-- Las tarjetas se inyectarán aquí con JavaScript -->
+            <!-- Tarjetas dinámicas -->
         </div>
     </div>
 
@@ -136,52 +140,76 @@
     </footer>
 
     <script>
-        // 1. Configuración de Presets (Los 5 actualizados)
         const PRESETS = {
+            // ----- INSPIRADOS EN BANDLAB -----
             universal: {
                 id: 'universal',
                 name: 'Universal',
                 emoji: '🌐',
-                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #00e5ff, 0 0 15px #00e5ff; font-style: italic; font-weight: 500;">Dinámica natural y balance tonal. Perfecto para unificar elementos de trance y arreglos orquestales con una claridad impecable.</em>',
-                tags: 'Trance • Orquestal • All Genres',
-                compThreshold: -14, compRatio: 2.2
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #00e5ff, 0 0 15px #00e5ff; font-style: italic; font-weight: 500;">Dinámica orgánica equilibrada. Integra a la perfección percusiones agresivas y cuerdas sinfónicas sin que compitan entre sí.</em>',
+                tags: 'All Genres • Balanced',
+                compThreshold: -14, compRatio: 2.2, compAttack: 0.025, compRelease: 0.15
             },
             fuego: {
                 id: 'fuego',
                 name: 'Fuego',
                 emoji: '🔥',
-                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #ff0055, 0 0 15px #ff0055; font-style: italic; font-weight: 500;">Graves contundentes y medios definidos. Ideal para hacer que los kicks y bajos del rawstyle y hardstyle destaquen con máxima agresión.</em>',
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #ff0055, 0 0 15px #ff0055; font-style: italic; font-weight: 500;">Graves pesados (Punchy Lows). Hace que los kicks y bajos del rawstyle retumben manteniendo la zona media nítida.</em>',
                 tags: 'Rawstyle • Hardstyle • Bass',
-                compThreshold: -18, compRatio: 3.5
+                compThreshold: -18, compRatio: 3.5, compAttack: 0.015, compRelease: 0.1
             },
             cinta: {
                 id: 'cinta',
                 name: 'Cinta',
                 emoji: '📼',
-                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #ffaa00, 0 0 15px #ffaa00; font-style: italic; font-weight: 500;">Saturación cálida y dinámica analógica. Excelente para darle textura, saturación y cohesión a pistas de corte industrial.</em>',
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #ffaa00, 0 0 15px #ffaa00; font-style: italic; font-weight: 500;">Saturación cálida vintage. Controla los armónicos punzantes y pega los elementos de sintetizadores industriales con textura analógica.</em>',
                 tags: 'Industrial • Vintage • Raw',
-                compThreshold: -12, compRatio: 2.0
+                compThreshold: -12, compRatio: 2.0, compAttack: 0.04, compRelease: 0.25
             },
             espacial: {
                 id: 'espacial',
                 name: 'Espacial',
                 emoji: '🌌',
-                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #b700ff, 0 0 15px #b700ff; font-style: italic; font-weight: 500;">Agudos nítidos y una imagen estéreo expandida. Resalta las atmósferas envolventes y los sintetizadores melódicos del trance.</em>',
-                tags: 'Trance • Atmosférico • Melodic',
-                compThreshold: -13, compRatio: 2.0
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #b700ff, 0 0 15px #b700ff; font-style: italic; font-weight: 500;">Imagen estéreo ultra ancha. Resalta los arpegios de trance y coros etéreos, aportando aire y separación tridimensional.</em>',
+                tags: 'Trance • Atmospheric',
+                compThreshold: -13, compRatio: 2.0, compAttack: 0.03, compRelease: 0.2
+            },
+            cinematic: {
+                id: 'cinematic',
+                name: 'Cinematográfico',
+                emoji: '🎬',
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #d4af37, 0 0 15px #d4af37; font-style: italic; font-weight: 500;">Preserva el rango dinámico. Deja respirar los crescendos de violines y metales mientras controla sutilmente los clímax.</em>',
+                tags: 'Orquestal • Soundtrack',
+                compThreshold: -10, compRatio: 1.8, compAttack: 0.05, compRelease: 0.3
             },
             empuje: {
                 id: 'empuje',
                 name: 'Empuje',
                 emoji: '💥',
-                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #00ffaa, 0 0 15px #00ffaa; font-style: italic; font-weight: 500;">Máximo impacto rítmico y densidad. Diseñado para potenciar los drops y controlar los transitorios más extremos del hardstyle.</em>',
-                tags: 'Hardstyle • Extreme • Punch',
-                compThreshold: -16, compRatio: 4.0
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #00ffaa, 0 0 15px #00ffaa; font-style: italic; font-weight: 500;">Densidad total y agarre rápido. Ideal para controlar la agresión de los drops y potenciar el impacto de cada transitorio.</em>',
+                tags: 'Hardcore • Extreme Punch',
+                compThreshold: -16, compRatio: 4.0, compAttack: 0.008, compRelease: 0.08
+            },
+
+            // ----- INSPIRADOS EN EASEUS AI MASTERING -----
+            pop: {
+                id: 'pop',
+                name: 'Pop',
+                emoji: '🎤',
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #ff66b2, 0 0 15px #ff66b2; font-style: italic; font-weight: 500;">Claridad vocal y medios brillantes. Inspirado en el motor estándar de Pop sin aplicar alteración inteligente de ganancia.</em>',
+                tags: 'Pop • Vocal Focus',
+                compThreshold: -12, compRatio: 2.5, compAttack: 0.02, compRelease: 0.15
+            },
+            edm: {
+                id: 'edm',
+                name: 'EDM',
+                emoji: '⚡',
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #ffff00, 0 0 15px #ffff00; font-style: italic; font-weight: 500;">Energía de club. Simula la compresión densa de la música electrónica de baile respetando tu volumen de exportación original.</em>',
+                tags: 'EDM • Electronic • Dance',
+                compThreshold: -15, compRatio: 3.0, compAttack: 0.015, compRelease: 0.1
             }
-            // NOTA: Los otros 8 presets (Estándar, Pulido Pop, Festival EDM, etc.) deben ir aquí.
         };
 
-        // 2. Renderizado de Tarjetas usando innerHTML para leer el estilo
         const container = document.getElementById('presetsContainer');
         
         Object.values(PRESETS).forEach(preset => {
@@ -189,7 +217,6 @@
             card.className = 'preset-card';
             card.id = `card-${preset.id}`;
             
-            // Usamos innerHTML para asegurar que las etiquetas <em> brillen
             card.innerHTML = `
                 <div class="preset-header">
                     <span>${preset.emoji}</span>
@@ -203,7 +230,7 @@
             container.appendChild(card);
         });
 
-        // 3. Lógica de Web Audio API
+        // Motor Web Audio
         let audioContext, mediaElementSource, compressor, limiter;
         const audioElement = document.getElementById('audioPlayer');
         const uploadInput = document.getElementById('audioUpload');
@@ -223,10 +250,10 @@
                 mediaElementSource = audioContext.createMediaElementSource(audioElement);
                 
                 compressor = audioContext.createDynamicsCompressor();
-                limiter = audioContext.createDynamicsCompressor(); // Actúa como hard limiter
+                limiter = audioContext.createDynamicsCompressor(); // Limiter de seguridad
                 
-                // Limiter básico fijo (Brickwall)
-                limiter.threshold.value = -0.1;
+                // Configuración neutral del Limiter para no inflar artificialmente el volumen
+                limiter.threshold.value = -0.1; 
                 limiter.ratio.value = 20.0;
                 limiter.attack.value = 0.001;
                 limiter.release.value = 0.05;
@@ -241,15 +268,16 @@
         function applyPreset(presetId) {
             if (!audioContext) initAudio();
             
-            // UI Update
             document.querySelectorAll('.preset-card').forEach(c => c.classList.remove('active'));
             document.getElementById(`card-${presetId}`).classList.add('active');
 
-            // Audio Update
             const p = PRESETS[presetId];
             if(compressor) {
+                // Aplicación de dinámica sin añadir Make-Up Gain artificial
                 compressor.threshold.setTargetAtTime(p.compThreshold, audioContext.currentTime, 0.1);
                 compressor.ratio.setTargetAtTime(p.compRatio, audioContext.currentTime, 0.1);
+                compressor.attack.setTargetAtTime(p.compAttack, audioContext.currentTime, 0.1);
+                compressor.release.setTargetAtTime(p.compRelease, audioContext.currentTime, 0.1);
                 console.log(`Aplicado preset: ${p.name}`);
             }
         }
