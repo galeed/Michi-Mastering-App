@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Michi Mastering App 🐾</title>
-    <link rel="manifest" href="manifest.json">
     <style>
         :root {
             --bg-color: #0f0f13;
@@ -31,12 +30,6 @@
         }
 
         .header h1 {
-            color: #ffffff;
-            text-shadow: 0 0 15px var(--neon-blue), 0 0 25px var(--neon-blue);
-            margin-bottom: 10px;
-        }
-
-        .header h2 {
             color: #ffffff;
             text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
             margin-bottom: 5px;
@@ -172,7 +165,6 @@
 
     <div class="header">
         <h1>🐾 Michi Mastering App</h1>
-        <h2>¡Funciona sin conexión!</h2>
         <p>Procesamiento Web Audio de Alta Fidelidad - Moustache de Chat Lab</p>
     </div>
 
@@ -495,14 +487,6 @@
             
             return new Blob([view], { type: 'audio/wav' });
         }
-        
-        if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('Service Worker registrado con éxito:', reg.scope))
-          .catch(err => console.error('Error al registrar el Service Worker:', err));
-      });
-    }
     </script>
 </body>
 </html>
