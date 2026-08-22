@@ -488,5 +488,18 @@
             return new Blob([view], { type: 'audio/wav' });
         }
     </script>
+    
+    <!-- REGISTRO DE SERVICE WORKER PARA MICHI MASTERING APP -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      /* MODIFICAR AQUÍ: Ruta relativa del Service Worker */
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('Michi Mastering App lista offline:', reg.scope))
+        .catch(err => console.error('Error al registrar SW:', err));
+    });
+  }
+</script>
+
 </body>
 </html>
