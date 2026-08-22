@@ -241,6 +241,18 @@
                 compThreshold: -15, compRatio: 3.0, compAttack: 0.015, compRelease: 0.1, makeUpGain: 1.5
             }
         };
+        
+                    dolby: {
+                id: 'dolby', name: 'Dolby Spatial', emoji: '🔊',
+                desc: '<em style="color: #ffffff; text-shadow: 0 0 8px #0055ff, 0 0 15px #0055ff; font-style: italic; font-weight: 500;">Sonido envolvente y masivo. Maximiza la profundidad y amplitud, dejando que los arreglos orquestales respiren mientras los bajos mantienen su impacto teatral.</em>',
+                tags: 'Cinematic • Spatial • Wide Dynamic',
+                compThreshold: -16, 
+                compRatio: 2.4, 
+                compAttack: 0.045, // Ataque lento para dejar pasar los transitorios fuertes
+                compRelease: 0.25, // Liberación suave para una sensación de espacio expansivo
+                makeUpGain: 1.6 // ~ +4dB para darle ese volumen de sala de cine sin saturar
+            }
+
 
         const container = document.getElementById('presetsContainer');
         
