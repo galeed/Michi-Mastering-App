@@ -1,15 +1,28 @@
 {
+  "/* MODIFICAR AQUÍ */": "Nombre oficial completo",
   "name": "Michi Mastering App",
-  "short_name": "🐾 Michi Mastering App",
+
+  "/* MODIFICAR AQUÍ */": "Nombre corto debajo del icono de la app",
+  "short_name": "Michi Master",
+
+  "description": "Herramienta web de procesamiento y masterización de audio sin conexión.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#04D9FF",
-  "theme_color": "#000000",
+
+  "/* MODIFICAR AQUÍ */": "Color de fondo de la pantalla de carga (Splash Screen)",
+  "background_color": "#121212",
+
+  "/* MODIFICAR AQUÍ */": "Color de la barra superior de Safari / Navegador",
+  "theme_color": "#121212",
+
+  "orientation": "any",
   "icons": [
     {
-      "src": "icon.png",
+      "/* MODIFICAR AQUÍ */": "Ruta al icono de la app",
+      "src": "./icon.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
