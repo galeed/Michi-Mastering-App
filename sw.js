@@ -1,26 +1,35 @@
+/* ==========================================================================
+   SERVICE WORKER - MICHI MASTERING APP
+   ========================================================================== */
+
+/* MODIFICAR AQUÍ: Identificador de la caché y versión de la app */
 const CACHE_NAME = 'michi-mastering-app-v1';
-// Lista de todos los archivos estáticos que necesita tu app para funcionar
-const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  './style.css',
-  './app.js',
-  './icon.png',
-  './manifest.json'
+
+/* MODIFICAR AQUÍ: Lista exacta de todos los archivos que requiere esta app para sonar/funcionar offline */
+const ARCHIVOS_A_GUARDAR = [
+  './',                  // Raíz de la app
+  './index.html',        // Interfaz de usuario
+  './style.css',         // Estilos de la app
+  './app.js',            // Lógica de procesamiento de audio / JS
+  './manifest.json',     // Configuración PWA
+  './icon.png'           // Icono principal
 ];
 
-// Instala el SW y guarda los recursos en la caché
+/* --------------------------------------------------------------------------
+   LÓGICA AUTOMÁTICA CACHE-FIRST (NO REQUIERE CAMBIOS)
+   -------------------------------------------------------------------------- */
+
+// 1. Guardar recursos al instalar
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('Archivos guardados en caché correctamente');
-      return cache.addAll(ASSETS_TO_CACHE);
+      return cache.addAll(ARCHIVOS_A_GUARDAR);
     })
   );
   self.skipWaiting();
 });
 
-// Elimina cachés antiguas si cambias la versión (ej. 'michi-app-v2')
+// 2. Limpiar cachés viejas al cambiar versión (ej. de 'v1' a 'v2')
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -36,20 +45,23 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Intercepta peticiones: intenta red primero; si falla, sirve desde la caché
+// 3. Servir desde la caché primero (Cache-First)
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    fetch(event.request)
-      .then((networkResponse) => {
-        // Actualiza la caché dinámicamente con la versión más reciente
-        return caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, networkResponse.clone());
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).then((networkResponse) => {
+        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
           return networkResponse;
+        }
+        const responseToCache = networkResponse.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseToCache);
         });
-      })
-      .catch(() => {
-        // Si no hay red, entrega el recurso desde la caché local
-        return caches.match(event.request);
-      })
+        return networkResponse;
+      });
+    })
   );
 });
